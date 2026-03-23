@@ -23,7 +23,7 @@ import { Component } from '@angular/core';
         <div>
           <p class="section-label mb-6">Connect</p>
           <ul class="space-y-3">
-            <li><a href="mailto:hello@momentseekerstudio.com" class="font-body text-sm text-white/50 hover:text-gold-400 transition-colors">hello@momentseekerstudio.com</a></li>
+            <li><a href="mailto:hello&#64;momentseekerstudio.com" class="font-body text-sm text-white/50 hover:text-gold-400 transition-colors">hello&#64;momentseekerstudio.com</a></li>
           </ul>
         </div>
       </div>

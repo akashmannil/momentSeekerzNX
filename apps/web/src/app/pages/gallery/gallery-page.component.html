@@ -18,7 +18,7 @@
     <ng-container *ngIf="categories$ | async as cats">
       <button
         *ngFor="let cat of cats"
-        (click)="setCategory(cat.category as any)"
+        (click)="setCategory(cat.category)"
         [class.text-gold-400]="(activeCategory$ | async) === cat.category"
         [class.border-gold-400]="(activeCategory$ | async) === cat.category"
         class="section-label px-4 py-2 border border-white/20 hover:border-gold-400 hover:text-gold-400 transition-colors"

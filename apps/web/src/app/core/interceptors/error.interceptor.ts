@@ -20,7 +20,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           this.store.dispatch(AuthActions.sessionExpired());
         } else if (err.status >= 500) {
           this.store.dispatch(
-            UiActions.showToast({ message: 'A server error occurred. Please try again.', type: 'error' })
+            UiActions.showToast({ message: 'A server error occurred. Please try again.', toastType: 'error' })
           );
         }
         const message = err.error?.message ?? err.message ?? 'Request failed';

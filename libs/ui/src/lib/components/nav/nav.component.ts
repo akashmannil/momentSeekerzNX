@@ -21,10 +21,13 @@ export class NavComponent implements OnInit {
   cartCount$: Observable<number> = this.store.select(selectCartCount);
   navOpen$: Observable<boolean> = this.store.select(selectNavOpen);
   scrolled = false;
+  navOpen = false;
 
   constructor(private readonly store: Store) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.navOpen$.subscribe(open => { this.navOpen = open; });
+  }
 
   @HostListener('window:scroll')
   onScroll(): void {

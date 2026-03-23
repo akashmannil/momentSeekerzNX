@@ -26,7 +26,7 @@ export const uiReducer = createReducer(
   on(UiActions.closeModal, state => ({ ...state, activeModal: null })),
   on(UiActions.setTheme, (state, { theme }) => ({ ...state, theme })),
   on(UiActions.setNavOpen, (state, { open }) => ({ ...state, navOpen: open })),
-  on(UiActions.showToast, (state, { message, type }) => ({ ...state, toast: { message, type } })),
+  on(UiActions.showToast, (state, { message, toastType }) => ({ ...state, toast: { message, type: toastType } })),
   on(UiActions.clearToast, state => ({ ...state, toast: null })),
   on(UiActions.setSceneReady, (state, { ready }) => ({ ...state, sceneReady: ready }))
 );

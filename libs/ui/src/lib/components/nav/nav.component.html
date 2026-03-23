@@ -1,11 +1,13 @@
 <header
   class="fixed top-0 left-0 right-0 z-30 transition-all duration-500"
-  [class.py-6]="!scrolled"
-  [class.py-4]="scrolled"
-  [class.bg-obsidian-950/90]="scrolled"
-  [class.backdrop-blur-md]="scrolled"
-  [class.border-b]="scrolled"
-  [class.border-white/5]="scrolled"
+  [ngClass]="{
+    'py-6': !scrolled,
+    'py-4': scrolled,
+    'bg-obsidian-950/90': scrolled,
+    'backdrop-blur-md': scrolled,
+    'border-b': scrolled,
+    'border-white/5': scrolled
+  }"
 >
   <nav class="max-w-7xl mx-auto px-6 flex items-center justify-between">
     <!-- Logo -->
@@ -34,7 +36,7 @@
     <!-- Mobile menu toggle -->
     <button
       class="md:hidden flex flex-col gap-1.5 p-2"
-      (click)="toggleNav(!(navOpen$ | async))"
+      (click)="toggleNav(!navOpen)"
       aria-label="Toggle menu"
     >
       <span class="w-6 h-px bg-white transition-all"></span>

@@ -5,7 +5,7 @@ export const selectStoreState = createFeatureSelector<StoreState>('store');
 
 export const selectProducts = createSelector(selectStoreState, selectAllProducts);
 export const selectProductById = (id: string) =>
-  createSelector(selectStoreState, selectProductEntities, (_, entities) => entities[id] ?? null);
+  createSelector(selectStoreState, state => state.entities[id] ?? null);
 
 export const selectCart = createSelector(selectStoreState, s => s.cart);
 export const selectCartCount = createSelector(selectCart, cart =>

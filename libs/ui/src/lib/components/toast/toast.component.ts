@@ -9,9 +9,11 @@ import { selectToast, UiActions } from '@mss/data-access';
     <div
       *ngIf="toast$ | async as toast"
       class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 glass-panel px-6 py-4 flex items-center gap-3 animate-fade-up shadow-xl min-w-[280px]"
-      [class.border-green-500/30]="toast.type === 'success'"
-      [class.border-red-500/30]="toast.type === 'error'"
-      [class.border-gold-400/30]="toast.type === 'info'"
+      [ngClass]="{
+        'border-green-500/30': toast.type === 'success',
+        'border-red-500/30': toast.type === 'error',
+        'border-gold-400/30': toast.type === 'info'
+      }"
       role="alert"
     >
       <span *ngIf="toast.type === 'success'" class="text-green-400">✓</span>
