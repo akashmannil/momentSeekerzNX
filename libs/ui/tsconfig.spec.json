@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc/libs/ui-spec",
+    "types": ["jest", "node"]
+  },
+  "include": ["src/test-setup.ts", "jest.config.ts", "src/**/*.spec.ts"]
+}

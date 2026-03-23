@@ -1,0 +1,69 @@
+<!-- ── Full-screen 3D canvas ─────────────────────────────────────────────── -->
+<mss-gallery-scene [images]="sceneImages"></mss-gallery-scene>
+
+<!-- ── Hero overlay ─────────────────────────────────────────────────────── -->
+<section class="scene-overlay flex flex-col items-center justify-center min-h-screen px-6 pointer-events-none">
+  <div class="text-center animate-fade-up" style="animation-delay: 0.2s">
+    <p class="section-label mb-6">Visual Storytelling</p>
+    <h1 class="font-display text-6xl md:text-8xl font-light leading-none tracking-tight mb-6">
+      Moment<br /><em class="not-italic text-gold-400">Seekers</em>
+    </h1>
+    <p class="font-body text-lg text-white/60 max-w-sm mx-auto leading-relaxed">
+      Cinematic photography that captures the poetry of fleeting moments.
+    </p>
+  </div>
+
+  <!-- CTA buttons — pointer-events re-enabled -->
+  <div class="flex flex-col sm:flex-row gap-4 mt-12 pointer-events-auto animate-fade-up" style="animation-delay: 0.5s">
+    <a routerLink="/gallery" class="btn-primary">Explore Gallery</a>
+    <a routerLink="/booking" class="btn-ghost">Book a Session</a>
+  </div>
+
+  <!-- Scroll hint -->
+  <div class="absolute bottom-10 flex flex-col items-center gap-2 opacity-40 pointer-events-none animate-fade-in" style="animation-delay: 1s">
+    <span class="section-label text-white/50">Scroll to explore</span>
+    <span class="block w-px h-10 bg-white/30 animate-pulse"></span>
+  </div>
+</section>
+
+<!-- ── Below-fold: featured categories ──────────────────────────────────── -->
+<section class="relative z-10 bg-obsidian-950 py-32 px-6">
+  <div class="max-w-6xl mx-auto">
+    <p class="section-label text-center mb-4">Portfolio</p>
+    <h2 class="font-display text-5xl text-center mb-16 font-light">The Work</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-1">
+      <a routerLink="/gallery" [queryParams]="{ category: 'weddings' }" class="group relative overflow-hidden aspect-[4/5] card-hover">
+        <div class="absolute inset-0 bg-obsidian-900 flex items-end p-6">
+          <h3 class="font-display text-3xl italic">Weddings</h3>
+        </div>
+      </a>
+      <a routerLink="/gallery" [queryParams]="{ category: 'portraits' }" class="group relative overflow-hidden aspect-[4/5] card-hover">
+        <div class="absolute inset-0 bg-obsidian-800 flex items-end p-6">
+          <h3 class="font-display text-3xl italic">Portraits</h3>
+        </div>
+      </a>
+      <a routerLink="/gallery" [queryParams]="{ category: 'commercial' }" class="group relative overflow-hidden aspect-[4/5] card-hover">
+        <div class="absolute inset-0 bg-obsidian-700 flex items-end p-6">
+          <h3 class="font-display text-3xl italic">Commercial</h3>
+        </div>
+      </a>
+    </div>
+
+    <div class="text-center mt-16">
+      <a routerLink="/gallery" class="btn-primary">View Full Gallery</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Store teaser ──────────────────────────────────────────────────────── -->
+<section class="relative z-10 bg-obsidian-900/50 py-32 px-6">
+  <div class="max-w-4xl mx-auto text-center">
+    <p class="section-label mb-4">Fine Art Prints</p>
+    <h2 class="font-display text-5xl font-light mb-6">Own a Moment</h2>
+    <p class="font-body text-white/60 text-lg max-w-xl mx-auto mb-12">
+      Museum-quality prints delivered to your door. Matte, glossy, or metallic finishes.
+    </p>
+    <a routerLink="/store" class="btn-primary">Shop Prints</a>
+  </div>
+</section>

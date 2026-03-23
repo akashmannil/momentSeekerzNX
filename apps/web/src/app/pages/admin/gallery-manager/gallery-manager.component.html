@@ -1,0 +1,50 @@
+<div class="p-8">
+  <div class="flex items-center justify-between mb-8">
+    <h1 class="font-display text-4xl font-light">Gallery Manager</h1>
+    <label class="btn-primary cursor-pointer">
+      {{ uploading ? 'Uploading...' : 'Upload Photo' }}
+      <input type="file" accept="image/*" class="hidden" (change)="onFileSelected($event)" [disabled]="uploading" />
+    </label>
+  </div>
+
+  <p *ngIf="uploadError" class="text-red-400 text-sm mb-4">{{ uploadError }}</p>
+  <p *ngIf="uploading" class="text-gold-400 text-sm mb-4 animate-pulse">Processing image...</p>
+
+  <div *ngIf="loading$ | async" class="flex justify-center py-16">
+    <div class="w-px h-12 bg-gold-400 animate-pulse"></div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4" *ngIf="!(loading$ | async)">
+    <article
+      *ngFor="let photo of photos$ | async"
+      class="glass-panel overflow-hidden"
+    >
+      <div class="relative">
+        <img [src]="photo.thumbnailUrl ?? photo.imageUrl" [alt]="photo.title" class="w-full aspect-video object-cover" />
+        <div class="absolute top-2 right-2 flex gap-1">
+          <span *ngIf="photo.published"
+                class="section-label text-xs bg-green-500/20 text-green-400 border border-green-500/30 px-2 py-1">Live</span>
+          <span *ngIf="!photo.published"
+                class="section-label text-xs bg-white/10 text-white/40 border border-white/10 px-2 py-1">Draft</span>
+          <span *ngIf="photo.featured"
+                class="section-label text-xs bg-gold-400/20 text-gold-400 border border-gold-400/30 px-2 py-1">Featured</span>
+        </div>
+      </div>
+      <div class="p-4">
+        <p class="font-body text-sm font-medium truncate mb-1">{{ photo.title }}</p>
+        <p class="text-white/30 text-xs capitalize mb-3">{{ photo.category }}</p>
+        <div class="flex gap-2 flex-wrap">
+          <button (click)="togglePublish(photo)" class="section-label text-xs px-3 py-1 border border-white/10 hover:border-gold-400 transition-colors">
+            {{ photo.published ? 'Unpublish' : 'Publish' }}
+          </button>
+          <button (click)="toggleFeatured(photo)" class="section-label text-xs px-3 py-1 border border-white/10 hover:border-gold-400 transition-colors">
+            {{ photo.featured ? 'Unfeature' : 'Feature' }}
+          </button>
+          <button (click)="deletePhoto(photo)" class="section-label text-xs px-3 py-1 border border-red-500/30 text-red-400 hover:bg-red-500/10 transition-colors ml-auto">
+            Delete
+          </button>
+        </div>
+      </div>
+    </article>
+  </div>
+</div>

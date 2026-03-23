@@ -1,0 +1,86 @@
+<div class="min-h-screen bg-obsidian-950 page-enter" *ngIf="photo$ | async as photo; else loading">
+  <!-- Back button -->
+  <button
+    (click)="goBack()"
+    class="fixed top-6 left-6 z-50 flex items-center gap-2 section-label text-white/60 hover:text-white transition-colors"
+    aria-label="Back to gallery"
+  >
+    ← Back
+  </button>
+
+  <!-- Full-screen image -->
+  <div class="flex items-center justify-center min-h-screen pt-20 pb-12 px-4">
+    <div class="max-w-5xl w-full">
+      <picture>
+        <source *ngIf="photo.webpUrl" [srcset]="photo.webpUrl" type="image/webp" />
+        <img
+          [src]="photo.imageUrl"
+          [alt]="photo.title"
+          class="w-full h-auto shadow-2xl"
+          loading="eager"
+        />
+      </picture>
+
+      <!-- Metadata panel -->
+      <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div>
+          <p class="section-label mb-2">{{ photo.category }}</p>
+          <h1 class="font-display text-4xl font-light mb-4">{{ photo.title }}</h1>
+          <p class="font-body text-white/60 leading-relaxed" *ngIf="photo.description">{{ photo.description }}</p>
+
+          <!-- Tags -->
+          <div class="flex flex-wrap gap-2 mt-4" *ngIf="photo.tags?.length">
+            <span
+              *ngFor="let tag of photo.tags"
+              class="section-label text-xs px-3 py-1 border border-white/10 text-white/40"
+            >
+              {{ tag }}
+            </span>
+          </div>
+        </div>
+
+        <!-- EXIF metadata -->
+        <div *ngIf="photo.metadata" class="glass-panel p-6 space-y-3">
+          <p class="section-label mb-4">Camera Details</p>
+          <dl class="space-y-2">
+            <div *ngIf="photo.metadata.camera" class="flex justify-between">
+              <dt class="text-white/40 text-sm">Camera</dt>
+              <dd class="text-sm">{{ photo.metadata.camera }}</dd>
+            </div>
+            <div *ngIf="photo.metadata.lens" class="flex justify-between">
+              <dt class="text-white/40 text-sm">Lens</dt>
+              <dd class="text-sm">{{ photo.metadata.lens }}</dd>
+            </div>
+            <div *ngIf="photo.metadata.aperture" class="flex justify-between">
+              <dt class="text-white/40 text-sm">Aperture</dt>
+              <dd class="text-sm">{{ photo.metadata.aperture }}</dd>
+            </div>
+            <div *ngIf="photo.metadata.shutterSpeed" class="flex justify-between">
+              <dt class="text-white/40 text-sm">Shutter Speed</dt>
+              <dd class="text-sm">{{ photo.metadata.shutterSpeed }}</dd>
+            </div>
+            <div *ngIf="photo.metadata.iso" class="flex justify-between">
+              <dt class="text-white/40 text-sm">ISO</dt>
+              <dd class="text-sm">{{ photo.metadata.iso }}</dd>
+            </div>
+            <div *ngIf="photo.metadata.location" class="flex justify-between">
+              <dt class="text-white/40 text-sm">Location</dt>
+              <dd class="text-sm">{{ photo.metadata.location }}</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+
+      <!-- Buy print CTA -->
+      <div class="mt-12 text-center">
+        <a routerLink="/store" class="btn-primary">Order a Print</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="flex items-center justify-center min-h-screen">
+    <div class="w-px h-24 bg-gold-400 animate-pulse"></div>
+  </div>
+</ng-template>

@@ -1,0 +1,67 @@
+<!-- Backdrop -->
+<div
+  *ngIf="isOpen"
+  class="fixed inset-0 bg-black/70 z-40 backdrop-blur-sm"
+  (click)="closed.emit()"
+></div>
+
+<!-- Slide-in panel -->
+<aside
+  class="fixed top-0 right-0 h-full w-full sm:w-96 bg-obsidian-900 z-50 flex flex-col
+         transform transition-transform duration-400"
+  [class.translate-x-0]="isOpen"
+  [class.translate-x-full]="!isOpen"
+  role="dialog"
+  aria-label="Shopping cart"
+>
+  <div class="flex items-center justify-between p-6 border-b border-white/10">
+    <h2 class="font-display text-2xl">Cart</h2>
+    <button (click)="closed.emit()" aria-label="Close cart" class="text-white/50 hover:text-white">✕</button>
+  </div>
+
+  <!-- Items -->
+  <div class="flex-1 overflow-y-auto p-6 space-y-6">
+    <ng-container *ngIf="cart$ | async as cart">
+      <div *ngIf="cart.length === 0" class="text-center py-16">
+        <p class="font-display text-2xl text-white/30 italic">Your cart is empty</p>
+      </div>
+
+      <div *ngFor="let item of cart" class="flex gap-4">
+        <img [src]="item.imageUrl" [alt]="item.title" class="w-20 h-20 object-cover" />
+        <div class="flex-1 min-w-0">
+          <p class="font-body text-sm font-medium truncate">{{ item.title }}</p>
+          <p class="text-white/40 text-xs mt-0.5">{{ item.size }} · {{ item.finish }}</p>
+          <p class="text-gold-400 text-sm mt-1">${{ item.unitPrice | number:'1.2-2' }}</p>
+          <div class="flex items-center gap-3 mt-2">
+            <button (click)="updateQty(item, -1)" class="text-white/50 hover:text-white w-6 h-6 flex items-center justify-center">−</button>
+            <span class="text-sm">{{ item.quantity }}</span>
+            <button (click)="updateQty(item, +1)" class="text-white/50 hover:text-white w-6 h-6 flex items-center justify-center">+</button>
+          </div>
+        </div>
+        <button (click)="removeItem(item)" class="text-white/30 hover:text-red-400 text-xs" aria-label="Remove">✕</button>
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- Checkout form + total -->
+  <div class="p-6 border-t border-white/10 space-y-4" *ngIf="(cart$ | async)?.length">
+    <div class="flex justify-between section-label">
+      <span>Total</span>
+      <span class="text-gold-400">${{ cartTotal$ | async | number:'1.2-2' }}</span>
+    </div>
+
+    <form [formGroup]="checkoutForm" class="space-y-4">
+      <input formControlName="customerName" placeholder="Your Name *" class="input-field text-sm" />
+      <input formControlName="customerEmail" type="email" placeholder="Email *" class="input-field text-sm" />
+    </form>
+
+    <button
+      (click)="checkout()"
+      class="btn-primary w-full justify-center"
+      [disabled]="checkingOut$ | async"
+    >
+      {{ (checkingOut$ | async) ? 'Redirecting...' : 'Proceed to Payment' }}
+    </button>
+    <p class="text-white/30 text-xs text-center">Secure checkout via Stripe</p>
+  </div>
+</aside>

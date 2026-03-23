@@ -1,0 +1,33 @@
+<div class="min-h-screen pt-24 pb-24 px-6 page-enter">
+  <div class="max-w-lg mx-auto">
+    <header class="text-center mb-16">
+      <p class="section-label mb-4">Get in Touch</p>
+      <h1 class="font-display text-6xl font-light">Contact</h1>
+    </header>
+
+    <div *ngIf="submitted" class="glass-panel p-10 text-center">
+      <h2 class="font-display text-3xl font-light mb-4">Message Sent</h2>
+      <p class="font-body text-white/60">Thank you! I'll respond within 48 hours.</p>
+    </div>
+
+    <form *ngIf="!submitted" (ngSubmit)="submit()" [formGroup]="form" class="space-y-8" novalidate>
+      <input formControlName="name" type="text" placeholder="Your Name *" class="input-field" />
+      <input formControlName="email" type="email" placeholder="Email Address *" class="input-field" />
+      <input formControlName="subject" type="text" placeholder="Subject" class="input-field" />
+      <textarea formControlName="message" placeholder="Your message *" rows="6" class="input-field resize-none"></textarea>
+
+      <div *ngIf="error" class="text-red-400 text-sm">{{ error }}</div>
+
+      <button type="submit" class="btn-primary w-full justify-center" [disabled]="loading">
+        {{ loading ? 'Sending...' : 'Send Message' }}
+      </button>
+    </form>
+
+    <!-- Contact info -->
+    <div class="mt-16 space-y-4 text-center">
+      <p class="section-label">Or reach out directly</p>
+      <p class="font-body text-white/50">hello@momentseekerstudio.com</p>
+      <p class="font-body text-white/30 text-sm">Based in New York, available worldwide</p>
+    </div>
+  </div>
+</div>

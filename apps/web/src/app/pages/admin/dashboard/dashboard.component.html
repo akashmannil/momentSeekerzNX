@@ -1,0 +1,59 @@
+<div class="p-8">
+  <h1 class="font-display text-4xl font-light mb-8">Dashboard</h1>
+
+  <div *ngIf="loading" class="flex justify-center py-24">
+    <div class="w-px h-16 bg-gold-400 animate-pulse"></div>
+  </div>
+
+  <ng-container *ngIf="stats && !loading">
+    <!-- KPI cards -->
+    <div class="grid grid-cols-2 xl:grid-cols-4 gap-4 mb-12">
+      <div class="glass-panel p-6">
+        <p class="section-label text-white/40 mb-2">Total Photos</p>
+        <p class="font-display text-4xl">{{ stats.summary.totalPhotos }}</p>
+      </div>
+      <div class="glass-panel p-6">
+        <p class="section-label text-white/40 mb-2">Pending Bookings</p>
+        <p class="font-display text-4xl">{{ stats.summary.pendingBookings }}</p>
+      </div>
+      <div class="glass-panel p-6">
+        <p class="section-label text-white/40 mb-2">Orders (30d)</p>
+        <p class="font-display text-4xl">{{ stats.summary.ordersThisMonth }}</p>
+      </div>
+      <div class="glass-panel p-6">
+        <p class="section-label text-white/40 mb-2">Revenue (30d)</p>
+        <p class="font-display text-4xl">${{ stats.summary.revenueThisMonth | number:'1.0-0' }}</p>
+      </div>
+    </div>
+
+    <!-- Top photos + booking status -->
+    <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+      <!-- Top viewed photos -->
+      <div class="glass-panel p-6">
+        <p class="section-label mb-6">Top Viewed Photos</p>
+        <div class="space-y-4">
+          <div *ngFor="let photo of stats.topPhotos" class="flex items-center gap-4">
+            <img [src]="photo.thumbnailUrl" [alt]="photo.title" class="w-12 h-12 object-cover" />
+            <div class="flex-1 min-w-0">
+              <p class="font-body text-sm truncate">{{ photo.title }}</p>
+              <p class="text-white/30 text-xs">{{ photo.category }}</p>
+            </div>
+            <p class="section-label text-gold-400">{{ photo.viewCount }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Booking status breakdown -->
+      <div class="glass-panel p-6">
+        <p class="section-label mb-6">Bookings by Status</p>
+        <div class="space-y-3">
+          <div *ngFor="let s of stats.bookingsByStatus" class="flex justify-between items-center">
+            <span class="font-body text-sm capitalize">{{ s.status }}</span>
+            <span class="section-label text-gold-400">{{ s.count }}</span>
+          </div>
+        </div>
+        <a routerLink="../bookings" class="btn-ghost text-xs mt-6 block text-center">Manage Bookings →</a>
+      </div>
+    </div>
+  </ng-container>
+</div>

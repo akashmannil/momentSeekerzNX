@@ -1,0 +1,45 @@
+<div class="min-h-screen flex items-center justify-center px-6 page-enter">
+  <div class="w-full max-w-sm">
+    <header class="text-center mb-12">
+      <p class="section-label mb-4">Studio</p>
+      <h1 class="font-display text-5xl font-light">Sign In</h1>
+    </header>
+
+    <form (ngSubmit)="submit()" [formGroup]="form" class="space-y-8" novalidate>
+      <div>
+        <input
+          formControlName="email"
+          type="email"
+          placeholder="Email"
+          class="input-field"
+          autocomplete="email"
+        />
+        <p *ngIf="form.get('email')?.invalid && form.get('email')?.touched"
+           class="text-red-400 text-xs mt-1">Valid email required</p>
+      </div>
+      <div>
+        <input
+          formControlName="password"
+          type="password"
+          placeholder="Password"
+          class="input-field"
+          autocomplete="current-password"
+        />
+      </div>
+
+      <div *ngIf="error$ | async as error" class="text-red-400 text-sm text-center">{{ error }}</div>
+
+      <button
+        type="submit"
+        class="btn-primary w-full justify-center"
+        [disabled]="loading$ | async"
+      >
+        {{ (loading$ | async) ? 'Signing In...' : 'Sign In' }}
+      </button>
+    </form>
+
+    <p class="text-center text-white/30 text-xs mt-8">
+      This is the private admin area. <a routerLink="/" class="text-gold-400 hover:underline">Back to site</a>
+    </p>
+  </div>
+</div>

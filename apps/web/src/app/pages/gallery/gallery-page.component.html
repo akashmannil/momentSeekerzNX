@@ -1,0 +1,74 @@
+<div class="min-h-screen pt-24 pb-16 px-6 page-enter">
+  <!-- Header -->
+  <header class="max-w-6xl mx-auto mb-16 text-center">
+    <p class="section-label mb-4">Portfolio</p>
+    <h1 class="font-display text-6xl font-light">Gallery</h1>
+  </header>
+
+  <!-- Category filter -->
+  <nav class="max-w-6xl mx-auto mb-12 flex flex-wrap items-center gap-3" aria-label="Filter by category">
+    <button
+      (click)="setCategory(null)"
+      [class.text-gold-400]="(activeCategory$ | async) === null"
+      [class.border-gold-400]="(activeCategory$ | async) === null"
+      class="section-label px-4 py-2 border border-white/20 hover:border-gold-400 hover:text-gold-400 transition-colors"
+    >
+      All
+    </button>
+    <ng-container *ngIf="categories$ | async as cats">
+      <button
+        *ngFor="let cat of cats"
+        (click)="setCategory(cat.category as any)"
+        [class.text-gold-400]="(activeCategory$ | async) === cat.category"
+        [class.border-gold-400]="(activeCategory$ | async) === cat.category"
+        class="section-label px-4 py-2 border border-white/20 hover:border-gold-400 hover:text-gold-400 transition-colors"
+      >
+        {{ categoryLabels[cat.category] ?? cat.category }}
+        <span class="ml-1 text-white/30">({{ cat.count }})</span>
+      </button>
+    </ng-container>
+  </nav>
+
+  <!-- Loading state -->
+  <div *ngIf="loading$ | async" class="flex justify-center py-32">
+    <div class="w-px h-16 bg-gold-400 animate-pulse"></div>
+  </div>
+
+  <!-- Masonry-style grid -->
+  <main class="max-w-6xl mx-auto" *ngIf="!(loading$ | async)">
+    <div class="columns-1 sm:columns-2 lg:columns-3 gap-2" *ngIf="photos$ | async as photos">
+      <article
+        *ngFor="let photo of photos; trackBy: trackByPhotoId"
+        (click)="openPhoto(photo)"
+        class="break-inside-avoid mb-2 group relative cursor-pointer overflow-hidden card-hover"
+      >
+        <!-- WebP with JPEG fallback -->
+        <picture>
+          <source *ngIf="photo.webpUrl" [srcset]="photo.webpUrl" type="image/webp" />
+          <img
+            [src]="photo.thumbnailUrl ?? photo.imageUrl"
+            [alt]="photo.title"
+            class="w-full h-auto block transition-transform duration-700 group-hover:scale-105"
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
+
+        <!-- Hover overlay -->
+        <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950/80 to-transparent
+                    opacity-0 group-hover:opacity-100 transition-opacity duration-300
+                    flex items-end p-5">
+          <div>
+            <p class="section-label text-gold-400 mb-1">{{ categoryLabels[photo.category] }}</p>
+            <h3 class="font-display text-xl">{{ photo.title }}</h3>
+          </div>
+        </div>
+      </article>
+
+      <!-- Empty state -->
+      <div *ngIf="photos.length === 0" class="col-span-full text-center py-32">
+        <p class="font-display text-3xl text-white/30 italic">No images found</p>
+      </div>
+    </div>
+  </main>
+</div>

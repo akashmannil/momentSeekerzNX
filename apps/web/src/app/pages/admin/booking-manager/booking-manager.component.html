@@ -1,0 +1,51 @@
+<div class="p-8">
+  <h1 class="font-display text-4xl font-light mb-8">Booking Requests</h1>
+
+  <!-- Status filter -->
+  <div class="flex flex-wrap gap-2 mb-8">
+    <button (click)="filterByStatus('')" class="section-label text-xs px-4 py-2 border border-white/10 hover:border-gold-400 transition-colors"
+            [class.border-gold-400]="!selectedStatus">All</button>
+    <button *ngFor="let s of statuses" (click)="filterByStatus(s)"
+            class="section-label text-xs px-4 py-2 border border-white/10 hover:border-gold-400 transition-colors capitalize"
+            [class.border-gold-400]="selectedStatus === s">{{ s }}</button>
+  </div>
+
+  <div *ngIf="loading$ | async" class="flex justify-center py-16">
+    <div class="w-px h-12 bg-gold-400 animate-pulse"></div>
+  </div>
+
+  <div class="space-y-4" *ngIf="!(loading$ | async)">
+    <article *ngFor="let booking of bookings$ | async" class="glass-panel p-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <p class="font-body font-medium">{{ booking.clientName }}</p>
+          <p class="text-white/40 text-sm">{{ booking.clientEmail }}</p>
+          <p class="text-white/40 text-sm">{{ booking.clientPhone }}</p>
+        </div>
+        <div>
+          <p class="section-label text-white/30 mb-1">Session</p>
+          <p class="font-body text-sm capitalize">{{ booking.sessionType }}</p>
+          <p class="text-white/40 text-xs mt-1">{{ booking.preferredDate | date:'mediumDate' }}</p>
+          <p *ngIf="booking.location" class="text-white/30 text-xs">{{ booking.location }}</p>
+        </div>
+        <div class="flex flex-col items-end gap-3">
+          <span class="section-label text-sm capitalize" [class]="statusClass(booking.status)">{{ booking.status }}</span>
+          <select
+            [value]="booking.status"
+            (change)="updateStatus(booking, $any($event.target).value)"
+            class="bg-obsidian-800 border border-white/10 text-xs text-white/70 px-2 py-1 rounded focus:border-gold-400 focus:outline-none"
+          >
+            <option *ngFor="let s of statuses" [value]="s" class="capitalize">{{ s }}</option>
+          </select>
+        </div>
+      </div>
+      <p *ngIf="booking.message" class="mt-4 text-white/40 text-sm border-t border-white/5 pt-4 italic">
+        "{{ booking.message }}"
+      </p>
+    </article>
+
+    <p *ngIf="(bookings$ | async)?.length === 0" class="text-center text-white/30 py-16 font-display text-2xl italic">
+      No bookings found
+    </p>
+  </div>
+</div>

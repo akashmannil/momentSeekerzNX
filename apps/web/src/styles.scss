@@ -1,0 +1,115 @@
+// ─── Tailwind ─────────────────────────────────────────────────────────────────
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// ─── Custom base ─────────────────────────────────────────────────────────────
+@layer base {
+  :root {
+    --color-accent: theme('colors.gold.400');
+    --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-obsidian-950 text-white;
+    font-family: theme('fontFamily.body');
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: theme('colors.gold.400');
+    color: theme('colors.obsidian.950');
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: theme('colors.obsidian.950');
+  }
+  ::-webkit-scrollbar-thumb {
+    background: theme('colors.obsidian.700');
+    border-radius: 3px;
+    &:hover { background: theme('colors.gold.500'); }
+  }
+
+  h1, h2, h3 {
+    font-family: theme('fontFamily.display');
+    font-weight: 300;
+    letter-spacing: 0.02em;
+  }
+}
+
+// ─── Custom components ───────────────────────────────────────────────────────
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-6 py-3 border border-gold-400
+           text-gold-400 font-body text-sm tracking-widest uppercase
+           transition-all duration-300
+           hover:bg-gold-400 hover:text-obsidian-950
+           focus:outline-none focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:ring-offset-obsidian-950;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 px-6 py-3
+           text-white/70 font-body text-sm tracking-widest uppercase
+           transition-all duration-300 hover:text-white;
+  }
+
+  .input-field {
+    @apply w-full bg-transparent border-b border-white/20 py-3 px-0
+           text-white placeholder-white/30
+           focus:outline-none focus:border-gold-400
+           transition-colors duration-300;
+  }
+
+  .section-label {
+    @apply text-xs tracking-[0.25em] uppercase text-gold-400 font-body;
+  }
+
+  .card-hover {
+    @apply transition-all duration-500 ease-out
+           hover:scale-[1.02] hover:shadow-2xl;
+  }
+
+  // 3D canvas container — always fullscreen
+  .three-canvas {
+    @apply fixed inset-0 w-full h-full;
+    z-index: 0;
+  }
+
+  // Overlay on top of the WebGL canvas
+  .scene-overlay {
+    @apply relative z-10;
+  }
+
+  .glass-panel {
+    @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-sm;
+  }
+}
+
+// ─── Page transition animations ──────────────────────────────────────────────
+@keyframes pageEnter {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.page-enter {
+  animation: pageEnter 0.5s var(--transition-smooth) forwards;
+}
+
+// ─── Loading progress bar ────────────────────────────────────────────────────
+.loading-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, theme('colors.gold.400'), theme('colors.gold.600'));
+  transition: width 0.3s ease;
+  z-index: 9999;
+}

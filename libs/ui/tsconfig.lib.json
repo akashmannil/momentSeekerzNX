@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc/libs/ui",
+    "declaration": true
+  },
+  "exclude": ["src/test-setup.ts", "jest.config.ts", "src/**/*.spec.ts"],
+  "include": ["src/**/*.ts"]
+}

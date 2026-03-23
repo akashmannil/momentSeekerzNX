@@ -1,0 +1,72 @@
+version: '3.9'
+
+services:
+  # ─── MongoDB ──────────────────────────────────────────────────────────────────
+  mongo:
+    image: mongo:7.0
+    container_name: mss-mongo
+    restart: unless-stopped
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:-devpassword}
+      MONGO_INITDB_DATABASE: moment-seekers
+    volumes:
+      - mongo_data:/data/db
+      - ./docker/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - mss-network
+
+  # ─── NestJS API ───────────────────────────────────────────────────────────────
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+      target: production
+    container_name: mss-api
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      MONGODB_URI: mongodb://admin:${MONGO_ROOT_PASSWORD:-devpassword}@mongo:27017/moment-seekers?authSource=admin
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRATION: ${JWT_EXPIRATION:-15m}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
+      JWT_REFRESH_EXPIRATION: ${JWT_REFRESH_EXPIRATION:-7d}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
+      STORAGE_PROVIDER: ${STORAGE_PROVIDER:-local}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:4200}
+    volumes:
+      - api_uploads:/app/uploads
+    depends_on:
+      - mongo
+    networks:
+      - mss-network
+
+  # ─── Angular Web (nginx) ─────────────────────────────────────────────────────
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      target: production
+    container_name: mss-web
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '443:443'
+    depends_on:
+      - api
+    networks:
+      - mss-network
+
+volumes:
+  mongo_data:
+  api_uploads:
+
+networks:
+  mss-network:
+    driver: bridge

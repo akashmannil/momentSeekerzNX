@@ -1,0 +1,119 @@
+<div class="min-h-screen pt-24 pb-24 px-6 page-enter">
+  <div class="max-w-2xl mx-auto">
+    <header class="text-center mb-16">
+      <p class="section-label mb-4">Let's Work Together</p>
+      <h1 class="font-display text-6xl font-light">Book a Session</h1>
+    </header>
+
+    <!-- Success state -->
+    <div *ngIf="success$ | async" class="glass-panel p-10 text-center animate-fade-in">
+      <p class="section-label text-gold-400 mb-4">Thank you!</p>
+      <h2 class="font-display text-3xl font-light mb-4">Request Received</h2>
+      <p class="font-body text-white/60">We'll review your request and get back to you within 24 hours.</p>
+    </div>
+
+    <!-- Booking form -->
+    <form *ngIf="!(success$ | async)" (ngSubmit)="submit()" [formGroup]="form" class="space-y-10" novalidate>
+      <!-- Personal info -->
+      <fieldset class="space-y-8">
+        <legend class="section-label">Your Details</legend>
+
+        <div>
+          <input
+            formControlName="clientName"
+            type="text"
+            placeholder="Full Name *"
+            class="input-field"
+            autocomplete="name"
+          />
+          <p *ngIf="form.get('clientName')?.invalid && form.get('clientName')?.touched"
+             class="text-red-400 text-xs mt-1">Name is required</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+          <div>
+            <input
+              formControlName="clientEmail"
+              type="email"
+              placeholder="Email *"
+              class="input-field"
+              autocomplete="email"
+            />
+            <p *ngIf="form.get('clientEmail')?.invalid && form.get('clientEmail')?.touched"
+               class="text-red-400 text-xs mt-1">Valid email required</p>
+          </div>
+          <div>
+            <input
+              formControlName="clientPhone"
+              type="tel"
+              placeholder="Phone *"
+              class="input-field"
+              autocomplete="tel"
+            />
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Session info -->
+      <fieldset class="space-y-8">
+        <legend class="section-label">Session Details</legend>
+
+        <div>
+          <select formControlName="sessionType" class="input-field bg-transparent text-white/70">
+            <option value="" disabled class="bg-obsidian-900">Select Session Type *</option>
+            <option *ngFor="let type of sessionTypes" [value]="type" class="bg-obsidian-900">
+              {{ sessionLabels[type] ?? type }}
+            </option>
+          </select>
+          <p *ngIf="form.get('sessionType')?.invalid && form.get('sessionType')?.touched"
+             class="text-red-400 text-xs mt-1">Please select a session type</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+          <div>
+            <label class="block text-white/30 text-xs mb-2">Preferred Date *</label>
+            <input
+              formControlName="preferredDate"
+              type="date"
+              class="input-field"
+            />
+          </div>
+          <div>
+            <label class="block text-white/30 text-xs mb-2">Alternate Date</label>
+            <input
+              formControlName="alternateDate"
+              type="date"
+              class="input-field"
+            />
+          </div>
+        </div>
+
+        <input
+          formControlName="location"
+          type="text"
+          placeholder="Preferred Location"
+          class="input-field"
+        />
+
+        <textarea
+          formControlName="message"
+          placeholder="Tell us about your vision, special requests, etc."
+          rows="5"
+          class="input-field resize-none"
+        ></textarea>
+      </fieldset>
+
+      <!-- Error message -->
+      <div *ngIf="error$ | async as error" class="text-red-400 text-sm">{{ error }}</div>
+
+      <button
+        type="submit"
+        class="btn-primary w-full justify-center"
+        [disabled]="submitting$ | async"
+      >
+        <span *ngIf="submitting$ | async">Sending...</span>
+        <span *ngIf="!(submitting$ | async)">Send Request</span>
+      </button>
+    </form>
+  </div>
+</div>
