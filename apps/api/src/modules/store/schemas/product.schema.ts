@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
-import { PrintSize, PrintFinish } from '@mss/shared';
+import { PrintSize, PrintFinish } from '@sm/shared';
 
 export type ProductDocument = Product & Document;
 

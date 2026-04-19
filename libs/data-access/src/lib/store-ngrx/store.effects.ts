@@ -6,7 +6,7 @@ import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { StoreActions } from './store.actions';
 import { selectCart } from './store.selectors';
 import { API_SERVICE_TOKEN } from '../../tokens';
-import { Product, Order } from '@mss/shared';
+import { Product, Order } from '@sm/shared';
 
 @Injectable()
 export class StoreEffects {

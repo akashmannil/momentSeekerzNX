@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { AuthActions, selectAuthLoading, selectAuthError } from '@mss/data-access';
+import { AuthActions, selectAuthLoading, selectAuthError } from '@sm/data-access';
 
 @Component({
-  selector: 'mss-login',
+  selector: 'sm-login',
   templateUrl: './login.component.html',
 })
 export class LoginComponent implements OnInit {

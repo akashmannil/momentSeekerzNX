@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { PhotoCategory } from '@mss/shared';
+import { PhotoCategory } from '@sm/shared';
 
 export type PhotoDocument = Photo & Document;
 
@@ -21,7 +21,7 @@ export class Photo {
   @Prop()
   webpUrl?: string;
 
-  @Prop({ required: true, enum: Object.values(PhotoCategory) })
+  @Prop({ required: true, type: String, enum: Object.values(PhotoCategory) })
   category!: PhotoCategory;
 
   @Prop({ type: [String], default: [] })

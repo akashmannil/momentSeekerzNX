@@ -8,7 +8,7 @@ import { BookingService } from './booking.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
-import { CreateBookingDto, UpdateBookingDto, BookingStatus } from '@mss/shared';
+import { CreateBookingDto, UpdateBookingDto, BookingStatus } from '@sm/shared';
 
 @ApiTags('booking')
 @Controller({ path: 'booking', version: '1' })

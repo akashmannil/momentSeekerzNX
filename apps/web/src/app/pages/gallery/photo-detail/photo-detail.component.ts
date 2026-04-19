@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { GalleryActions, selectSelectedPhoto } from '@mss/data-access';
-import { Photo } from '@mss/shared';
+import { GalleryActions, selectSelectedPhoto } from '@sm/data-access';
+import { Photo } from '@sm/shared';
 
 @Component({
-  selector: 'mss-photo-detail',
+  selector: 'sm-photo-detail',
   templateUrl: './photo-detail.component.html',
   styleUrls: ['./photo-detail.component.scss'],
 })

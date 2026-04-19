@@ -8,10 +8,10 @@ import {
   AuthActions,
   UiActions,
   selectNavOpen,
-} from '@mss/data-access';
+} from '@sm/data-access';
 
 @Component({
-  selector: 'mss-nav',
+  selector: 'sm-nav',
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.scss'],
 })

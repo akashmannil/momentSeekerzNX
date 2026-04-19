@@ -1,119 +1,323 @@
-<div class="min-h-screen pt-24 pb-24 px-6 page-enter">
-  <div class="max-w-2xl mx-auto">
-    <header class="text-center mb-16">
-      <p class="section-label mb-4">Let's Work Together</p>
-      <h1 class="font-display text-6xl font-light">Book a Session</h1>
-    </header>
+<div class="min-h-screen">
 
-    <!-- Success state -->
-    <div *ngIf="success$ | async" class="glass-panel p-10 text-center animate-fade-in">
-      <p class="section-label text-gold-400 mb-4">Thank you!</p>
-      <h2 class="font-display text-3xl font-light mb-4">Request Received</h2>
-      <p class="font-body text-white/60">We'll review your request and get back to you within 24 hours.</p>
+  <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
+  <section class="relative pt-36 pb-24 px-6 text-center page-enter">
+    <div class="max-w-3xl mx-auto">
+      <p class="section-label mb-6">Let's Create Together</p>
+      <h1 class="font-display text-6xl md:text-8xl font-light leading-none mb-8">
+        Book a<br /><em class="not-italic text-gold-400">Session</em>
+      </h1>
+      <p class="font-body text-white/50 text-lg max-w-lg mx-auto leading-relaxed">
+        Every great photograph starts with a conversation. Tell us about your vision and we'll bring it to life.
+      </p>
     </div>
+  </section>
 
-    <!-- Booking form -->
-    <form *ngIf="!(success$ | async)" (ngSubmit)="submit()" [formGroup]="form" class="space-y-10" novalidate>
-      <!-- Personal info -->
-      <fieldset class="space-y-8">
-        <legend class="section-label">Your Details</legend>
-
-        <div>
-          <input
-            formControlName="clientName"
-            type="text"
-            placeholder="Full Name *"
-            class="input-field"
-            autocomplete="name"
-          />
-          <p *ngIf="form.get('clientName')?.invalid && form.get('clientName')?.touched"
-             class="text-red-400 text-xs mt-1">Name is required</p>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
-          <div>
-            <input
-              formControlName="clientEmail"
-              type="email"
-              placeholder="Email *"
-              class="input-field"
-              autocomplete="email"
-            />
-            <p *ngIf="form.get('clientEmail')?.invalid && form.get('clientEmail')?.touched"
-               class="text-red-400 text-xs mt-1">Valid email required</p>
-          </div>
-          <div>
-            <input
-              formControlName="clientPhone"
-              type="tel"
-              placeholder="Phone *"
-              class="input-field"
-              autocomplete="tel"
-            />
-          </div>
-        </div>
-      </fieldset>
-
-      <!-- Session info -->
-      <fieldset class="space-y-8">
-        <legend class="section-label">Session Details</legend>
+  <!-- ── How It Works ───────────────────────────────────────────────────────── -->
+  <section class="py-20 px-6 border-t border-white/5">
+    <div class="max-w-4xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
 
         <div>
-          <select formControlName="sessionType" class="input-field bg-transparent text-white/70">
-            <option value="" disabled class="bg-obsidian-900">Select Session Type *</option>
-            <option *ngFor="let type of sessionTypes" [value]="type" class="bg-obsidian-900">
-              {{ sessionLabels[type] ?? type }}
-            </option>
-          </select>
-          <p *ngIf="form.get('sessionType')?.invalid && form.get('sessionType')?.touched"
-             class="text-red-400 text-xs mt-1">Please select a session type</p>
+          <span class="font-display text-7xl font-light text-gold-400/15 leading-none">01</span>
+          <h3 class="font-display text-xl mt-2 mb-3">Submit Request</h3>
+          <p class="font-body text-white/40 text-sm leading-relaxed">
+            Fill out the form below with your details and session preferences.
+          </p>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
-          <div>
-            <label class="block text-white/30 text-xs mb-2">Preferred Date *</label>
-            <input
-              formControlName="preferredDate"
-              type="date"
-              class="input-field"
-            />
-          </div>
-          <div>
-            <label class="block text-white/30 text-xs mb-2">Alternate Date</label>
-            <input
-              formControlName="alternateDate"
-              type="date"
-              class="input-field"
-            />
-          </div>
+        <div>
+          <span class="font-display text-7xl font-light text-gold-400/15 leading-none">02</span>
+          <h3 class="font-display text-xl mt-2 mb-3">Consultation</h3>
+          <p class="font-body text-white/40 text-sm leading-relaxed">
+            We'll reach out within 24 hours to discuss your vision and finalise details.
+          </p>
         </div>
 
-        <input
-          formControlName="location"
-          type="text"
-          placeholder="Preferred Location"
-          class="input-field"
-        />
+        <div>
+          <span class="font-display text-7xl font-light text-gold-400/15 leading-none">03</span>
+          <h3 class="font-display text-xl mt-2 mb-3">Create</h3>
+          <p class="font-body text-white/40 text-sm leading-relaxed">
+            We meet, we shoot, we craft images that will last a lifetime.
+          </p>
+        </div>
 
-        <textarea
-          formControlName="message"
-          placeholder="Tell us about your vision, special requests, etc."
-          rows="5"
-          class="input-field resize-none"
-        ></textarea>
-      </fieldset>
+      </div>
+    </div>
+  </section>
 
-      <!-- Error message -->
-      <div *ngIf="error$ | async as error" class="text-red-400 text-sm">{{ error }}</div>
+  <!-- ── Session Packages ───────────────────────────────────────────────────── -->
+  <section class="py-24 px-6 bg-obsidian-900/30 border-t border-white/5">
+    <div class="max-w-6xl mx-auto">
+      <p class="section-label text-center mb-4">Sessions</p>
+      <h2 class="font-display text-5xl text-center font-light mb-4">What We Offer</h2>
+      <p class="font-body text-white/30 text-center mb-16 text-sm">
+        Select a session below to pre-fill your booking form.
+      </p>
 
-      <button
-        type="submit"
-        class="btn-primary w-full justify-center"
-        [disabled]="submitting$ | async"
-      >
-        <span *ngIf="submitting$ | async">Sending...</span>
-        <span *ngIf="!(submitting$ | async)">Send Request</span>
-      </button>
-    </form>
-  </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div
+          *ngFor="let pkg of packages"
+          class="glass-panel p-6 cursor-pointer transition-all duration-300 hover:border-gold-400/40 group"
+          [class.border-gold-400]="form.get('sessionType')?.value === pkg.type"
+          (click)="selectPackage(pkg.type)"
+        >
+          <h3 class="font-display text-2xl mb-3 group-hover:text-gold-400 transition-colors duration-300"
+              [class.text-gold-400]="form.get('sessionType')?.value === pkg.type">
+            {{ pkg.label }}
+          </h3>
+          <p class="font-body text-white/40 text-sm leading-relaxed mb-5">{{ pkg.description }}</p>
+          <p class="section-label text-xs"
+             [class.text-gold-400]="form.get('sessionType')?.value === pkg.type"
+             [ngClass]="form.get('sessionType')?.value !== pkg.type ? 'text-white/30' : ''">
+            {{ pkg.startingPrice }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Booking Form / Success ─────────────────────────────────────────────── -->
+  <section id="booking-form" class="py-28 px-6 border-t border-white/5">
+    <div class="max-w-2xl mx-auto">
+
+      <!-- ── Success State ─────────────────────────────────────────────────── -->
+      <div *ngIf="success$ | async" class="animate-fade-in">
+        <div class="text-center mb-16">
+          <div class="w-12 h-px bg-gold-400 mx-auto mb-10"></div>
+          <p class="section-label mb-6">Request Received</p>
+          <h2 class="font-display text-6xl font-light mb-6">Thank You</h2>
+          <p class="font-body text-white/50 text-lg leading-relaxed max-w-md mx-auto">
+            We've received your booking request and will be in touch within 24 hours.
+          </p>
+        </div>
+
+        <div class="glass-panel p-8 mb-12">
+          <p class="section-label mb-8">What Happens Next</p>
+          <ul class="space-y-6">
+            <li class="flex gap-5 items-start">
+              <span class="font-display text-xl text-gold-400 font-light leading-none shrink-0 mt-0.5">01</span>
+              <div>
+                <p class="font-body text-white/80 text-sm font-medium mb-1">Check your email</p>
+                <p class="font-body text-white/40 text-sm leading-relaxed">
+                  Your request details have been logged in our system.
+                </p>
+              </div>
+            </li>
+            <li class="flex gap-5 items-start">
+              <span class="font-display text-xl text-gold-400 font-light leading-none shrink-0 mt-0.5">02</span>
+              <div>
+                <p class="font-body text-white/80 text-sm font-medium mb-1">We'll reach out</p>
+                <p class="font-body text-white/40 text-sm leading-relaxed">
+                  Within 24 hours to confirm availability and discuss the details.
+                </p>
+              </div>
+            </li>
+            <li class="flex gap-5 items-start">
+              <span class="font-display text-xl text-gold-400 font-light leading-none shrink-0 mt-0.5">03</span>
+              <div>
+                <p class="font-body text-white/80 text-sm font-medium mb-1">Consultation call</p>
+                <p class="font-body text-white/40 text-sm leading-relaxed">
+                  We'll set up a brief call to finalize your session plan and creative direction.
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a routerLink="/gallery" class="btn-primary">View Gallery</a>
+          <a routerLink="/" class="btn-ghost">Return Home</a>
+        </div>
+      </div>
+
+      <!-- ── Booking Form ────────────────────────────────────────────────────── -->
+      <form *ngIf="!(success$ | async)" (ngSubmit)="submit()" [formGroup]="form" novalidate>
+
+        <header class="mb-16">
+          <p class="section-label mb-4">Booking Request</p>
+          <h2 class="font-display text-5xl md:text-6xl font-light">
+            Tell Us About<br /><em class="not-italic text-gold-400">Your Vision</em>
+          </h2>
+        </header>
+
+        <div class="space-y-14">
+
+          <!-- Your Details ───────────────────────────────────────────────── -->
+          <div>
+            <p class="font-body text-white/30 text-xs tracking-[0.2em] uppercase pb-4 mb-8 border-b border-white/10">
+              Your Details
+            </p>
+            <div class="space-y-8">
+
+              <div>
+                <input
+                  formControlName="clientName"
+                  type="text"
+                  placeholder="Full Name *"
+                  class="input-field"
+                  autocomplete="name"
+                />
+                <p *ngIf="form.get('clientName')?.invalid && form.get('clientName')?.touched"
+                   class="text-red-400 text-xs mt-2">Name is required</p>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                <div>
+                  <input
+                    formControlName="clientEmail"
+                    type="email"
+                    placeholder="Email Address *"
+                    class="input-field"
+                    autocomplete="email"
+                  />
+                  <p *ngIf="form.get('clientEmail')?.invalid && form.get('clientEmail')?.touched"
+                     class="text-red-400 text-xs mt-2">Valid email required</p>
+                </div>
+                <div>
+                  <input
+                    formControlName="clientPhone"
+                    type="tel"
+                    placeholder="Phone Number *"
+                    class="input-field"
+                    autocomplete="tel"
+                  />
+                  <p *ngIf="form.get('clientPhone')?.invalid && form.get('clientPhone')?.touched"
+                     class="text-red-400 text-xs mt-2">Phone is required</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Session Details ─────────────────────────────────────────────── -->
+          <div>
+            <p class="font-body text-white/30 text-xs tracking-[0.2em] uppercase pb-4 mb-8 border-b border-white/10">
+              Session Details
+            </p>
+            <div class="space-y-8">
+
+              <div class="relative">
+                <select formControlName="sessionType" class="input-field booking-select appearance-none pr-8">
+                  <option value="" disabled class="bg-obsidian-950">Session Type *</option>
+                  <option *ngFor="let type of sessionTypes" [value]="type" class="bg-obsidian-950">
+                    {{ sessionLabels[type] ?? type }}
+                  </option>
+                </select>
+                <!-- dropdown arrow -->
+                <span class="pointer-events-none absolute right-0 bottom-3 text-white/30">
+                  <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+                    <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </span>
+                <p *ngIf="form.get('sessionType')?.invalid && form.get('sessionType')?.touched"
+                   class="text-red-400 text-xs mt-2">Please select a session type</p>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                <div>
+                  <label class="block text-white/30 text-xs tracking-[0.15em] uppercase mb-3">
+                    Preferred Date *
+                  </label>
+                  <input formControlName="preferredDate" type="date" class="input-field" />
+                  <p *ngIf="form.get('preferredDate')?.invalid && form.get('preferredDate')?.touched"
+                     class="text-red-400 text-xs mt-2">Date is required</p>
+                </div>
+                <div>
+                  <label class="block text-white/30 text-xs tracking-[0.15em] uppercase mb-3">
+                    Alternate Date
+                  </label>
+                  <input formControlName="alternateDate" type="date" class="input-field" />
+                </div>
+              </div>
+
+              <input
+                formControlName="location"
+                type="text"
+                placeholder="Preferred Location (optional)"
+                class="input-field"
+              />
+
+            </div>
+          </div>
+
+          <!-- Your Vision ─────────────────────────────────────────────────── -->
+          <div>
+            <p class="font-body text-white/30 text-xs tracking-[0.2em] uppercase pb-4 mb-8 border-b border-white/10">
+              Your Vision
+            </p>
+            <textarea
+              formControlName="message"
+              placeholder="Tell us about your vision, any special requests, or anything that will help us prepare..."
+              rows="6"
+              class="input-field resize-none"
+            ></textarea>
+            <p *ngIf="form.get('message')?.hasError('maxlength')"
+               class="text-red-400 text-xs mt-2">Message must be under 1000 characters</p>
+          </div>
+
+          <!-- Error ─────────────────────────────────────────────────────── -->
+          <div *ngIf="error$ | async as error" class="glass-panel p-4">
+            <p class="text-red-400 text-sm">{{ error }}</p>
+          </div>
+
+          <!-- Submit ────────────────────────────────────────────────────── -->
+          <div class="pt-2">
+            <button
+              type="submit"
+              class="btn-primary w-full justify-center py-4"
+              [disabled]="submitting$ | async"
+            >
+              <span *ngIf="submitting$ | async">Sending Request...</span>
+              <span *ngIf="!(submitting$ | async)">Send Booking Request</span>
+            </button>
+            <p class="font-body text-white/25 text-xs text-center mt-6 leading-relaxed">
+              No payment required at this stage. We'll confirm availability before any commitment.
+            </p>
+          </div>
+
+        </div>
+      </form>
+
+    </div>
+  </section>
+
+  <!-- ── FAQ strip ──────────────────────────────────────────────────────────── -->
+  <section class="py-20 px-6 bg-obsidian-900/20 border-t border-white/5">
+    <div class="max-w-4xl mx-auto">
+      <p class="section-label text-center mb-12">Common Questions</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-10">
+
+        <div>
+          <h4 class="font-display text-lg mb-2">How soon will I hear back?</h4>
+          <p class="font-body text-white/40 text-sm leading-relaxed">
+            Within 24 hours on business days. For urgent bookings, contact us directly.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="font-display text-lg mb-2">When is payment due?</h4>
+          <p class="font-body text-white/40 text-sm leading-relaxed">
+            A deposit is required only after we've confirmed your session date together.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="font-display text-lg mb-2">Can I reschedule?</h4>
+          <p class="font-body text-white/40 text-sm leading-relaxed">
+            Yes, with at least 48 hours notice. We'll do our best to accommodate your schedule.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="font-display text-lg mb-2">What should I bring?</h4>
+          <p class="font-body text-white/40 text-sm leading-relaxed">
+            We'll send a detailed preparation guide once your session is confirmed.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
 </div>

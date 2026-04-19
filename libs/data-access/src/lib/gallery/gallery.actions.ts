@@ -1,5 +1,5 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { Photo, PaginatedPhotos, PhotoCategory } from '@mss/shared';
+import { Photo, PaginatedPhotos, PhotoCategory } from '@sm/shared';
 
 export const GalleryActions = createActionGroup({
   source: 'Gallery',

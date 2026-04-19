@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { BookingStatus, SessionType } from '@mss/shared';
+import { BookingStatus, SessionType } from '@sm/shared';
 
 export type BookingDocument = Booking & Document;
 
@@ -15,7 +15,7 @@ export class Booking {
   @Prop({ required: true })
   clientPhone!: string;
 
-  @Prop({ required: true, enum: Object.values(SessionType) })
+  @Prop({ required: true, type: String, enum: Object.values(SessionType) })
   sessionType!: SessionType;
 
   @Prop({ required: true })
@@ -31,6 +31,7 @@ export class Booking {
   message?: string;
 
   @Prop({
+    type: String,
     default: BookingStatus.PENDING,
     enum: Object.values(BookingStatus),
   })

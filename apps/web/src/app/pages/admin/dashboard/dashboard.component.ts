@@ -15,7 +15,7 @@ interface DashboardStats {
 }
 
 @Component({
-  selector: 'mss-dashboard',
+  selector: 'sm-dashboard',
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent implements OnInit {

@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import {
@@ -7,11 +8,18 @@ import {
   selectBookingSubmitting,
   selectBookingSubmitSuccess,
   selectBookingError,
-} from '@mss/data-access';
-import { SessionType } from '@mss/shared';
+} from '@sm/data-access';
+import { SessionType } from '@sm/shared';
+
+interface SessionPackage {
+  type: SessionType;
+  label: string;
+  description: string;
+  startingPrice: string;
+}
 
 @Component({
-  selector: 'mss-booking',
+  selector: 'sm-booking',
   templateUrl: './booking.component.html',
   styleUrls: ['./booking.component.scss'],
 })
@@ -23,19 +31,88 @@ export class BookingComponent implements OnInit, OnDestroy {
 
   readonly sessionTypes = Object.values(SessionType);
   readonly sessionLabels: Record<string, string> = {
-    portrait: 'Portrait Session',
-    wedding: 'Wedding',
-    engagement: 'Engagement',
-    corporate: 'Corporate / Headshots',
-    commercial: 'Commercial',
-    boudoir: 'Boudoir',
-    family: 'Family',
-    newborn: 'Newborn',
+    [SessionType.REAL_ESTATE]: 'Real Estate Shoot',
+    [SessionType.PRODUCT_BRAND]: 'Product / Brand',
+    [SessionType.PORTRAIT]: 'Portraits & Headshots',
+    [SessionType.DRONE_AERIAL]: 'Drone & Aerial',
+    [SessionType.VIRTUAL_TOUR]: '360° Virtual Tour',
+    [SessionType.CINEMATIC_VIDEO]: 'Cinematic Promo Video',
+    [SessionType.VERTICAL_REEL]: 'Vertical Reels',
+    [SessionType.EVENT_COVERAGE]: 'Event Coverage',
+    [SessionType.CORPORATE_CAMPAIGN]: 'Campaign / Corporate',
+    [SessionType.OTHER]: 'Something Else',
   };
+
+  readonly packages: SessionPackage[] = [
+    {
+      type: SessionType.REAL_ESTATE,
+      label: 'Real Estate',
+      description: 'Photo + video coverage for realtors — exterior, interior, walkthrough.',
+      startingPrice: 'From CA$250',
+    },
+    {
+      type: SessionType.PRODUCT_BRAND,
+      label: 'Product / Brand',
+      description: 'Perfectly lit, styled, and edited visuals that elevate your store.',
+      startingPrice: 'From CA$250',
+    },
+    {
+      type: SessionType.PORTRAIT,
+      label: 'Portraits',
+      description: 'Personal, team, or founder portraits with editorial polish.',
+      startingPrice: 'From CA$200',
+    },
+    {
+      type: SessionType.DRONE_AERIAL,
+      label: 'Drone & Aerial',
+      description: 'Certified aerial coverage — properties, events, cinematic B-roll.',
+      startingPrice: 'From CA$300',
+    },
+    {
+      type: SessionType.VIRTUAL_TOUR,
+      label: '360° Virtual Tour',
+      description: 'Immersive walkthroughs for properties, spaces, and venues.',
+      startingPrice: 'From CA$350',
+    },
+    {
+      type: SessionType.CINEMATIC_VIDEO,
+      label: 'Cinematic Promo',
+      description: 'Brand films and hero videos built to convert.',
+      startingPrice: 'From CA$600',
+    },
+    {
+      type: SessionType.VERTICAL_REEL,
+      label: 'Vertical Reels',
+      description: 'Scroll-stopping short-form for IG, TikTok, and Shorts.',
+      startingPrice: 'From CA$150',
+    },
+    {
+      type: SessionType.EVENT_COVERAGE,
+      label: 'Event Coverage',
+      description: 'Commercial and live event photo + video, on-site crew.',
+      startingPrice: 'From CA$500',
+    },
+    {
+      type: SessionType.CORPORATE_CAMPAIGN,
+      label: 'Campaign Shoot',
+      description: 'Full creative campaign — concept, production, post.',
+      startingPrice: 'From CA$700',
+    },
+    {
+      type: SessionType.OTHER,
+      label: 'Something Else',
+      description: 'Custom brief? Tell us what you need and we\'ll scope it.',
+      startingPrice: 'Custom Quote',
+    },
+  ];
 
   private destroy$ = new Subject<void>();
 
-  constructor(private readonly fb: FormBuilder, private readonly store: Store) {}
+  constructor(
+    private readonly fb: FormBuilder,
+    private readonly store: Store,
+    private readonly route: ActivatedRoute,
+  ) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -49,10 +126,20 @@ export class BookingComponent implements OnInit, OnDestroy {
       message: ['', Validators.maxLength(1000)],
     });
 
-    // Reset form on success
+    this.route.queryParams.pipe(takeUntil(this.destroy$)).subscribe(params => {
+      if (params['session']) {
+        this.form.patchValue({ sessionType: params['session'] });
+      }
+    });
+
     this.success$.pipe(takeUntil(this.destroy$)).subscribe(success => {
       if (success) this.form.reset();
     });
+  }
+
+  selectPackage(type: SessionType): void {
+    this.form.patchValue({ sessionType: type });
+    document.querySelector('#booking-form')?.scrollIntoView({ behavior: 'smooth' });
   }
 
   submit(): void {

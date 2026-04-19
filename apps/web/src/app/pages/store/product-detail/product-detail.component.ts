@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { StoreActions, selectProductById, selectCart } from '@mss/data-access';
-import { Product, ProductVariant, PrintSize, PrintFinish } from '@mss/shared';
+import { StoreActions, selectProductById, selectCart } from '@sm/data-access';
+import { Product, ProductVariant, PrintSize, PrintFinish } from '@sm/shared';
 
 @Component({
-  selector: 'mss-product-detail',
+  selector: 'sm-product-detail',
   templateUrl: './product-detail.component.html',
 })
 export class ProductDetailComponent implements OnInit {

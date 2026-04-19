@@ -1,13 +1,21 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Router } from '@angular/router';
-import { of } from 'rxjs';
+import { from, of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { AuthActions } from './auth.actions';
-
 // The ApiService is injected from the Angular app — effects only depend on actions + services.
 // We use a token-based injection to avoid circular deps.
 import { API_SERVICE_TOKEN } from '../../tokens';
+
+function hashPassword(password: string): Promise<string> {
+  const data = new TextEncoder().encode(password);
+  return crypto.subtle.digest('SHA-256', data).then(buf =>
+    Array.from(new Uint8Array(buf))
+      .map(b => b.toString(16).padStart(2, '0'))
+      .join('')
+  );
+}
 
 @Injectable()
 export class AuthEffects {
@@ -19,15 +27,19 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.login),
       switchMap(({ email, password }) =>
-        this.api.post<any>('/auth/login', { email, password }).pipe(
-          map(res =>
-            AuthActions.loginSuccess({
-              user: res.user,
-              accessToken: res.accessToken,
-              refreshToken: res.refreshToken,
-            })
-          ),
-          catchError(err => of(AuthActions.loginFailure({ error: err.message ?? 'Login failed' })))
+        from(hashPassword(password)).pipe(
+          switchMap(hashedPw =>
+            this.api.post<any>('/auth/login', { email, password: hashedPw }).pipe(
+              map(res =>
+                AuthActions.loginSuccess({
+                  user: res.user,
+                  accessToken: res.accessToken,
+                  refreshToken: res.refreshToken,
+                })
+              ),
+              catchError(err => of(AuthActions.loginFailure({ error: err.message ?? 'Login failed' })))
+            )
+          )
         )
       )
     )
@@ -37,15 +49,19 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.register),
       switchMap(({ email, name, password }) =>
-        this.api.post<any>('/auth/register', { email, name, password }).pipe(
-          map(res =>
-            AuthActions.registerSuccess({
-              user: res.user,
-              accessToken: res.accessToken,
-              refreshToken: res.refreshToken,
-            })
-          ),
-          catchError(err => of(AuthActions.registerFailure({ error: err.message ?? 'Registration failed' })))
+        from(hashPassword(password)).pipe(
+          switchMap(hashedPw =>
+            this.api.post<any>('/auth/register', { email, name, password: hashedPw }).pipe(
+              map(res =>
+                AuthActions.registerSuccess({
+                  user: res.user,
+                  accessToken: res.accessToken,
+                  refreshToken: res.refreshToken,
+                })
+              ),
+              catchError(err => of(AuthActions.registerFailure({ error: err.message ?? 'Registration failed' })))
+            )
+          )
         )
       )
     )

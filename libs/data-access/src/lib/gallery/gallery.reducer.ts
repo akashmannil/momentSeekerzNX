@@ -4,7 +4,7 @@
  */
 import { createReducer, on } from '@ngrx/store';
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
-import { Photo, PhotoCategory } from '@mss/shared';
+import { Photo, PhotoCategory } from '@sm/shared';
 import { GalleryActions } from './gallery.actions';
 
 export interface GalleryState extends EntityState<Photo> {

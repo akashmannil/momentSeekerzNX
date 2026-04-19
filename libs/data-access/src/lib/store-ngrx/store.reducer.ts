@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
-import { Product, CartItem, Order } from '@mss/shared';
+import { Product, CartItem, Order } from '@sm/shared';
 import { StoreActions } from './store.actions';
 
 export interface StoreState extends EntityState<Product> {

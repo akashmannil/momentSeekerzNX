@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, delay, tap } from 'rxjs';
-import { selectToast, UiActions } from '@mss/data-access';
+import { selectToast, UiActions } from '@sm/data-access';
 
 @Component({
-  selector: 'mss-toast',
+  selector: 'sm-toast',
   template: `
     <div
       *ngIf="toast$ | async as toast"

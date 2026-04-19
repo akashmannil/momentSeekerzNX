@@ -16,13 +16,13 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@mss/shared": ["libs/shared/src/index.ts"],
-      "@mss/ui": ["libs/ui/src/index.ts"],
-      "@mss/data-access": ["libs/data-access/src/index.ts"],
-      "@mss/feature-gallery": ["libs/feature-gallery/src/index.ts"],
-      "@mss/feature-booking": ["libs/feature-booking/src/index.ts"],
-      "@mss/feature-admin": ["libs/feature-admin/src/index.ts"],
-      "@mss/feature-store": ["libs/feature-store/src/index.ts"]
+      "@sm/shared": ["libs/shared/src/index.ts"],
+      "@sm/ui": ["libs/ui/src/index.ts"],
+      "@sm/data-access": ["libs/data-access/src/index.ts"],
+      "@sm/feature-gallery": ["libs/feature-gallery/src/index.ts"],
+      "@sm/feature-booking": ["libs/feature-booking/src/index.ts"],
+      "@sm/feature-admin": ["libs/feature-admin/src/index.ts"],
+      "@sm/feature-store": ["libs/feature-store/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

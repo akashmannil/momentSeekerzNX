@@ -4,11 +4,11 @@ import { Observable } from 'rxjs';
 import {
   StoreActions, selectProducts, selectStoreLoading,
   selectCartCount, selectCart,
-} from '@mss/data-access';
-import { Product, CartItem } from '@mss/shared';
+} from '@sm/data-access';
+import { Product, CartItem } from '@sm/shared';
 
 @Component({
-  selector: 'mss-store-page',
+  selector: 'sm-store-page',
   templateUrl: './store-page.component.html',
   styleUrls: ['./store-page.component.scss'],
 })

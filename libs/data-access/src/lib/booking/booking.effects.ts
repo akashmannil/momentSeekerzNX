@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { BookingActions } from './booking.actions';
 import { API_SERVICE_TOKEN } from '../../tokens';
-import { Booking } from '@mss/shared';
+import { Booking } from '@sm/shared';
 
 @Injectable()
 export class BookingEffects {

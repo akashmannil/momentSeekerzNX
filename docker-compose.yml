@@ -4,19 +4,19 @@ services:
   # ─── MongoDB ──────────────────────────────────────────────────────────────────
   mongo:
     image: mongo:7.0
-    container_name: mss-mongo
+    container_name: sm-mongo
     restart: unless-stopped
     ports:
       - '27017:27017'
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:-devpassword}
-      MONGO_INITDB_DATABASE: moment-seekers
+      MONGO_INITDB_DATABASE: savage-media
     volumes:
       - mongo_data:/data/db
       - ./docker/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     networks:
-      - mss-network
+      - sm-network
 
   # ─── NestJS API ───────────────────────────────────────────────────────────────
   api:
@@ -24,14 +24,14 @@ services:
       context: .
       dockerfile: apps/api/Dockerfile
       target: production
-    container_name: mss-api
+    container_name: sm-api
     restart: unless-stopped
     ports:
       - '3000:3000'
     environment:
       NODE_ENV: production
       PORT: 3000
-      MONGODB_URI: mongodb://admin:${MONGO_ROOT_PASSWORD:-devpassword}@mongo:27017/moment-seekers?authSource=admin
+      MONGODB_URI: mongodb://admin:${MONGO_ROOT_PASSWORD:-devpassword}@mongo:27017/savage-media?authSource=admin
       JWT_SECRET: ${JWT_SECRET}
       JWT_EXPIRATION: ${JWT_EXPIRATION:-15m}
       JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
@@ -45,7 +45,7 @@ services:
     depends_on:
       - mongo
     networks:
-      - mss-network
+      - sm-network
 
   # ─── Angular Web (nginx) ─────────────────────────────────────────────────────
   web:
@@ -53,7 +53,7 @@ services:
       context: .
       dockerfile: apps/web/Dockerfile
       target: production
-    container_name: mss-web
+    container_name: sm-web
     restart: unless-stopped
     ports:
       - '80:80'
@@ -61,12 +61,12 @@ services:
     depends_on:
       - api
     networks:
-      - mss-network
+      - sm-network
 
 volumes:
   mongo_data:
   api_uploads:
 
 networks:
-  mss-network:
+  sm-network:
     driver: bridge

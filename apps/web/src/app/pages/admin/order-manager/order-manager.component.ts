@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { StoreActions, selectOrders, selectStoreLoading } from '@mss/data-access';
-import { Order, OrderStatus } from '@mss/shared';
+import { StoreActions, selectOrders, selectStoreLoading } from '@sm/data-access';
+import { Order, OrderStatus } from '@sm/shared';
 
 @Component({
-  selector: 'mss-order-manager',
+  selector: 'sm-order-manager',
   templateUrl: './order-manager.component.html',
 })
 export class OrderManagerComponent implements OnInit {

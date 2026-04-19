@@ -1,0 +1,127 @@
+<div class="min-h-screen">
+
+  <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
+  <section class="relative pt-36 pb-24 px-6 text-center page-enter">
+    <div class="max-w-3xl mx-auto">
+      <p class="section-label mb-6">Plans & Pricing</p>
+      <h1 class="font-display text-6xl md:text-8xl font-light leading-none mb-8">
+        Creative Work<br /><em class="not-italic text-gold-400">Priced Simply</em>
+      </h1>
+      <p class="font-body text-white/50 text-lg max-w-lg mx-auto leading-relaxed">
+        Subscription plans for ongoing content. One-off projects priced à la carte. No retainers, no lock-in.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── Subscription tiers ───────────────────────────────────────────────── -->
+  <section class="py-16 px-6 border-t border-white/5">
+    <div class="max-w-6xl mx-auto">
+      <p class="section-label text-center mb-4">Monthly Subscriptions</p>
+      <h2 class="font-display text-4xl md:text-5xl text-center font-light mb-16">
+        Ongoing Content Plans
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div
+          *ngFor="let plan of plans"
+          class="glass-panel p-10 flex flex-col relative"
+          [class.border-gold-400]="plan.featured"
+          [class.ring-1]="plan.featured"
+          [class.ring-gold-400]="plan.featured"
+        >
+          <span
+            *ngIf="plan.featured"
+            class="absolute -top-3 left-10 bg-gold-400 text-obsidian-950 text-xs tracking-[0.25em] uppercase px-3 py-1"
+          >Most Popular</span>
+
+          <p class="section-label mb-4">{{ plan.name }}</p>
+          <div class="flex items-baseline gap-2 mb-4">
+            <span class="font-display text-6xl font-light">${{ plan.monthlyPrice }}</span>
+            <span class="font-body text-white/40 text-sm">{{ plan.currency }} / month</span>
+          </div>
+          <p class="font-body text-white/50 text-sm leading-relaxed mb-8">{{ plan.tagline }}</p>
+
+          <ul class="space-y-3 mb-10 flex-1">
+            <li
+              *ngFor="let highlight of plan.highlights"
+              class="flex gap-3 text-sm font-body text-white/70 leading-relaxed"
+            >
+              <span class="text-gold-400 shrink-0">—</span>
+              <span>{{ highlight }}</span>
+            </li>
+          </ul>
+
+          <a
+            [routerLink]="['/booking']"
+            [queryParams]="{ plan: plan.tier }"
+            class="w-full justify-center"
+            [class.btn-primary]="plan.featured"
+            [class.btn-ghost]="!plan.featured"
+          >
+            Start {{ plan.name }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── À la carte services ──────────────────────────────────────────────── -->
+  <section class="py-28 px-6 bg-obsidian-900/30 border-t border-white/5">
+    <div class="max-w-6xl mx-auto">
+      <p class="section-label text-center mb-4">À La Carte</p>
+      <h2 class="font-display text-4xl md:text-5xl text-center font-light mb-4">
+        One-Off Projects
+      </h2>
+      <p class="font-body text-white/40 text-center max-w-xl mx-auto mb-20 text-sm">
+        Just need a single shoot, edit, or deliverable? Pick what you need — no subscription required.
+      </p>
+
+      <div *ngFor="let category of categories" class="mb-20 last:mb-0">
+        <header class="flex items-end justify-between mb-10 border-b border-white/10 pb-4">
+          <h3 class="font-display text-2xl md:text-3xl font-light">{{ category.label }}</h3>
+          <span class="section-label text-white/30">{{ servicesFor(category.key).length }} services</span>
+        </header>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div
+            *ngFor="let service of servicesFor(category.key)"
+            class="glass-panel p-6 hover:border-gold-400/40 transition-colors duration-300"
+          >
+            <h4 class="font-display text-xl mb-2">{{ service.name }}</h4>
+            <p class="font-body text-white/40 text-xs leading-relaxed mb-5">{{ service.description }}</p>
+            <div class="flex items-baseline gap-2">
+              <span *ngIf="service.salePrice" class="font-display text-gold-400 text-lg">
+                CA${{ service.salePrice }}
+              </span>
+              <span
+                class="font-display text-lg"
+                [ngClass]="service.salePrice ? 'text-white/30 line-through' : 'text-white'"
+              >
+                CA${{ service.startingPrice }}
+              </span>
+              <span *ngIf="service.unit" class="font-body text-white/30 text-xs">{{ service.unit }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Custom / CTA ──────────────────────────────────────────────────────── -->
+  <section class="py-24 px-6 border-t border-white/5">
+    <div class="max-w-3xl mx-auto text-center">
+      <p class="section-label mb-6">Custom Scope</p>
+      <h2 class="font-display text-4xl md:text-5xl font-light mb-6">
+        Something bigger in mind?
+      </h2>
+      <p class="font-body text-white/50 text-base max-w-xl mx-auto mb-10 leading-relaxed">
+        Multi-day productions, long-form campaigns, or subscription at a higher volume — send over the brief and we'll scope it end-to-end.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a routerLink="/booking" class="btn-primary">Request a Quote</a>
+        <a routerLink="/services" class="btn-ghost">Browse Services</a>
+      </div>
+    </div>
+  </section>
+
+</div>

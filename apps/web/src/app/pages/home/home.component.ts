@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { GalleryActions, selectFeaturedPhotos, selectGalleryLoadingFeatured } from '@mss/data-access';
-import { Photo } from '@mss/shared';
+import { GalleryActions, selectFeaturedPhotos, selectGalleryLoadingFeatured } from '@sm/data-access';
+import { Photo } from '@sm/shared';
 import { SceneImage } from '../../three/three-scene.service';
 
 @Component({
-  selector: 'mss-home',
+  selector: 'sm-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })

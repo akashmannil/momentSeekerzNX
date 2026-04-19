@@ -11,7 +11,7 @@ import { Roles } from '../auth/decorators/roles.decorator';
 import {
   CreateProductDto, UpdateProductDto,
   CreateOrderDto, OrderStatus,
-} from '@mss/shared';
+} from '@sm/shared';
 
 @ApiTags('store')
 @Controller({ path: 'store', version: '1' })

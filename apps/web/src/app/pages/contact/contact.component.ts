@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../../core/services/api.service';
 
 @Component({
-  selector: 'mss-contact',
+  selector: 'sm-contact',
   templateUrl: './contact.component.html',
 })
 export class ContactComponent {

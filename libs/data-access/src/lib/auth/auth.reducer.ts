@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { User } from '@mss/shared';
+import { User } from '@sm/shared';
 import { AuthActions } from './auth.actions';
 
 export interface AuthState {

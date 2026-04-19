@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'mss-about',
+  selector: 'sm-about',
   templateUrl: './about.component.html',
 })
 export class AboutComponent {}

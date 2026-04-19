@@ -57,8 +57,8 @@
 
   .btn-ghost {
     @apply inline-flex items-center gap-2 px-6 py-3
-           text-white/70 font-body text-sm tracking-widest uppercase
-           transition-all duration-300 hover:text-white;
+           border border-white/20 text-white/70 font-body text-sm tracking-widest uppercase
+           transition-all duration-300 hover:text-white hover:border-white/50;
   }
 
   .input-field {
@@ -103,7 +103,7 @@
   animation: pageEnter 0.5s var(--transition-smooth) forwards;
 }
 
-// ─── Loading progress bar ────────────────────────────────────────────────────
+// ─── Loading progress bar ──────────────────────────────────────────────────���─
 .loading-bar {
   position: fixed;
   top: 0;

@@ -12,11 +12,13 @@
   <nav class="max-w-7xl mx-auto px-6 flex items-center justify-between">
     <!-- Logo -->
     <a routerLink="/" class="font-display text-xl tracking-wide hover:text-gold-400 transition-colors">
-      Moment Seekers
+      Savage Media
     </a>
 
     <!-- Desktop links -->
     <ul class="hidden md:flex items-center gap-8">
+      <li><a routerLink="/services" routerLinkActive="text-gold-400" class="section-label hover:text-gold-400 transition-colors">Services</a></li>
+      <li><a routerLink="/pricing" routerLinkActive="text-gold-400" class="section-label hover:text-gold-400 transition-colors">Pricing</a></li>
       <li><a routerLink="/gallery" routerLinkActive="text-gold-400" class="section-label hover:text-gold-400 transition-colors">Gallery</a></li>
       <li><a routerLink="/store" routerLinkActive="text-gold-400" class="section-label hover:text-gold-400 transition-colors">Store</a></li>
       <li><a routerLink="/about" routerLinkActive="text-gold-400" class="section-label hover:text-gold-400 transition-colors">About</a></li>
@@ -51,6 +53,8 @@
     class="md:hidden bg-obsidian-900/95 backdrop-blur-lg border-t border-white/10 px-6 py-8"
   >
     <ul class="space-y-6">
+      <li><a routerLink="/services" (click)="toggleNav(false)" class="section-label block hover:text-gold-400">Services</a></li>
+      <li><a routerLink="/pricing" (click)="toggleNav(false)" class="section-label block hover:text-gold-400">Pricing</a></li>
       <li><a routerLink="/gallery" (click)="toggleNav(false)" class="section-label block hover:text-gold-400">Gallery</a></li>
       <li><a routerLink="/store" (click)="toggleNav(false)" class="section-label block hover:text-gold-400">Store</a></li>
       <li><a routerLink="/about" (click)="toggleNav(false)" class="section-label block hover:text-gold-400">About</a></li>

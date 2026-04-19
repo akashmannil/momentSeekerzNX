@@ -1,5 +1,5 @@
 {
-  "name": "moment-seekers-studio",
+  "name": "savage-media",
   "version": "1.0.0",
   "description": "Cinematic 3D photography portfolio & online store — Nx monorepo",
   "license": "MIT",
@@ -34,6 +34,7 @@
     "@nestjs/mongoose": "^10.0.6",
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.3.0",
+    "@nestjs/serve-static": "^4.0.2",
     "@nestjs/swagger": "^7.3.0",
     "@nestjs/throttler": "^5.1.2",
     "@ngrx/effects": "^18.0.0",

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AuthActions } from '@mss/data-access';
+import { AuthActions } from '@sm/data-access';
 
 @Component({
-  selector: 'mss-root',
+  selector: 'sm-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })

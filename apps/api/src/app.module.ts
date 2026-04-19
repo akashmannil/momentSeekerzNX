@@ -28,7 +28,7 @@ import { AnalyticsModule } from './modules/analytics/analytics.module';
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
         uri: config.get<string>('MONGODB_URI'),
-        dbName: 'moment-seekers',
+        dbName: 'savage-media',
       }),
     }),
 

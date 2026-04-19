@@ -1,4 +1,4 @@
-# CLAUDE.md — Moment Seekers Studio
+# CLAUDE.md — Savage Media
 
 This file is the authoritative guide for AI-assisted development on this project.
 **Read this before making any changes.**
@@ -7,17 +7,39 @@ This file is the authoritative guide for AI-assisted development on this project
 
 ## Project Identity
 
-**Moment Seekers Studio** is a cinematic photography portfolio and online fine-art print store.
+**Savage Media** is a full-service visual production studio — photography, cinematic video, aerial/drone, 360° virtual tours, 3D visualization, and creative direction. Migration target of [savagemedia.online](https://www.savagemedia.online/).
+
+Revenue streams:
+
+- **Monthly subscription plans** — Lite (CA$99), Pro (CA$249), Business (CA$499) — recurring photo + video content
+- **À la carte services** — one-off shoots, edits, and deliverables across 4 service categories
+- **Fine-art print store** — curated editorial prints
+- **Client booking** — custom projects scoped via a consultation flow
+
 It is an Nx monorepo with an Angular frontend, NestJS backend, and MongoDB database.
+
+### Service Categories (see `ServiceCategory` enum in `@sm/shared`)
+
+1. **Core Visual** — Real estate, product/brand, portraits, drone & aerial, 360° virtual tours, cinematic campaigns
+2. **Advanced Visual Tools** — Vertical reels, cinematic promos, hero banners, logo animations, mockups, 3D viz, colour grading, sky replacement
+3. **Marketing & Branding** — Influencer kits, corporate identity, event packages, architect/designer viz, flyers, monthly social kits
+4. **Add-On & Premium** — Commercial/event coverage, content subscriptions, creative direction
+
+### Pricing Tiers (see `PricingTier` enum in `@sm/shared`)
+
+- `LITE` — CA$99/mo, 15 photos + 1 short video, 3-day delivery
+- `PRO` — CA$249/mo, 25 photos + 1 video + 1 reel, 2-day delivery **(featured)**
+- `BUSINESS` — CA$499/mo, 40 photos + 2 videos + 2 reels + brand story, 24h turnaround
+- `CUSTOM` — scoped per brief
 
 ---
 
 ## Monorepo Architecture
 
 ```
-momentSeekersStudio/
+savageMedia/
 ├── apps/
-│   ├── web/          Angular 18 SPA (prefix: mss)
+│   ├── web/          Angular 18 SPA (prefix: sm)
 │   └── api/          NestJS 10 REST API
 ├── libs/
 │   ├── shared/       TypeScript interfaces, DTOs, enums — used by BOTH apps
@@ -34,10 +56,10 @@ momentSeekersStudio/
 
 ### Path aliases (tsconfig.base.json)
 ```
-@mss/shared       → libs/shared/src/index.ts
-@mss/ui           → libs/ui/src/index.ts
-@mss/data-access  → libs/data-access/src/index.ts
-@mss/feature-*    → libs/feature-*/src/index.ts
+@sm/shared       → libs/shared/src/index.ts
+@sm/ui           → libs/ui/src/index.ts
+@sm/data-access  → libs/data-access/src/index.ts
+@sm/feature-*    → libs/feature-*/src/index.ts
 ```
 
 ### Module boundary rules (.eslintrc.json)
@@ -55,7 +77,7 @@ momentSeekersStudio/
 ## Frontend (Angular 18)
 
 ### Key Conventions
-- Component selector prefix: `mss-`
+- Component selector prefix: `sm-`
 - All components belong to an NgModule (not standalone) for consistency
 - Lazy-load every route (loadChildren)
 - Never use BehaviorSubjects for global state — use NgRx exclusively
@@ -74,7 +96,7 @@ momentSeekersStudio/
 ```
 
 ### Effects use the API_SERVICE_TOKEN injection token
-Effects import `API_SERVICE_TOKEN` from `@mss/data-access` and inject it as `IApiService`.
+Effects import `API_SERVICE_TOKEN` from `@sm/data-access` and inject it as `IApiService`.
 The concrete `ApiService` is provided in `CoreModule` and bound to the token via `{ provide: API_SERVICE_TOKEN, useExisting: ApiService }`.
 
 ### Three.js 3D Scene
@@ -107,16 +129,16 @@ src/
 └── modules/
     ├── auth/             JWT + LocalStrategy, guards, decorators
     ├── users/            User CRUD, password hashing
-    ├── gallery/          Photos CRUD with pagination
-    ├── booking/          Client booking requests
+    ├── gallery/          Photos CRUD with pagination (categorised by PhotoCategory)
+    ├── booking/          Client project/session requests (keyed by SessionType)
     ├── upload/           Multer + Sharp image processing
-    ├── store/            Products, Stripe checkout, orders
+    ├── store/            Products, Stripe checkout, orders (subscription plans + prints)
     └── analytics/        Admin dashboard aggregations
 ```
 
 ### Conventions
 - All controllers are versioned (`version: '1'`) → `/api/v1/`
-- DTOs live in `libs/shared` — import from `@mss/shared`
+- DTOs live in `libs/shared` — import from `@sm/shared`
 - Schemas use `@Schema({ timestamps: true })` always
 - Use `@Prop({ select: false })` for sensitive fields (passwords, tokens)
 - Rate-limit sensitive endpoints with `@Throttle({ default: { limit: N, ttl: ms } })`
@@ -150,24 +172,35 @@ src/
 
 ---
 
-## Shared Library (`@mss/shared`)
+## Shared Library (`@sm/shared`)
 
 Contains TypeScript that is compiled and consumed by **both** apps.
 
 ```
 libs/shared/src/lib/
-├── enums/index.ts          PhotoCategory, SessionType, BookingStatus, PrintSize, etc.
+├── enums/index.ts          PhotoCategory, SessionType, ServiceCategory, PricingTier,
+│                           BookingStatus, PrintSize, PrintFinish, OrderStatus, UserRole
 ├── interfaces/             TypeScript interfaces (not Mongoose schemas)
 │   ├── photo.interface.ts
 │   ├── user.interface.ts
 │   ├── booking.interface.ts
-│   └── store.interface.ts
+│   ├── store.interface.ts
+│   └── pricing.interface.ts     PricingPlan, ServiceOffering
 └── dtos/                   class-validator DTOs (used by NestJS & Angular forms)
     ├── auth.dto.ts
     ├── gallery.dto.ts
     ├── booking.dto.ts
     └── store.dto.ts
 ```
+
+### Enum source of truth
+
+| Enum | Values |
+| --- | --- |
+| `SessionType` | `REAL_ESTATE`, `PRODUCT_BRAND`, `PORTRAIT`, `DRONE_AERIAL`, `VIRTUAL_TOUR`, `CINEMATIC_VIDEO`, `VERTICAL_REEL`, `EVENT_COVERAGE`, `CORPORATE_CAMPAIGN`, `OTHER` |
+| `PhotoCategory` | `REAL_ESTATE`, `PRODUCT_BRAND`, `PORTRAIT`, `AERIAL`, `CINEMATIC`, `EVENTS`, `COMMERCIAL` |
+| `ServiceCategory` | `CORE_VISUAL`, `ADVANCED_TOOLS`, `MARKETING_BRANDING`, `ADD_ON_PREMIUM` |
+| `PricingTier` | `LITE`, `PRO`, `BUSINESS`, `CUSTOM` |
 
 **Rules:**
 - Enums are the single source of truth — use them in schemas, components, and NgRx state
@@ -242,6 +275,7 @@ nx affected:build           # Build only affected projects
 - **Motion:** Smooth, cinematic — prefer `0.4–0.7s` transitions with easing
 
 ### Do not
+
 - Add bright colors or busy backgrounds
 - Use heavy font weights for headlines
 - Add rounded corners to major UI elements (sharp = editorial)
@@ -252,8 +286,18 @@ nx affected:build           # Build only affected projects
 ## Making Changes — Checklist
 
 ### Adding a new page route
+
 1. Create `apps/web/src/app/pages/<name>/<name>.module.ts` + components
 2. Add the lazy route to `apps/web/src/app/app-routing.module.ts`
+3. Add the link to `libs/ui/src/lib/components/nav/nav.component.html` (both desktop & mobile)
+
+### Adding a new service offering or pricing plan
+
+1. Add any new enum value to `SessionType`, `ServiceCategory`, or `PricingTier` in `libs/shared/src/lib/enums/index.ts`
+2. Add it to the `packages` array in `apps/web/src/app/pages/booking/booking.component.ts` (keep `sessionLabels` in sync)
+3. Add it to the `categories[*].services` array in `apps/web/src/app/pages/services/services.component.ts`
+4. Add it to the `alaCarte` or `plans` array in `apps/web/src/app/pages/pricing/pricing.component.ts`
+5. Enum values propagate to the backend automatically (schemas use `Object.values(...)`), so no migration is needed for new values
 
 ### Adding a new NgRx feature slice
 1. Create `libs/data-access/src/lib/<name>/` with actions, reducer, selectors, effects

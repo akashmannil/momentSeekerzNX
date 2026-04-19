@@ -6,7 +6,7 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
-import { AuthActions, UiActions } from '@mss/data-access';
+import { AuthActions, UiActions } from '@sm/data-access';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {

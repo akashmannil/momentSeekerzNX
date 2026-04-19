@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AuthActions } from '@mss/data-access';
+import { AuthActions } from '@sm/data-access';
 
 @Component({
-  selector: 'mss-admin-shell',
+  selector: 'sm-admin-shell',
   template: `
     <div class="flex min-h-screen">
       <!-- Sidebar -->
       <aside class="w-60 bg-obsidian-900 border-r border-white/10 flex flex-col">
         <div class="p-6 border-b border-white/10">
-          <p class="section-label">Moment Seekers</p>
+          <p class="section-label">Savage Media</p>
           <h2 class="font-display text-xl mt-1">Admin</h2>
         </div>
         <nav class="flex-1 p-4 space-y-1">
