@@ -1,7 +1,7 @@
 <div class="min-h-screen pt-24 pb-16 px-6 page-enter">
   <header class="max-w-6xl mx-auto mb-16 text-center">
-    <p class="section-label mb-4">Fine Art Prints</p>
-    <h1 class="font-display text-6xl font-light">The Store</h1>
+    <p smReveal="fade-up" class="section-label mb-4">Fine Art Prints</p>
+    <h1 smReveal="fade-up" [smRevealDelay]="120" class="font-display text-6xl font-light">The Store</h1>
 
     <!-- Cart icon -->
     <button
@@ -22,6 +22,8 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1">
       <article
         *ngFor="let product of products$ | async; trackBy: trackByProductId"
+        smReveal="fade-up"
+        [smRevealThreshold]="0.05"
         class="group relative overflow-hidden cursor-pointer card-hover"
         [routerLink]="['/store', product._id]"
       >

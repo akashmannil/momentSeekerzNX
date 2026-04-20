@@ -2,12 +2,12 @@
 
   <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
   <section class="relative pt-36 pb-24 px-6 text-center page-enter">
-    <div class="max-w-3xl mx-auto">
-      <p class="section-label mb-6">Let's Create Together</p>
-      <h1 class="font-display text-6xl md:text-8xl font-light leading-none mb-8">
+    <div class="max-w-3xl mx-auto" [smParallax]="0.1">
+      <p smReveal="fade-up" class="section-label mb-6">Let's Create Together</p>
+      <h1 smReveal="fade-up" [smRevealDelay]="120" class="font-display text-6xl md:text-8xl font-light leading-none mb-8">
         Book a<br /><em class="not-italic text-gold-400">Session</em>
       </h1>
-      <p class="font-body text-white/50 text-lg max-w-lg mx-auto leading-relaxed">
+      <p smReveal="fade-up" [smRevealDelay]="240" class="font-body text-white/50 text-lg max-w-lg mx-auto leading-relaxed">
         Every great photograph starts with a conversation. Tell us about your vision and we'll bring it to life.
       </p>
     </div>
@@ -18,7 +18,7 @@
     <div class="max-w-4xl mx-auto">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
 
-        <div>
+        <div smReveal="fade-up" [smRevealDelay]="0">
           <span class="font-display text-7xl font-light text-gold-400/15 leading-none">01</span>
           <h3 class="font-display text-xl mt-2 mb-3">Submit Request</h3>
           <p class="font-body text-white/40 text-sm leading-relaxed">
@@ -26,7 +26,7 @@
           </p>
         </div>
 
-        <div>
+        <div smReveal="fade-up" [smRevealDelay]="150">
           <span class="font-display text-7xl font-light text-gold-400/15 leading-none">02</span>
           <h3 class="font-display text-xl mt-2 mb-3">Consultation</h3>
           <p class="font-body text-white/40 text-sm leading-relaxed">
@@ -34,7 +34,7 @@
           </p>
         </div>
 
-        <div>
+        <div smReveal="fade-up" [smRevealDelay]="300">
           <span class="font-display text-7xl font-light text-gold-400/15 leading-none">03</span>
           <h3 class="font-display text-xl mt-2 mb-3">Create</h3>
           <p class="font-body text-white/40 text-sm leading-relaxed">
@@ -49,15 +49,17 @@
   <!-- ── Session Packages ───────────────────────────────────────────────────── -->
   <section class="py-24 px-6 bg-obsidian-900/30 border-t border-white/5">
     <div class="max-w-6xl mx-auto">
-      <p class="section-label text-center mb-4">Sessions</p>
-      <h2 class="font-display text-5xl text-center font-light mb-4">What We Offer</h2>
-      <p class="font-body text-white/30 text-center mb-16 text-sm">
+      <p smReveal="fade-up" class="section-label text-center mb-4">Sessions</p>
+      <h2 smReveal="fade-up" [smRevealDelay]="100" class="font-display text-5xl text-center font-light mb-4">What We Offer</h2>
+      <p smReveal="fade-up" [smRevealDelay]="200" class="font-body text-white/30 text-center mb-16 text-sm">
         Select a session below to pre-fill your booking form.
       </p>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div
-          *ngFor="let pkg of packages"
+          *ngFor="let pkg of packages; let i = index"
+          smReveal="fade-up"
+          [smRevealDelay]="i * 80"
           class="glass-panel p-6 cursor-pointer transition-all duration-300 hover:border-gold-400/40 group"
           [class.border-gold-400]="form.get('sessionType')?.value === pkg.type"
           (click)="selectPackage(pkg.type)"
@@ -132,7 +134,7 @@
       </div>
 
       <!-- ── Booking Form ────────────────────────────────────────────────────── -->
-      <form *ngIf="!(success$ | async)" (ngSubmit)="submit()" [formGroup]="form" novalidate>
+      <form *ngIf="!(success$ | async)" (ngSubmit)="submit()" [formGroup]="form" novalidate smReveal="fade-up">
 
         <header class="mb-16">
           <p class="section-label mb-4">Booking Request</p>
@@ -285,31 +287,31 @@
   <!-- ── FAQ strip ──────────────────────────────────────────────────────────── -->
   <section class="py-20 px-6 bg-obsidian-900/20 border-t border-white/5">
     <div class="max-w-4xl mx-auto">
-      <p class="section-label text-center mb-12">Common Questions</p>
+      <p smReveal="fade-up" class="section-label text-center mb-12">Common Questions</p>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-10">
 
-        <div>
+        <div smReveal="fade-up" [smRevealDelay]="0">
           <h4 class="font-display text-lg mb-2">How soon will I hear back?</h4>
           <p class="font-body text-white/40 text-sm leading-relaxed">
             Within 24 hours on business days. For urgent bookings, contact us directly.
           </p>
         </div>
 
-        <div>
+        <div smReveal="fade-up" [smRevealDelay]="100">
           <h4 class="font-display text-lg mb-2">When is payment due?</h4>
           <p class="font-body text-white/40 text-sm leading-relaxed">
             A deposit is required only after we've confirmed your session date together.
           </p>
         </div>
 
-        <div>
+        <div smReveal="fade-up" [smRevealDelay]="200">
           <h4 class="font-display text-lg mb-2">Can I reschedule?</h4>
           <p class="font-body text-white/40 text-sm leading-relaxed">
             Yes, with at least 48 hours notice. We'll do our best to accommodate your schedule.
           </p>
         </div>
 
-        <div>
+        <div smReveal="fade-up" [smRevealDelay]="300">
           <h4 class="font-display text-lg mb-2">What should I bring?</h4>
           <p class="font-body text-white/40 text-sm leading-relaxed">
             We'll send a detailed preparation guide once your session is confirmed.

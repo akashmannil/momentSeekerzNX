@@ -103,6 +103,36 @@
   animation: pageEnter 0.5s var(--transition-smooth) forwards;
 }
 
+// ─── Scroll-reveal (smReveal directive) ──────────────────────────────────────
+.sm-reveal {
+  opacity: 0;
+  transition:
+    opacity 0.9s var(--transition-smooth),
+    transform 0.9s var(--transition-smooth),
+    filter 0.9s var(--transition-smooth);
+  will-change: opacity, transform;
+}
+.sm-reveal--fade-up       { transform: translate3d(0, 32px, 0); }
+.sm-reveal--fade          { transform: none; }
+.sm-reveal--scale         { transform: scale(0.94); }
+.sm-reveal--fade-left     { transform: translate3d(-40px, 0, 0); }
+.sm-reveal--fade-right    { transform: translate3d(40px, 0, 0); }
+
+.sm-reveal.is-revealed {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sm-reveal,
+  .sm-reveal.is-revealed {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 // ─── Loading progress bar ──────────────────────────────────────────────────���─
 .loading-bar {
   position: fixed;

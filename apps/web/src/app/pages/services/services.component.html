@@ -2,15 +2,15 @@
 
   <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
   <section class="relative pt-36 pb-24 px-6 text-center page-enter">
-    <div class="max-w-3xl mx-auto">
-      <p class="section-label mb-6">What We Do</p>
-      <h1 class="font-display text-6xl md:text-8xl font-light leading-none mb-8">
+    <div class="max-w-3xl mx-auto" [smParallax]="0.1">
+      <p smReveal="fade-up" class="section-label mb-6">What We Do</p>
+      <h1 smReveal="fade-up" [smRevealDelay]="120" class="font-display text-6xl md:text-8xl font-light leading-none mb-8">
         A Full-Service<br /><em class="not-italic text-gold-400">Visual Studio</em>
       </h1>
-      <p class="font-body text-white/50 text-lg max-w-xl mx-auto leading-relaxed">
+      <p smReveal="fade-up" [smRevealDelay]="240" class="font-body text-white/50 text-lg max-w-xl mx-auto leading-relaxed">
         Photography, video, aerial, 3D, and creative direction — under one roof, shipped fast.
       </p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center mt-12">
+      <div smReveal="fade-up" [smRevealDelay]="360" class="flex flex-col sm:flex-row gap-4 justify-center mt-12">
         <a routerLink="/pricing" class="btn-primary">See Pricing</a>
         <a routerLink="/booking" class="btn-ghost">Book a Project</a>
       </div>
@@ -26,14 +26,16 @@
   >
     <div class="max-w-6xl mx-auto">
       <header class="max-w-2xl mb-16">
-        <p class="section-label mb-4">{{ i + 1 < 10 ? '0' : '' }}{{ i + 1 }} — Services</p>
-        <h2 class="font-display text-4xl md:text-5xl font-light mb-4">{{ category.title }}</h2>
-        <p class="font-body text-white/50 text-base leading-relaxed">{{ category.lede }}</p>
+        <p smReveal="fade-up" class="section-label mb-4">{{ i + 1 < 10 ? '0' : '' }}{{ i + 1 }} — Services</p>
+        <h2 smReveal="fade-up" [smRevealDelay]="100" class="font-display text-4xl md:text-5xl font-light mb-4">{{ category.title }}</h2>
+        <p smReveal="fade-up" [smRevealDelay]="200" class="font-body text-white/50 text-base leading-relaxed">{{ category.lede }}</p>
       </header>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div
-          *ngFor="let service of category.services"
+          *ngFor="let service of category.services; let j = index"
+          smReveal="fade-up"
+          [smRevealDelay]="j * 80"
           class="glass-panel p-8 hover:border-gold-400/40 transition-colors duration-300 flex flex-col"
         >
           <h3 class="font-display text-2xl mb-3">{{ service.name }}</h3>
@@ -62,11 +64,11 @@
   <!-- ── Closing CTA ──────────────────────────────────────────────────────── -->
   <section class="py-28 px-6 border-t border-white/5">
     <div class="max-w-3xl mx-auto text-center">
-      <p class="section-label mb-6">Ready?</p>
-      <h2 class="font-display text-4xl md:text-5xl font-light mb-8">
+      <p smReveal="fade-up" class="section-label mb-6">Ready?</p>
+      <h2 smReveal="fade-up" [smRevealDelay]="100" class="font-display text-4xl md:text-5xl font-light mb-8">
         Let's build something worth sharing.
       </h2>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <div smReveal="scale" [smRevealDelay]="200" class="flex flex-col sm:flex-row gap-4 justify-center">
         <a routerLink="/booking" class="btn-primary">Start a Project</a>
         <a routerLink="/pricing" class="btn-ghost">See Plans & Pricing</a>
       </div>

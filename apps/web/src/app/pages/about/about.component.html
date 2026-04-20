@@ -1,11 +1,11 @@
 <div class="min-h-screen pt-24 pb-24 page-enter">
   <!-- Hero -->
   <section class="max-w-4xl mx-auto px-6 mb-24">
-    <p class="section-label mb-6">The Photographer</p>
-    <h1 class="font-display text-7xl font-light leading-none mb-8">
+    <p smReveal="fade-up" class="section-label mb-6">The Photographer</p>
+    <h1 smReveal="fade-up" [smRevealDelay]="120" class="font-display text-7xl font-light leading-none mb-8">
       Chasing<br /><em class="italic text-gold-400">fleeting</em><br />beauty.
     </h1>
-    <p class="font-body text-xl text-white/60 max-w-xl leading-relaxed">
+    <p smReveal="fade-up" [smRevealDelay]="240" class="font-body text-xl text-white/60 max-w-xl leading-relaxed">
       I'm an independent photographer based wherever the light is interesting —
       obsessed with the emotion that lives in the fraction of a second between
       before and after.
@@ -14,32 +14,32 @@
 
   <!-- Philosophy -->
   <section class="bg-obsidian-900/40 py-24 px-6 mb-24">
-    <div class="max-w-3xl mx-auto">
-      <p class="section-label mb-6">Philosophy</p>
-      <blockquote class="font-display text-4xl font-light italic leading-snug">
+    <div class="max-w-3xl mx-auto" [smParallax]="0.08">
+      <p smReveal="fade-up" class="section-label mb-6">Philosophy</p>
+      <blockquote smReveal="fade-up" [smRevealDelay]="150" class="font-display text-4xl font-light italic leading-snug">
         "A photograph is a secret about a secret. The more it tells you, the less you know."
       </blockquote>
-      <p class="font-body text-white/30 mt-4 text-sm">— Diane Arbus</p>
+      <p smReveal="fade" [smRevealDelay]="300" class="font-body text-white/30 mt-4 text-sm">— Diane Arbus</p>
     </div>
   </section>
 
   <!-- Services -->
   <section class="max-w-5xl mx-auto px-6 mb-24">
-    <p class="section-label mb-12 text-center">What I Do</p>
+    <p smReveal="fade-up" class="section-label mb-12 text-center">What I Do</p>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div class="glass-panel p-8">
+      <div smReveal="fade-up" [smRevealDelay]="0" class="glass-panel p-8">
         <h3 class="font-display text-2xl mb-4">Weddings</h3>
         <p class="font-body text-white/50 text-sm leading-relaxed">
           Full-day documentary coverage that tells your story with honesty and artistry.
         </p>
       </div>
-      <div class="glass-panel p-8">
+      <div smReveal="fade-up" [smRevealDelay]="150" class="glass-panel p-8">
         <h3 class="font-display text-2xl mb-4">Portraits</h3>
         <p class="font-body text-white/50 text-sm leading-relaxed">
           Intimate sessions designed to reveal the authentic you rather than a performed version.
         </p>
       </div>
-      <div class="glass-panel p-8">
+      <div smReveal="fade-up" [smRevealDelay]="300" class="glass-panel p-8">
         <h3 class="font-display text-2xl mb-4">Fine Art</h3>
         <p class="font-body text-white/50 text-sm leading-relaxed">
           Limited-edition museum prints crafted on archival paper with pigment inks.
@@ -49,7 +49,7 @@
   </section>
 
   <!-- CTA -->
-  <section class="text-center px-6">
+  <section smReveal="scale" class="text-center px-6">
     <a routerLink="/booking" class="btn-primary">Work With Me</a>
   </section>
 </div>

@@ -5,10 +5,26 @@ import { NavComponent } from './components/nav/nav.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LoadingOverlayComponent } from './components/loading-overlay/loading-overlay.component';
 import { ToastComponent } from './components/toast/toast.component';
+import { RevealDirective } from './directives/reveal.directive';
+import { ParallaxDirective } from './directives/parallax.directive';
 
 @NgModule({
-  declarations: [NavComponent, FooterComponent, LoadingOverlayComponent, ToastComponent],
+  declarations: [
+    NavComponent,
+    FooterComponent,
+    LoadingOverlayComponent,
+    ToastComponent,
+    RevealDirective,
+    ParallaxDirective,
+  ],
   imports: [CommonModule, RouterModule],
-  exports: [NavComponent, FooterComponent, LoadingOverlayComponent, ToastComponent],
+  exports: [
+    NavComponent,
+    FooterComponent,
+    LoadingOverlayComponent,
+    ToastComponent,
+    RevealDirective,
+    ParallaxDirective,
+  ],
 })
 export class UiModule {}

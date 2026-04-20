@@ -2,12 +2,12 @@
 
   <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
   <section class="relative pt-36 pb-24 px-6 text-center page-enter">
-    <div class="max-w-3xl mx-auto">
-      <p class="section-label mb-6">Plans & Pricing</p>
-      <h1 class="font-display text-6xl md:text-8xl font-light leading-none mb-8">
+    <div class="max-w-3xl mx-auto" [smParallax]="0.1">
+      <p smReveal="fade-up" class="section-label mb-6">Plans & Pricing</p>
+      <h1 smReveal="fade-up" [smRevealDelay]="120" class="font-display text-6xl md:text-8xl font-light leading-none mb-8">
         Creative Work<br /><em class="not-italic text-gold-400">Priced Simply</em>
       </h1>
-      <p class="font-body text-white/50 text-lg max-w-lg mx-auto leading-relaxed">
+      <p smReveal="fade-up" [smRevealDelay]="240" class="font-body text-white/50 text-lg max-w-lg mx-auto leading-relaxed">
         Subscription plans for ongoing content. One-off projects priced à la carte. No retainers, no lock-in.
       </p>
     </div>
@@ -16,14 +16,16 @@
   <!-- ── Subscription tiers ───────────────────────────────────────────────── -->
   <section class="py-16 px-6 border-t border-white/5">
     <div class="max-w-6xl mx-auto">
-      <p class="section-label text-center mb-4">Monthly Subscriptions</p>
-      <h2 class="font-display text-4xl md:text-5xl text-center font-light mb-16">
+      <p smReveal="fade-up" class="section-label text-center mb-4">Monthly Subscriptions</p>
+      <h2 smReveal="fade-up" [smRevealDelay]="100" class="font-display text-4xl md:text-5xl text-center font-light mb-16">
         Ongoing Content Plans
       </h2>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div
-          *ngFor="let plan of plans"
+          *ngFor="let plan of plans; let i = index"
+          smReveal="scale"
+          [smRevealDelay]="i * 120"
           class="glass-panel p-10 flex flex-col relative"
           [class.border-gold-400]="plan.featured"
           [class.ring-1]="plan.featured"
@@ -68,23 +70,25 @@
   <!-- ── À la carte services ──────────────────────────────────────────────── -->
   <section class="py-28 px-6 bg-obsidian-900/30 border-t border-white/5">
     <div class="max-w-6xl mx-auto">
-      <p class="section-label text-center mb-4">À La Carte</p>
-      <h2 class="font-display text-4xl md:text-5xl text-center font-light mb-4">
+      <p smReveal="fade-up" class="section-label text-center mb-4">À La Carte</p>
+      <h2 smReveal="fade-up" [smRevealDelay]="100" class="font-display text-4xl md:text-5xl text-center font-light mb-4">
         One-Off Projects
       </h2>
-      <p class="font-body text-white/40 text-center max-w-xl mx-auto mb-20 text-sm">
+      <p smReveal="fade-up" [smRevealDelay]="200" class="font-body text-white/40 text-center max-w-xl mx-auto mb-20 text-sm">
         Just need a single shoot, edit, or deliverable? Pick what you need — no subscription required.
       </p>
 
       <div *ngFor="let category of categories" class="mb-20 last:mb-0">
-        <header class="flex items-end justify-between mb-10 border-b border-white/10 pb-4">
+        <header smReveal="fade-up" class="flex items-end justify-between mb-10 border-b border-white/10 pb-4">
           <h3 class="font-display text-2xl md:text-3xl font-light">{{ category.label }}</h3>
           <span class="section-label text-white/30">{{ servicesFor(category.key).length }} services</span>
         </header>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <div
-            *ngFor="let service of servicesFor(category.key)"
+            *ngFor="let service of servicesFor(category.key); let j = index"
+            smReveal="fade-up"
+            [smRevealDelay]="j * 60"
             class="glass-panel p-6 hover:border-gold-400/40 transition-colors duration-300"
           >
             <h4 class="font-display text-xl mb-2">{{ service.name }}</h4>
@@ -110,14 +114,14 @@
   <!-- ── Custom / CTA ──────────────────────────────────────────────────────── -->
   <section class="py-24 px-6 border-t border-white/5">
     <div class="max-w-3xl mx-auto text-center">
-      <p class="section-label mb-6">Custom Scope</p>
-      <h2 class="font-display text-4xl md:text-5xl font-light mb-6">
+      <p smReveal="fade-up" class="section-label mb-6">Custom Scope</p>
+      <h2 smReveal="fade-up" [smRevealDelay]="100" class="font-display text-4xl md:text-5xl font-light mb-6">
         Something bigger in mind?
       </h2>
-      <p class="font-body text-white/50 text-base max-w-xl mx-auto mb-10 leading-relaxed">
+      <p smReveal="fade-up" [smRevealDelay]="200" class="font-body text-white/50 text-base max-w-xl mx-auto mb-10 leading-relaxed">
         Multi-day productions, long-form campaigns, or subscription at a higher volume — send over the brief and we'll scope it end-to-end.
       </p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <div smReveal="scale" [smRevealDelay]="300" class="flex flex-col sm:flex-row gap-4 justify-center">
         <a routerLink="/booking" class="btn-primary">Request a Quote</a>
         <a routerLink="/services" class="btn-ghost">Browse Services</a>
       </div>
