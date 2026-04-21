@@ -15,7 +15,7 @@
         "browser": "apps/web/src/main.ts",
         "polyfills": ["zone.js", "reflect-metadata"],
         "tsConfig": "apps/web/tsconfig.app.json",
-        "assets": ["apps/web/src/favicon.ico", { "glob": "**/*", "input": "apps/web/src/assets", "output": "assets" }],
+        "assets": [{ "glob": "**/*", "input": "apps/web/src/assets", "output": "assets" }],
         "styles": ["apps/web/src/styles.scss"],
         "scripts": []
       },
