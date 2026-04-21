@@ -87,7 +87,7 @@ jobs:
       - uses: nrwl/nx-set-shas@v4
 
       - name: Build affected
-        run: npx nx affected --target=build --parallel=3
+        run: npx nx affected --target=build --parallel=3 --output-style=stream --verbose
 
       - name: Upload web artifact
         uses: actions/upload-artifact@v4
