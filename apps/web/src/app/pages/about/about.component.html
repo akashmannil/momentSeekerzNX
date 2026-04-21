@@ -1,55 +1,67 @@
 <div class="min-h-screen pt-24 pb-24 page-enter">
   <!-- Hero -->
-  <section class="max-w-4xl mx-auto px-6 mb-24">
-    <p smReveal="fade-up" class="section-label mb-6">The Photographer</p>
-    <h1 smReveal="fade-up" [smRevealDelay]="120" class="font-display text-7xl font-light leading-none mb-8">
-      Chasing<br /><em class="italic text-gold-400">fleeting</em><br />beauty.
-    </h1>
-    <p smReveal="fade-up" [smRevealDelay]="240" class="font-body text-xl text-white/60 max-w-xl leading-relaxed">
-      I'm an independent photographer based wherever the light is interesting —
-      obsessed with the emotion that lives in the fraction of a second between
-      before and after.
-    </p>
+  <section class="relative mb-24 overflow-hidden">
+    <div class="relative aspect-[16/9] md:aspect-[21/9] max-h-[75vh] w-full">
+      <img [src]="images.photographerAtWork" alt="Photographer on location" class="absolute inset-0 w-full h-full object-cover" />
+      <div class="absolute inset-0 bg-gradient-to-r from-obsidian-950 via-obsidian-950/60 to-transparent"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950 via-transparent to-transparent"></div>
+      <div class="relative h-full flex items-center">
+        <div class="max-w-4xl mx-auto px-6 w-full" [smParallax]="0.08">
+          <p smReveal="fade-up" class="section-label mb-6">The Photographer</p>
+          <h1 smReveal="fade-up" [smRevealDelay]="120" class="font-display text-6xl md:text-7xl font-light leading-none mb-8">
+            Chasing<br /><em class="italic text-gold-400">fleeting</em><br />beauty.
+          </h1>
+          <p smReveal="fade-up" [smRevealDelay]="240" class="font-body text-xl text-white/70 max-w-xl leading-relaxed">
+            An independent studio working wherever the light is interesting —
+            obsessed with the emotion that lives in the fraction of a second between
+            before and after.
+          </p>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- Philosophy -->
-  <section class="bg-obsidian-900/40 py-24 px-6 mb-24">
-    <div class="max-w-3xl mx-auto" [smParallax]="0.08">
+  <section class="relative bg-obsidian-900/40 py-24 px-6 mb-24 overflow-hidden">
+    <img [src]="images.philosophy" alt="" loading="lazy" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-15" />
+    <div class="absolute inset-0 bg-gradient-to-b from-obsidian-950/70 via-obsidian-950/50 to-obsidian-950/70"></div>
+    <div class="relative max-w-3xl mx-auto" [smParallax]="0.08">
       <p smReveal="fade-up" class="section-label mb-6">Philosophy</p>
       <blockquote smReveal="fade-up" [smRevealDelay]="150" class="font-display text-4xl font-light italic leading-snug">
         "A photograph is a secret about a secret. The more it tells you, the less you know."
       </blockquote>
-      <p smReveal="fade" [smRevealDelay]="300" class="font-body text-white/30 mt-4 text-sm">— Diane Arbus</p>
+      <p smReveal="fade" [smRevealDelay]="300" class="font-body text-white/40 mt-4 text-sm">— Diane Arbus</p>
     </div>
   </section>
 
   <!-- Services -->
-  <section class="max-w-5xl mx-auto px-6 mb-24">
+  <section class="max-w-6xl mx-auto px-6 mb-24">
     <p smReveal="fade-up" class="section-label mb-12 text-center">What I Do</p>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div smReveal="fade-up" [smRevealDelay]="0" class="glass-panel p-8">
-        <h3 class="font-display text-2xl mb-4">Weddings</h3>
-        <p class="font-body text-white/50 text-sm leading-relaxed">
-          Full-day documentary coverage that tells your story with honesty and artistry.
-        </p>
-      </div>
-      <div smReveal="fade-up" [smRevealDelay]="150" class="glass-panel p-8">
-        <h3 class="font-display text-2xl mb-4">Portraits</h3>
-        <p class="font-body text-white/50 text-sm leading-relaxed">
-          Intimate sessions designed to reveal the authentic you rather than a performed version.
-        </p>
-      </div>
-      <div smReveal="fade-up" [smRevealDelay]="300" class="glass-panel p-8">
-        <h3 class="font-display text-2xl mb-4">Fine Art</h3>
-        <p class="font-body text-white/50 text-sm leading-relaxed">
-          Limited-edition museum prints crafted on archival paper with pigment inks.
-        </p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div
+        *ngFor="let discipline of disciplines; let i = index"
+        smReveal="fade-up"
+        [smRevealDelay]="i * 150"
+        class="group relative overflow-hidden aspect-[3/4] card-hover"
+      >
+        <img [src]="discipline.image" [alt]="discipline.title" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] group-hover:scale-110" />
+        <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950 via-obsidian-950/60 to-obsidian-950/10"></div>
+        <div class="absolute inset-0 flex flex-col justify-end p-8">
+          <h3 class="font-display text-3xl mb-3">{{ discipline.title }}</h3>
+          <p class="font-body text-white/70 text-sm leading-relaxed">
+            {{ discipline.copy }}
+          </p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- CTA -->
-  <section smReveal="scale" class="text-center px-6">
-    <a routerLink="/booking" class="btn-primary">Work With Me</a>
+  <section class="relative overflow-hidden px-6">
+    <img [src]="images.heroCinematic" alt="" loading="lazy" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-20" />
+    <div class="absolute inset-0 bg-gradient-to-b from-obsidian-950 via-obsidian-950/70 to-obsidian-950"></div>
+    <div smReveal="scale" class="relative text-center py-20">
+      <a routerLink="/booking" class="btn-primary">Work With Me</a>
+    </div>
   </section>
 </div>

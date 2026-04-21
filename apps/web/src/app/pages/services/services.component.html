@@ -1,13 +1,15 @@
 <div class="min-h-screen">
 
   <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
-  <section class="relative pt-36 pb-24 px-6 text-center page-enter">
-    <div class="max-w-3xl mx-auto" [smParallax]="0.1">
+  <section class="relative pt-36 pb-24 px-6 text-center page-enter overflow-hidden">
+    <img [src]="images.heroServices" alt="" loading="eager" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-30" />
+    <div class="absolute inset-0 bg-gradient-to-b from-obsidian-950/70 via-obsidian-950/80 to-obsidian-950"></div>
+    <div class="relative max-w-3xl mx-auto" [smParallax]="0.1">
       <p smReveal="fade-up" class="section-label mb-6">What We Do</p>
       <h1 smReveal="fade-up" [smRevealDelay]="120" class="font-display text-6xl md:text-8xl font-light leading-none mb-8">
         A Full-Service<br /><em class="not-italic text-gold-400">Visual Studio</em>
       </h1>
-      <p smReveal="fade-up" [smRevealDelay]="240" class="font-body text-white/50 text-lg max-w-xl mx-auto leading-relaxed">
+      <p smReveal="fade-up" [smRevealDelay]="240" class="font-body text-white/60 text-lg max-w-xl mx-auto leading-relaxed">
         Photography, video, aerial, 3D, and creative direction — under one roof, shipped fast.
       </p>
       <div smReveal="fade-up" [smRevealDelay]="360" class="flex flex-col sm:flex-row gap-4 justify-center mt-12">
@@ -20,11 +22,14 @@
   <!-- ── Category blocks ──────────────────────────────────────────────────── -->
   <section
     *ngFor="let category of categories; let i = index"
-    class="py-24 px-6 border-t border-white/5"
+    class="relative py-24 px-6 border-t border-white/5 overflow-hidden"
     [class.bg-obsidian-900]="i % 2 === 1"
     [class.bg-opacity-30]="i % 2 === 1"
   >
-    <div class="max-w-6xl mx-auto">
+    <img [src]="category.hero" alt="" loading="lazy" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-10 pointer-events-none" />
+    <div class="absolute inset-0 bg-gradient-to-b from-obsidian-950/80 via-obsidian-950/90 to-obsidian-950/80 pointer-events-none"></div>
+
+    <div class="relative max-w-6xl mx-auto">
       <header class="max-w-2xl mb-16">
         <p smReveal="fade-up" class="section-label mb-4">{{ i + 1 < 10 ? '0' : '' }}{{ i + 1 }} — Services</p>
         <h2 smReveal="fade-up" [smRevealDelay]="100" class="font-display text-4xl md:text-5xl font-light mb-4">{{ category.title }}</h2>
@@ -36,25 +41,31 @@
           *ngFor="let service of category.services; let j = index"
           smReveal="fade-up"
           [smRevealDelay]="j * 80"
-          class="glass-panel p-8 hover:border-gold-400/40 transition-colors duration-300 flex flex-col"
+          class="group relative overflow-hidden border border-white/10 hover:border-gold-400/40 transition-colors duration-300 flex flex-col"
         >
-          <h3 class="font-display text-2xl mb-3">{{ service.name }}</h3>
-          <p class="font-body text-white/50 text-sm leading-relaxed mb-6 flex-1">
-            {{ service.description }}
-          </p>
-          <div class="flex items-center justify-between pt-4 border-t border-white/10">
-            <span class="section-label text-white/50">{{ service.startingPrice }}</span>
-            <a
-              *ngIf="service.sessionType"
-              [routerLink]="['/booking']"
-              [queryParams]="{ session: service.sessionType }"
-              class="section-label text-gold-400 hover:text-white transition-colors"
-            >Book →</a>
-            <a
-              *ngIf="!service.sessionType"
-              routerLink="/booking"
-              class="section-label text-gold-400 hover:text-white transition-colors"
-            >Enquire →</a>
+          <div class="relative aspect-[16/9] overflow-hidden">
+            <img [src]="service.image" [alt]="service.name" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] group-hover:scale-110" />
+            <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950 via-obsidian-950/40 to-transparent"></div>
+          </div>
+          <div class="p-8 bg-obsidian-950/80 backdrop-blur-sm flex flex-col flex-1">
+            <h3 class="font-display text-2xl mb-3">{{ service.name }}</h3>
+            <p class="font-body text-white/50 text-sm leading-relaxed mb-6 flex-1">
+              {{ service.description }}
+            </p>
+            <div class="flex items-center justify-between pt-4 border-t border-white/10">
+              <span class="section-label text-white/50">{{ service.startingPrice }}</span>
+              <a
+                *ngIf="service.sessionType"
+                [routerLink]="['/booking']"
+                [queryParams]="{ session: service.sessionType }"
+                class="section-label text-gold-400 hover:text-white transition-colors"
+              >Book →</a>
+              <a
+                *ngIf="!service.sessionType"
+                routerLink="/booking"
+                class="section-label text-gold-400 hover:text-white transition-colors"
+              >Enquire →</a>
+            </div>
           </div>
         </div>
       </div>
@@ -62,8 +73,10 @@
   </section>
 
   <!-- ── Closing CTA ──────────────────────────────────────────────────────── -->
-  <section class="py-28 px-6 border-t border-white/5">
-    <div class="max-w-3xl mx-auto text-center">
+  <section class="relative py-28 px-6 border-t border-white/5 overflow-hidden">
+    <img [src]="images.heroCinematic" alt="" loading="lazy" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-20" />
+    <div class="absolute inset-0 bg-gradient-to-b from-obsidian-950 via-obsidian-950/70 to-obsidian-950"></div>
+    <div class="relative max-w-3xl mx-auto text-center">
       <p smReveal="fade-up" class="section-label mb-6">Ready?</p>
       <h2 smReveal="fade-up" [smRevealDelay]="100" class="font-display text-4xl md:text-5xl font-light mb-8">
         Let's build something worth sharing.

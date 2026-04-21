@@ -1,8 +1,10 @@
 <div class="min-h-screen">
 
   <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
-  <section class="relative pt-36 pb-24 px-6 text-center page-enter">
-    <div class="max-w-3xl mx-auto" [smParallax]="0.1">
+  <section class="relative pt-36 pb-24 px-6 text-center page-enter overflow-hidden">
+    <img [src]="images.heroStudio" alt="" loading="eager" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-25" />
+    <div class="absolute inset-0 bg-gradient-to-b from-obsidian-950/70 via-obsidian-950/85 to-obsidian-950"></div>
+    <div class="relative max-w-3xl mx-auto" [smParallax]="0.1">
       <p smReveal="fade-up" class="section-label mb-6">Plans & Pricing</p>
       <h1 smReveal="fade-up" [smRevealDelay]="120" class="font-display text-6xl md:text-8xl font-light leading-none mb-8">
         Creative Work<br /><em class="not-italic text-gold-400">Priced Simply</em>
@@ -26,16 +28,19 @@
           *ngFor="let plan of plans; let i = index"
           smReveal="scale"
           [smRevealDelay]="i * 120"
-          class="glass-panel p-10 flex flex-col relative"
+          class="glass-panel p-10 flex flex-col relative overflow-hidden"
           [class.border-gold-400]="plan.featured"
           [class.ring-1]="plan.featured"
           [class.ring-gold-400]="plan.featured"
         >
+          <img [src]="planImages[plan.tier]" alt="" loading="lazy" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-10 pointer-events-none" />
+          <div class="absolute inset-0 bg-gradient-to-b from-obsidian-950/40 via-obsidian-950/70 to-obsidian-950/90 pointer-events-none"></div>
           <span
             *ngIf="plan.featured"
-            class="absolute -top-3 left-10 bg-gold-400 text-obsidian-950 text-xs tracking-[0.25em] uppercase px-3 py-1"
+            class="absolute -top-3 left-10 bg-gold-400 text-obsidian-950 text-xs tracking-[0.25em] uppercase px-3 py-1 z-10"
           >Most Popular</span>
 
+          <div class="relative flex flex-col flex-1">
           <p class="section-label mb-4">{{ plan.name }}</p>
           <div class="flex items-baseline gap-2 mb-4">
             <span class="font-display text-6xl font-light">${{ plan.monthlyPrice }}</span>
@@ -62,6 +67,7 @@
           >
             Start {{ plan.name }}
           </a>
+          </div>
         </div>
       </div>
     </div>
@@ -79,9 +85,11 @@
       </p>
 
       <div *ngFor="let category of categories" class="mb-20 last:mb-0">
-        <header smReveal="fade-up" class="flex items-end justify-between mb-10 border-b border-white/10 pb-4">
-          <h3 class="font-display text-2xl md:text-3xl font-light">{{ category.label }}</h3>
-          <span class="section-label text-white/30">{{ servicesFor(category.key).length }} services</span>
+        <header smReveal="fade-up" class="relative flex items-end justify-between mb-10 border-b border-white/10 pb-4 overflow-hidden">
+          <img [src]="categoryImages[category.key]" alt="" loading="lazy" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-15 pointer-events-none" />
+          <div class="absolute inset-0 bg-gradient-to-r from-obsidian-950 via-obsidian-950/80 to-transparent pointer-events-none"></div>
+          <h3 class="relative font-display text-2xl md:text-3xl font-light py-3">{{ category.label }}</h3>
+          <span class="relative section-label text-white/50 py-3">{{ servicesFor(category.key).length }} services</span>
         </header>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -112,8 +120,10 @@
   </section>
 
   <!-- ── Custom / CTA ──────────────────────────────────────────────────────── -->
-  <section class="py-24 px-6 border-t border-white/5">
-    <div class="max-w-3xl mx-auto text-center">
+  <section class="relative py-24 px-6 border-t border-white/5 overflow-hidden">
+    <img [src]="images.heroAerial" alt="" loading="lazy" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-15" />
+    <div class="absolute inset-0 bg-gradient-to-b from-obsidian-950 via-obsidian-950/70 to-obsidian-950"></div>
+    <div class="relative max-w-3xl mx-auto text-center">
       <p smReveal="fade-up" class="section-label mb-6">Custom Scope</p>
       <h2 smReveal="fade-up" [smRevealDelay]="100" class="font-display text-4xl md:text-5xl font-light mb-6">
         Something bigger in mind?

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { PricingPlan, PricingTier, ServiceCategory, ServiceOffering } from '@sm/shared';
+import { IMAGES } from '../../shared/image-assets';
 
 @Component({
   selector: 'sm-pricing',
@@ -7,6 +8,22 @@ import { PricingPlan, PricingTier, ServiceCategory, ServiceOffering } from '@sm/
   styleUrls: ['./pricing.component.scss'],
 })
 export class PricingComponent {
+  readonly images = IMAGES;
+
+  readonly planImages: Record<PricingTier, string> = {
+    [PricingTier.LITE]: IMAGES.productFlatlay,
+    [PricingTier.PRO]: IMAGES.cinematicSet,
+    [PricingTier.BUSINESS]: IMAGES.campaign,
+    [PricingTier.CUSTOM]: IMAGES.creativeDirection,
+  };
+
+  readonly categoryImages: Record<ServiceCategory, string> = {
+    [ServiceCategory.CORE_VISUAL]: IMAGES.heroStudio,
+    [ServiceCategory.ADVANCED_TOOLS]: IMAGES.heroCinematic,
+    [ServiceCategory.MARKETING_BRANDING]: IMAGES.heroAerial,
+    [ServiceCategory.ADD_ON_PREMIUM]: IMAGES.heroBooking,
+  };
+
   readonly plans: PricingPlan[] = [
     {
       tier: PricingTier.LITE,

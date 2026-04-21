@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../../core/services/api.service';
+import { IMAGES } from '../../shared/image-assets';
 
 @Component({
   selector: 'sm-contact',
@@ -11,6 +12,7 @@ export class ContactComponent {
   submitted = false;
   error: string | null = null;
   loading = false;
+  readonly images = IMAGES;
 
   constructor(private readonly fb: FormBuilder, private readonly api: ApiService) {
     this.form = this.fb.group({

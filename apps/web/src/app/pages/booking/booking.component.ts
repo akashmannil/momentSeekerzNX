@@ -10,12 +10,14 @@ import {
   selectBookingError,
 } from '@sm/data-access';
 import { SessionType } from '@sm/shared';
+import { IMAGES } from '../../shared/image-assets';
 
 interface SessionPackage {
   type: SessionType;
   label: string;
   description: string;
   startingPrice: string;
+  image: string;
 }
 
 @Component({
@@ -43,66 +45,78 @@ export class BookingComponent implements OnInit, OnDestroy {
     [SessionType.OTHER]: 'Something Else',
   };
 
+  readonly images = IMAGES;
+
   readonly packages: SessionPackage[] = [
     {
       type: SessionType.REAL_ESTATE,
       label: 'Real Estate',
       description: 'Photo + video coverage for realtors — exterior, interior, walkthrough.',
       startingPrice: 'From CA$250',
+      image: IMAGES.realEstate,
     },
     {
       type: SessionType.PRODUCT_BRAND,
       label: 'Product / Brand',
       description: 'Perfectly lit, styled, and edited visuals that elevate your store.',
       startingPrice: 'From CA$250',
+      image: IMAGES.productFlatlay,
     },
     {
       type: SessionType.PORTRAIT,
       label: 'Portraits',
       description: 'Personal, team, or founder portraits with editorial polish.',
       startingPrice: 'From CA$200',
+      image: IMAGES.portraitStudio,
     },
     {
       type: SessionType.DRONE_AERIAL,
       label: 'Drone & Aerial',
       description: 'Certified aerial coverage — properties, events, cinematic B-roll.',
       startingPrice: 'From CA$300',
+      image: IMAGES.aerialDrone,
     },
     {
       type: SessionType.VIRTUAL_TOUR,
       label: '360° Virtual Tour',
       description: 'Immersive walkthroughs for properties, spaces, and venues.',
       startingPrice: 'From CA$350',
+      image: IMAGES.virtualTour,
     },
     {
       type: SessionType.CINEMATIC_VIDEO,
       label: 'Cinematic Promo',
       description: 'Brand films and hero videos built to convert.',
       startingPrice: 'From CA$600',
+      image: IMAGES.cinematicFilm,
     },
     {
       type: SessionType.VERTICAL_REEL,
       label: 'Vertical Reels',
       description: 'Scroll-stopping short-form for IG, TikTok, and Shorts.',
       startingPrice: 'From CA$150',
+      image: IMAGES.verticalReel,
     },
     {
       type: SessionType.EVENT_COVERAGE,
       label: 'Event Coverage',
       description: 'Commercial and live event photo + video, on-site crew.',
       startingPrice: 'From CA$500',
+      image: IMAGES.eventCoverage,
     },
     {
       type: SessionType.CORPORATE_CAMPAIGN,
       label: 'Campaign Shoot',
       description: 'Full creative campaign — concept, production, post.',
       startingPrice: 'From CA$700',
+      image: IMAGES.campaign,
     },
     {
       type: SessionType.OTHER,
       label: 'Something Else',
       description: 'Custom brief? Tell us what you need and we\'ll scope it.',
       startingPrice: 'Custom Quote',
+      image: IMAGES.creativeDirection,
     },
   ];
 

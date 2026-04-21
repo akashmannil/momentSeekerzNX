@@ -36,24 +36,27 @@
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-1">
       <a smReveal="fade-up" [smRevealDelay]="0" routerLink="/gallery" [queryParams]="{ category: 'real-estate' }" class="group relative overflow-hidden aspect-[4/5] card-hover">
-        <div class="absolute inset-0 bg-obsidian-900 flex flex-col justify-end p-8">
+        <img [src]="images.realEstateInterior" alt="Modern real estate interior" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] group-hover:scale-110" />
+        <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950/95 via-obsidian-950/40 to-obsidian-950/10 flex flex-col justify-end p-8">
           <p class="section-label text-gold-400 mb-2">01</p>
           <h3 class="font-display text-3xl italic mb-2">Real Estate</h3>
-          <p class="font-body text-white/40 text-xs leading-relaxed">Photo, video, aerial & 360° virtual tours for listings that move.</p>
+          <p class="font-body text-white/60 text-xs leading-relaxed">Photo, video, aerial & 360° virtual tours for listings that move.</p>
         </div>
       </a>
       <a smReveal="fade-up" [smRevealDelay]="150" routerLink="/gallery" [queryParams]="{ category: 'cinematic' }" class="group relative overflow-hidden aspect-[4/5] card-hover">
-        <div class="absolute inset-0 bg-obsidian-800 flex flex-col justify-end p-8">
+        <img [src]="images.cinematic" alt="Cinematic film production" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] group-hover:scale-110" />
+        <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950/95 via-obsidian-950/40 to-obsidian-950/10 flex flex-col justify-end p-8">
           <p class="section-label text-gold-400 mb-2">02</p>
           <h3 class="font-display text-3xl italic mb-2">Cinematic</h3>
-          <p class="font-body text-white/40 text-xs leading-relaxed">Brand films, promo videos, and vertical reels built to convert.</p>
+          <p class="font-body text-white/60 text-xs leading-relaxed">Brand films, promo videos, and vertical reels built to convert.</p>
         </div>
       </a>
       <a smReveal="fade-up" [smRevealDelay]="300" routerLink="/gallery" [queryParams]="{ category: 'product-brand' }" class="group relative overflow-hidden aspect-[4/5] card-hover">
-        <div class="absolute inset-0 bg-obsidian-700 flex flex-col justify-end p-8">
+        <img [src]="images.productBrand" alt="Product and brand photography" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] group-hover:scale-110" />
+        <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950/95 via-obsidian-950/40 to-obsidian-950/10 flex flex-col justify-end p-8">
           <p class="section-label text-gold-400 mb-2">03</p>
           <h3 class="font-display text-3xl italic mb-2">Product & Brand</h3>
-          <p class="font-body text-white/40 text-xs leading-relaxed">Studio-grade product photography, 3D mockups & campaign shoots.</p>
+          <p class="font-body text-white/60 text-xs leading-relaxed">Studio-grade product photography, 3D mockups & campaign shoots.</p>
         </div>
       </a>
     </div>
@@ -65,8 +68,9 @@
 </section>
 
 <!-- ── Subscription teaser ─────────────────────────────────────────────── -->
-<section class="relative z-10 bg-obsidian-900/50 py-28 px-6 border-t border-white/5">
-  <div class="max-w-5xl mx-auto">
+<section class="relative z-10 bg-obsidian-900/50 py-28 px-6 border-t border-white/5 overflow-hidden">
+  <img [src]="images.heroStudio" alt="" loading="lazy" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-10 pointer-events-none" />
+  <div class="relative max-w-5xl mx-auto">
     <p smReveal="fade-up" class="section-label text-center mb-4">Monthly Content Plans</p>
     <h2 smReveal="fade-up" [smRevealDelay]="100" class="font-display text-4xl md:text-5xl text-center font-light mb-16">
       From <em class="not-italic text-gold-400">CA$99 / month</em>
@@ -97,8 +101,10 @@
 </section>
 
 <!-- ── Prints store teaser ──────────────────────────────────────────────── -->
-<section class="relative z-10 bg-obsidian-950 py-28 px-6 border-t border-white/5">
-  <div class="max-w-4xl mx-auto text-center" [smParallax]="0.08">
+<section class="relative z-10 bg-obsidian-950 py-28 px-6 border-t border-white/5 overflow-hidden">
+  <img [src]="images.fineArtGallery" alt="" loading="lazy" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-25 pointer-events-none" />
+  <div class="absolute inset-0 bg-gradient-to-b from-obsidian-950 via-obsidian-950/60 to-obsidian-950 pointer-events-none"></div>
+  <div class="relative max-w-4xl mx-auto text-center" [smParallax]="0.08">
     <p smReveal="fade-up" class="section-label mb-4">Fine Art Prints</p>
     <h2 smReveal="fade-up" [smRevealDelay]="100" class="font-display text-5xl font-light mb-6">Own a Moment</h2>
     <p smReveal="fade-up" [smRevealDelay]="200" class="font-body text-white/60 text-lg max-w-xl mx-auto mb-12">

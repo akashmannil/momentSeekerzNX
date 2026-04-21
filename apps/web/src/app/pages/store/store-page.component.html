@@ -1,7 +1,16 @@
-<div class="min-h-screen pt-24 pb-16 px-6 page-enter">
-  <header class="max-w-6xl mx-auto mb-16 text-center">
-    <p smReveal="fade-up" class="section-label mb-4">Fine Art Prints</p>
-    <h1 smReveal="fade-up" [smRevealDelay]="120" class="font-display text-6xl font-light">The Store</h1>
+<div class="min-h-screen page-enter">
+  <!-- Hero -->
+  <header class="relative pt-36 pb-20 px-6 text-center overflow-hidden">
+    <img [src]="images.heroStore" alt="" loading="eager" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-30" />
+    <div class="absolute inset-0 bg-gradient-to-b from-obsidian-950/60 via-obsidian-950/80 to-obsidian-950"></div>
+
+    <div class="relative max-w-4xl mx-auto" [smParallax]="0.08">
+      <p smReveal="fade-up" class="section-label mb-4">Fine Art Prints</p>
+      <h1 smReveal="fade-up" [smRevealDelay]="120" class="font-display text-6xl md:text-7xl font-light mb-6">The Store</h1>
+      <p smReveal="fade-up" [smRevealDelay]="200" class="font-body text-white/60 text-lg max-w-xl mx-auto leading-relaxed">
+        Museum-quality editorial prints. Archival paper, pigment inks — ready for the wall.
+      </p>
+    </div>
 
     <!-- Cart icon -->
     <button
@@ -18,10 +27,10 @@
   </header>
 
   <!-- Product grid -->
-  <main class="max-w-6xl mx-auto" *ngIf="!(loading$ | async)">
+  <main class="max-w-6xl mx-auto pb-16 px-6" *ngIf="!(loading$ | async)">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1">
       <article
-        *ngFor="let product of products$ | async; trackBy: trackByProductId"
+        *ngFor="let product of products$ | async; let i = index; trackBy: trackByProductId"
         smReveal="fade-up"
         [smRevealThreshold]="0.05"
         class="group relative overflow-hidden cursor-pointer card-hover"
@@ -29,7 +38,7 @@
       >
         <picture>
           <img
-            [src]="product.thumbnailUrl ?? product.imageUrl"
+            [src]="productImage(product, i)"
             [alt]="product.title"
             class="w-full aspect-square object-cover transition-transform duration-700 group-hover:scale-105"
             loading="lazy"

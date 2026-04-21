@@ -1,13 +1,15 @@
 <div class="min-h-screen">
 
   <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
-  <section class="relative pt-36 pb-24 px-6 text-center page-enter">
-    <div class="max-w-3xl mx-auto" [smParallax]="0.1">
+  <section class="relative pt-36 pb-24 px-6 text-center page-enter overflow-hidden">
+    <img [src]="images.heroBooking" alt="" loading="eager" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-30" />
+    <div class="absolute inset-0 bg-gradient-to-b from-obsidian-950/70 via-obsidian-950/80 to-obsidian-950"></div>
+    <div class="relative max-w-3xl mx-auto" [smParallax]="0.1">
       <p smReveal="fade-up" class="section-label mb-6">Let's Create Together</p>
       <h1 smReveal="fade-up" [smRevealDelay]="120" class="font-display text-6xl md:text-8xl font-light leading-none mb-8">
         Book a<br /><em class="not-italic text-gold-400">Session</em>
       </h1>
-      <p smReveal="fade-up" [smRevealDelay]="240" class="font-body text-white/50 text-lg max-w-lg mx-auto leading-relaxed">
+      <p smReveal="fade-up" [smRevealDelay]="240" class="font-body text-white/60 text-lg max-w-lg mx-auto leading-relaxed">
         Every great photograph starts with a conversation. Tell us about your vision and we'll bring it to life.
       </p>
     </div>
@@ -60,20 +62,26 @@
           *ngFor="let pkg of packages; let i = index"
           smReveal="fade-up"
           [smRevealDelay]="i * 80"
-          class="glass-panel p-6 cursor-pointer transition-all duration-300 hover:border-gold-400/40 group"
+          class="group relative cursor-pointer border border-white/10 hover:border-gold-400/40 transition-all duration-300 overflow-hidden"
           [class.border-gold-400]="form.get('sessionType')?.value === pkg.type"
           (click)="selectPackage(pkg.type)"
         >
-          <h3 class="font-display text-2xl mb-3 group-hover:text-gold-400 transition-colors duration-300"
-              [class.text-gold-400]="form.get('sessionType')?.value === pkg.type">
-            {{ pkg.label }}
-          </h3>
-          <p class="font-body text-white/40 text-sm leading-relaxed mb-5">{{ pkg.description }}</p>
-          <p class="section-label text-xs"
-             [class.text-gold-400]="form.get('sessionType')?.value === pkg.type"
-             [ngClass]="form.get('sessionType')?.value !== pkg.type ? 'text-white/30' : ''">
-            {{ pkg.startingPrice }}
-          </p>
+          <div class="relative aspect-[4/3] overflow-hidden">
+            <img [src]="pkg.image" [alt]="pkg.label" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] group-hover:scale-110" />
+            <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950 via-obsidian-950/50 to-transparent"></div>
+          </div>
+          <div class="p-6 bg-obsidian-950/80 backdrop-blur-sm">
+            <h3 class="font-display text-2xl mb-3 group-hover:text-gold-400 transition-colors duration-300"
+                [class.text-gold-400]="form.get('sessionType')?.value === pkg.type">
+              {{ pkg.label }}
+            </h3>
+            <p class="font-body text-white/40 text-sm leading-relaxed mb-5">{{ pkg.description }}</p>
+            <p class="section-label text-xs"
+               [class.text-gold-400]="form.get('sessionType')?.value === pkg.type"
+               [ngClass]="form.get('sessionType')?.value !== pkg.type ? 'text-white/30' : ''">
+              {{ pkg.startingPrice }}
+            </p>
+          </div>
         </div>
       </div>
     </div>
