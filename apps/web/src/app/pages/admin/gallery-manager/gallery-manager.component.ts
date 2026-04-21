@@ -5,12 +5,12 @@ import {
   GalleryActions,
   selectAllPhotos,
   selectGalleryLoading,
-} from '@mss/data-access';
-import { Photo } from '@mss/shared';
+} from '@sm/data-access';
+import { Photo, PhotoCategory } from '@sm/shared';
 import { ApiService } from '../../../core/services/api.service';
 
 @Component({
-  selector: 'mss-gallery-manager',
+  selector: 'sm-gallery-manager',
   templateUrl: './gallery-manager.component.html',
 })
 export class GalleryManagerComponent implements OnInit {
@@ -47,7 +47,7 @@ export class GalleryManagerComponent implements OnInit {
               imageUrl: result.originalUrl,
               thumbnailUrl: result.thumbnailUrl,
               webpUrl: result.webpUrl,
-              category: 'portraits' as any,
+              category: PhotoCategory.PORTRAIT,
               published: false,
             },
           })

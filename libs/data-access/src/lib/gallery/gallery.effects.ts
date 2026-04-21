@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { GalleryActions } from './gallery.actions';
 import { API_SERVICE_TOKEN } from '../../tokens';
-import { PaginatedPhotos, Photo } from '@mss/shared';
+import { PaginatedPhotos, Photo } from '@sm/shared';
 
 @Injectable()
 export class GalleryEffects {

@@ -8,7 +8,7 @@ export const UiActions = createActionGroup({
     'Close Modal': emptyProps(),
     'Set Theme': props<{ theme: 'dark' | 'light' }>(),
     'Set Nav Open': props<{ open: boolean }>(),
-    'Show Toast': props<{ message: string; type: 'success' | 'error' | 'info' }>(),
+    'Show Toast': props<{ message: string; toastType: 'success' | 'error' | 'info' }>(),
     'Clear Toast': emptyProps(),
     'Set Scene Ready': props<{ ready: boolean }>(),
   },

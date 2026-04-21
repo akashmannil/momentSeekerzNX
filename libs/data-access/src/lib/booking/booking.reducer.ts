@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
-import { Booking } from '@mss/shared';
+import { Booking } from '@sm/shared';
 import { BookingActions } from './booking.actions';
 
 export interface BookingState extends EntityState<Booking> {

@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Photo, PhotoDocument } from './schemas/photo.schema';
-import { CreatePhotoDto, UpdatePhotoDto, GalleryQueryDto } from '@mss/shared';
+import { CreatePhotoDto, UpdatePhotoDto, GalleryQueryDto } from '@sm/shared';
 
 export interface PaginatedPhotos {
   data: PhotoDocument[];

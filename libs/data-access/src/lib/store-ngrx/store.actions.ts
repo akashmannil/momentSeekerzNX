@@ -1,5 +1,5 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { Product, CartItem, Order } from '@mss/shared';
+import { Product, CartItem, Order } from '@sm/shared';
 
 export const StoreActions = createActionGroup({
   source: 'Store',

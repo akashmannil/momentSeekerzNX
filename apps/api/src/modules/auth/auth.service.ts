@@ -4,7 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcryptjs';
 import { UsersService } from '../users/users.service';
 import { UserDocument } from '../users/schemas/user.schema';
-import { LoginDto, RegisterDto } from '@mss/shared';
+import { LoginDto, RegisterDto } from '@sm/shared';
 
 export interface JwtPayload {
   sub: string;

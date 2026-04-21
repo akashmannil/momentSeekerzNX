@@ -7,7 +7,7 @@ import { GalleryService } from './gallery.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
-import { CreatePhotoDto, UpdatePhotoDto, GalleryQueryDto } from '@mss/shared';
+import { CreatePhotoDto, UpdatePhotoDto, GalleryQueryDto } from '@sm/shared';
 
 @ApiTags('gallery')
 @Controller({ path: 'gallery', version: '1' })

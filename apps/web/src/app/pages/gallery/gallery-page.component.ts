@@ -8,11 +8,11 @@ import {
   selectCategories,
   selectGalleryLoading,
   selectActiveCategory,
-} from '@mss/data-access';
-import { Photo, PhotoCategory } from '@mss/shared';
+} from '@sm/data-access';
+import { Photo, PhotoCategory } from '@sm/shared';
 
 @Component({
-  selector: 'mss-gallery-page',
+  selector: 'sm-gallery-page',
   templateUrl: './gallery-page.component.html',
   styleUrls: ['./gallery-page.component.scss'],
 })
@@ -23,12 +23,13 @@ export class GalleryPageComponent implements OnInit {
   activeCategory$: Observable<PhotoCategory | null> = this.store.select(selectActiveCategory);
 
   readonly categoryLabels: Record<string, string> = {
-    weddings: 'Weddings',
-    portraits: 'Portraits',
-    commercial: 'Commercial',
-    landscape: 'Landscape',
+    'real-estate': 'Real Estate',
+    'product-brand': 'Product / Brand',
+    portrait: 'Portraits',
+    aerial: 'Aerial',
+    cinematic: 'Cinematic',
     events: 'Events',
-    'fine-art': 'Fine Art',
+    commercial: 'Commercial',
   };
 
   constructor(

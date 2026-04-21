@@ -8,9 +8,12 @@ import { ValidationPipe, VersioningType, Logger } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 import helmet from 'helmet';
+import { createHash } from 'crypto';
+import * as bcrypt from 'bcryptjs';
 import { AppModule } from './app.module';
 import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
+import { UsersService } from './modules/users/users.service';
 
 async function bootstrap() {
   const logger = new Logger('Bootstrap');
@@ -70,7 +73,7 @@ async function bootstrap() {
   // ─── Swagger API docs ────────────────────────────────────────────────────────
   if (configService.get('NODE_ENV') !== 'production') {
     const swaggerConfig = new DocumentBuilder()
-      .setTitle('Moment Seekers Studio API')
+      .setTitle('Savage Media API')
       .setDescription('Photography portfolio & store REST API')
       .setVersion('1.0')
       .addBearerAuth()
@@ -89,6 +92,25 @@ async function bootstrap() {
 
   await app.listen(port);
   logger.log(`API running on http://localhost:${port}/api`);
+
+  // Seed admin user on first boot
+  const adminEmail = configService.get<string>('ADMIN_EMAIL');
+  const adminPassword = configService.get<string>('ADMIN_PASSWORD');
+  if (adminEmail && adminPassword) {
+    const usersService = app.get(UsersService);
+    const existing = await usersService.findByEmail(adminEmail);
+    if (!existing) {
+      try {
+        // Mirror client-side SHA-256 hashing: store bcrypt(sha256(password))
+        const sha256Hash = createHash('sha256').update(adminPassword).digest('hex');
+        const passwordHash = await bcrypt.hash(sha256Hash, 12);
+        await usersService.create({ email: adminEmail, name: 'Admin', passwordHash, role: 'admin' });
+        logger.log(`Admin user seeded: ${adminEmail}`);
+      } catch (err: unknown) {
+        logger.warn(`Admin seed skipped: ${(err as Error).message}`);
+      }
+    }
+  }
 }
 
 bootstrap();

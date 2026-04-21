@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { StoreActions } from '@mss/data-access';
+import { StoreActions } from '@sm/data-access';
 
 @Component({
-  selector: 'mss-checkout-success',
+  selector: 'sm-checkout-success',
   template: `
     <div class="min-h-screen flex items-center justify-center px-6 page-enter">
       <div class="text-center max-w-md">

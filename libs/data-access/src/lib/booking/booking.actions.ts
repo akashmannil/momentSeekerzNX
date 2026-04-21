@@ -1,5 +1,5 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { Booking, BookingStatus } from '@mss/shared';
+import { Booking, BookingStatus } from '@sm/shared';
 
 export const BookingActions = createActionGroup({
   source: 'Booking',

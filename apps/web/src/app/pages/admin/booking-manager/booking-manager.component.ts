@@ -5,11 +5,11 @@ import {
   BookingActions,
   selectBookings,
   selectBookingLoading,
-} from '@mss/data-access';
-import { Booking, BookingStatus } from '@mss/shared';
+} from '@sm/data-access';
+import { Booking, BookingStatus } from '@sm/shared';
 
 @Component({
-  selector: 'mss-booking-manager',
+  selector: 'sm-booking-manager',
   templateUrl: './booking-manager.component.html',
 })
 export class BookingManagerComponent implements OnInit {

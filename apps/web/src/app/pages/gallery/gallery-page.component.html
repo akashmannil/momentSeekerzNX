@@ -1,12 +1,12 @@
 <div class="min-h-screen pt-24 pb-16 px-6 page-enter">
   <!-- Header -->
   <header class="max-w-6xl mx-auto mb-16 text-center">
-    <p class="section-label mb-4">Portfolio</p>
-    <h1 class="font-display text-6xl font-light">Gallery</h1>
+    <p smReveal="fade-up" class="section-label mb-4">Portfolio</p>
+    <h1 smReveal="fade-up" [smRevealDelay]="120" class="font-display text-6xl font-light">Gallery</h1>
   </header>
 
   <!-- Category filter -->
-  <nav class="max-w-6xl mx-auto mb-12 flex flex-wrap items-center gap-3" aria-label="Filter by category">
+  <nav smReveal="fade" [smRevealDelay]="200" class="max-w-6xl mx-auto mb-12 flex flex-wrap items-center gap-3" aria-label="Filter by category">
     <button
       (click)="setCategory(null)"
       [class.text-gold-400]="(activeCategory$ | async) === null"
@@ -18,7 +18,7 @@
     <ng-container *ngIf="categories$ | async as cats">
       <button
         *ngFor="let cat of cats"
-        (click)="setCategory(cat.category as any)"
+        (click)="setCategory(cat.category)"
         [class.text-gold-400]="(activeCategory$ | async) === cat.category"
         [class.border-gold-400]="(activeCategory$ | async) === cat.category"
         class="section-label px-4 py-2 border border-white/20 hover:border-gold-400 hover:text-gold-400 transition-colors"
@@ -40,6 +40,8 @@
       <article
         *ngFor="let photo of photos; trackBy: trackByPhotoId"
         (click)="openPhoto(photo)"
+        smReveal="fade-up"
+        [smRevealThreshold]="0.05"
         class="break-inside-avoid mb-2 group relative cursor-pointer overflow-hidden card-hover"
       >
         <!-- WebP with JPEG fallback -->

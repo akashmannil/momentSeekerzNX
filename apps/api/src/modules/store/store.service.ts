@@ -6,7 +6,7 @@ import Stripe from 'stripe';
 import { v4 as uuidv4 } from 'uuid';
 import { Product, ProductDocument } from './schemas/product.schema';
 import { Order, OrderDocument } from './schemas/order.schema';
-import { CreateProductDto, UpdateProductDto, CreateOrderDto, OrderStatus } from '@mss/shared';
+import { CreateProductDto, UpdateProductDto, CreateOrderDto, OrderStatus } from '@sm/shared';
 
 @Injectable()
 export class StoreService {
@@ -126,7 +126,7 @@ export class StoreService {
   }
 
   private async fulfillOrder(session: Stripe.Checkout.Session): Promise<void> {
-    const orderNumber = `MSS-${Date.now()}-${uuidv4().slice(0, 6).toUpperCase()}`;
+    const orderNumber = `SM-${Date.now()}-${uuidv4().slice(0, 6).toUpperCase()}`;
     const metadata = session.metadata as Record<string, string>;
     const items = JSON.parse(metadata['items'] || '[]');
 

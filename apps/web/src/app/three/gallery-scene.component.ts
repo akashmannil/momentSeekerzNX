@@ -6,11 +6,12 @@ import { Subject, takeUntil } from 'rxjs';
 import { ThreeSceneService, SceneImage } from './three-scene.service';
 
 @Component({
-  selector: 'mss-gallery-scene',
+  selector: 'sm-gallery-scene',
   template: `
     <canvas
       #canvas
       class="three-canvas"
+      style="pointer-events: none"
       aria-hidden="true"
       role="presentation"
     ></canvas>

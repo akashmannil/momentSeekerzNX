@@ -2,8 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Booking, BookingDocument } from './schemas/booking.schema';
-import { CreateBookingDto, UpdateBookingDto } from '@mss/shared';
-import { BookingStatus } from '@mss/shared';
+import { CreateBookingDto, UpdateBookingDto } from '@sm/shared';
+import { BookingStatus } from '@sm/shared';
 
 @Injectable()
 export class BookingService {

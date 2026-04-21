@@ -1,0 +1,13 @@
+:host {
+  display: block;
+}
+
+// Dark background on native select so dropdown options are readable
+select.booking-select {
+  background-color: theme('colors.obsidian.950');
+
+  option {
+    background-color: theme('colors.obsidian.950');
+    color: #ffffff;
+  }
+}

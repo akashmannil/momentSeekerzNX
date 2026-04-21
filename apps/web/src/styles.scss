@@ -57,8 +57,8 @@
 
   .btn-ghost {
     @apply inline-flex items-center gap-2 px-6 py-3
-           text-white/70 font-body text-sm tracking-widest uppercase
-           transition-all duration-300 hover:text-white;
+           border border-white/20 text-white/70 font-body text-sm tracking-widest uppercase
+           transition-all duration-300 hover:text-white hover:border-white/50;
   }
 
   .input-field {
@@ -103,7 +103,37 @@
   animation: pageEnter 0.5s var(--transition-smooth) forwards;
 }
 
-// ─── Loading progress bar ────────────────────────────────────────────────────
+// ─── Scroll-reveal (smReveal directive) ──────────────────────────────────────
+.sm-reveal {
+  opacity: 0;
+  transition:
+    opacity 0.9s var(--transition-smooth),
+    transform 0.9s var(--transition-smooth),
+    filter 0.9s var(--transition-smooth);
+  will-change: opacity, transform;
+}
+.sm-reveal--fade-up       { transform: translate3d(0, 32px, 0); }
+.sm-reveal--fade          { transform: none; }
+.sm-reveal--scale         { transform: scale(0.94); }
+.sm-reveal--fade-left     { transform: translate3d(-40px, 0, 0); }
+.sm-reveal--fade-right    { transform: translate3d(40px, 0, 0); }
+
+.sm-reveal.is-revealed {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sm-reveal,
+  .sm-reveal.is-revealed {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+// ─── Loading progress bar ──────────────────────────────────────────────────���─
 .loading-bar {
   position: fixed;
   top: 0;

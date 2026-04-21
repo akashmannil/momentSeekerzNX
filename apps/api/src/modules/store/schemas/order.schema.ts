@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
-import { OrderStatus } from '@mss/shared';
+import { OrderStatus } from '@sm/shared';
 
 export type OrderDocument = Order & Document;
 
@@ -63,7 +63,7 @@ export class Order {
     country: string;
   };
 
-  @Prop({ default: OrderStatus.PENDING, enum: Object.values(OrderStatus) })
+  @Prop({ type: String, default: OrderStatus.PENDING, enum: Object.values(OrderStatus) })
   status!: OrderStatus;
 
   @Prop()

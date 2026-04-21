@@ -1,19 +1,20 @@
-# Moment Seekers Studio
+# Savage Media
 
-> Cinematic photography portfolio & fine-art print store — built as a full-stack Nx monorepo.
-
+> Full-service visual production studio — photo, video, aerial, and 3D. Migration of [savagemedia.online](https://www.savagemedia.online/), built as a full-stack Nx monorepo.
 
 ---
 
 ## Overview
 
-A high-end, immersive web experience for an independent photographer featuring:
+A high-end, immersive web experience for a multi-discipline visual production studio featuring:
 
-- **Interactive 3D gallery scene** powered by Three.js — camera fly-through of floating image planes driven by mouse and scroll
-- **Masonry photo gallery** with category filtering and lazy-loaded WebP images
-- **Online fine-art print store** with Stripe checkout
-- **Session booking** request form
-- **Secure admin panel** for uploading photos, managing bookings, and viewing orders
+- **Services catalogue** across 4 categories — Core Visual, Advanced Visual Tools, Marketing & Branding, Add-On & Premium
+- **Subscription pricing** — Lite (CA$99), Pro (CA$249), Business (CA$499) monthly content plans + à la carte one-offs
+- **Interactive 3D gallery scene** powered by Three.js — mouse- and scroll-driven camera fly-through
+- **Photo & video portfolio** with category filtering (real estate, product/brand, cinematic, aerial, events, commercial)
+- **Fine-art print store** with Stripe checkout
+- **Project booking** for real estate shoots, drone coverage, cinematic promos, virtual tours, and campaign production
+- **Secure admin panel** for content, bookings, and orders
 - **JWT authentication** with access/refresh token rotation
 
 ---
@@ -36,12 +37,12 @@ A high-end, immersive web experience for an independent photographer featuring:
 ## Project Structure
 
 ```
-momentSeekersStudio/
+savageMedia/
 ├── apps/
 │   ├── web/               Angular SPA
 │   │   ├── src/app/
 │   │   │   ├── three/     Three.js scene service & component
-│   │   │   ├── pages/     home, gallery, store, booking, about, contact, admin
+│   │   │   ├── pages/     home, services, pricing, gallery, store, booking, about, contact, admin
 │   │   │   └── core/      services, interceptors, guards
 │   │   └── tailwind.config.js
 │   └── api/               NestJS REST API
@@ -72,8 +73,8 @@ momentSeekersStudio/
 ### 1. Clone & install
 
 ```bash
-git clone https://github.com/your-org/moment-seekers-studio.git
-cd moment-seekers-studio
+git clone https://github.com/your-org/savage-media.git
+cd savage-media
 npm install
 ```
 
@@ -86,7 +87,7 @@ cp .env.example .env
 Edit `.env` with your values. Minimum required for local dev:
 
 ```env
-MONGODB_URI=mongodb://localhost:27017/moment-seekers
+MONGODB_URI=mongodb://localhost:27017/savage-media
 JWT_SECRET=dev-secret-change-me-in-prod
 JWT_REFRESH_SECRET=dev-refresh-secret-change-me
 STRIPE_SECRET_KEY=sk_test_...
@@ -134,7 +135,7 @@ docker-compose up --build
 When MongoDB initializes with the init script, an admin user is created:
 
 ```
-Email:    admin@momentseekerstudio.com
+Email:    admin@savagemedia.online
 Password: Admin@1234
 ```
 

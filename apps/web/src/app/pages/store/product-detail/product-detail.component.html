@@ -1,12 +1,12 @@
 <div class="min-h-screen pt-24 pb-16 px-6 page-enter" *ngIf="product$ | async as product; else loading">
   <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
     <!-- Image -->
-    <div>
+    <div smReveal="fade-right">
       <img [src]="product.imageUrl" [alt]="product.title" class="w-full h-auto shadow-2xl" />
     </div>
 
     <!-- Details -->
-    <div>
+    <div smReveal="fade-left" [smRevealDelay]="150">
       <a routerLink="/store" class="section-label text-white/40 hover:text-white mb-6 block">← All Prints</a>
       <h1 class="font-display text-5xl font-light mb-4">{{ product.title }}</h1>
       <p class="font-body text-white/60 leading-relaxed mb-8">{{ product.description }}</p>
@@ -60,4 +60,4 @@
   </div>
 </ng-template>
 
-<mss-cart-sidebar [isOpen]="cartOpen" (closed)="cartOpen = false"></mss-cart-sidebar>
+<sm-cart-sidebar [isOpen]="cartOpen" (closed)="cartOpen = false"></sm-cart-sidebar>

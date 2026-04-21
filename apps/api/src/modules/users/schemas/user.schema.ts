@@ -31,7 +31,8 @@ export const UserSchema = SchemaFactory.createForClass(User);
 
 // Prevent exposing sensitive fields in JSON responses
 UserSchema.set('toJSON', {
-  transform: (_doc, ret) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  transform: (_doc: any, ret: any) => {
     delete ret.passwordHash;
     delete ret.refreshTokenHash;
     return ret;

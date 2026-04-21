@@ -12,8 +12,8 @@ import {
   authReducer, galleryReducer, bookingReducer, uiReducer,
   AuthEffects, GalleryEffects, BookingEffects,
   StoreEffects,
-} from '@mss/data-access';
-import { storeReducer } from '@mss/data-access';
+} from '@sm/data-access';
+import { storeReducer } from '@sm/data-access';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -42,7 +42,7 @@ import { CoreModule } from './core/core.module';
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: !isDevMode(),
-      name: 'Moment Seekers Studio',
+      name: 'Savage Media',
     }),
   ],
   bootstrap: [AppComponent],

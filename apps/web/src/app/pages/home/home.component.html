@@ -1,22 +1,22 @@
 <!-- ── Full-screen 3D canvas ─────────────────────────────────────────────── -->
-<mss-gallery-scene [images]="sceneImages"></mss-gallery-scene>
+<sm-gallery-scene [images]="sceneImages"></sm-gallery-scene>
 
 <!-- ── Hero overlay ─────────────────────────────────────────────────────── -->
 <section class="scene-overlay flex flex-col items-center justify-center min-h-screen px-6 pointer-events-none">
-  <div class="text-center animate-fade-up" style="animation-delay: 0.2s">
-    <p class="section-label mb-6">Visual Storytelling</p>
+  <div class="text-center animate-fade-up" style="animation-delay: 0.2s" [smParallax]="0.12">
+    <p class="section-label mb-6">Visual Production Studio</p>
     <h1 class="font-display text-6xl md:text-8xl font-light leading-none tracking-tight mb-6">
-      Moment<br /><em class="not-italic text-gold-400">Seekers</em>
+      Savage<br /><em class="not-italic text-gold-400">Media</em>
     </h1>
-    <p class="font-body text-lg text-white/60 max-w-sm mx-auto leading-relaxed">
-      Cinematic photography that captures the poetry of fleeting moments.
+    <p class="font-body text-lg text-white/60 max-w-md mx-auto leading-relaxed">
+      Photography, cinematic video, aerial, and 3D — shipped fast for brands, real estate, and creators.
     </p>
   </div>
 
   <!-- CTA buttons — pointer-events re-enabled -->
   <div class="flex flex-col sm:flex-row gap-4 mt-12 pointer-events-auto animate-fade-up" style="animation-delay: 0.5s">
-    <a routerLink="/gallery" class="btn-primary">Explore Gallery</a>
-    <a routerLink="/booking" class="btn-ghost">Book a Session</a>
+    <a routerLink="/services" class="btn-primary">Explore Services</a>
+    <a routerLink="/pricing" class="btn-ghost">See Pricing</a>
   </div>
 
   <!-- Scroll hint -->
@@ -26,44 +26,90 @@
   </div>
 </section>
 
-<!-- ── Below-fold: featured categories ──────────────────────────────────── -->
-<section class="relative z-10 bg-obsidian-950 py-32 px-6">
+<!-- ── Capability strip ─────────────────────────────────────────────────── -->
+<section class="relative z-10 bg-obsidian-950 py-28 px-6 border-t border-white/5">
   <div class="max-w-6xl mx-auto">
-    <p class="section-label text-center mb-4">Portfolio</p>
-    <h2 class="font-display text-5xl text-center mb-16 font-light">The Work</h2>
+    <p smReveal="fade-up" class="section-label text-center mb-4">What We Do</p>
+    <h2 smReveal="fade-up" [smRevealDelay]="100" class="font-display text-4xl md:text-5xl text-center mb-16 font-light">
+      One studio. <em class="not-italic text-gold-400">Every deliverable.</em>
+    </h2>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-1">
-      <a routerLink="/gallery" [queryParams]="{ category: 'weddings' }" class="group relative overflow-hidden aspect-[4/5] card-hover">
-        <div class="absolute inset-0 bg-obsidian-900 flex items-end p-6">
-          <h3 class="font-display text-3xl italic">Weddings</h3>
+      <a smReveal="fade-up" [smRevealDelay]="0" routerLink="/gallery" [queryParams]="{ category: 'real-estate' }" class="group relative overflow-hidden aspect-[4/5] card-hover">
+        <img [src]="images.realEstateInterior" alt="Modern real estate interior" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] group-hover:scale-110" />
+        <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950/95 via-obsidian-950/40 to-obsidian-950/10 flex flex-col justify-end p-8">
+          <p class="section-label text-gold-400 mb-2">01</p>
+          <h3 class="font-display text-3xl italic mb-2">Real Estate</h3>
+          <p class="font-body text-white/60 text-xs leading-relaxed">Photo, video, aerial & 360° virtual tours for listings that move.</p>
         </div>
       </a>
-      <a routerLink="/gallery" [queryParams]="{ category: 'portraits' }" class="group relative overflow-hidden aspect-[4/5] card-hover">
-        <div class="absolute inset-0 bg-obsidian-800 flex items-end p-6">
-          <h3 class="font-display text-3xl italic">Portraits</h3>
+      <a smReveal="fade-up" [smRevealDelay]="150" routerLink="/gallery" [queryParams]="{ category: 'cinematic' }" class="group relative overflow-hidden aspect-[4/5] card-hover">
+        <img [src]="images.cinematic" alt="Cinematic film production" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] group-hover:scale-110" />
+        <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950/95 via-obsidian-950/40 to-obsidian-950/10 flex flex-col justify-end p-8">
+          <p class="section-label text-gold-400 mb-2">02</p>
+          <h3 class="font-display text-3xl italic mb-2">Cinematic</h3>
+          <p class="font-body text-white/60 text-xs leading-relaxed">Brand films, promo videos, and vertical reels built to convert.</p>
         </div>
       </a>
-      <a routerLink="/gallery" [queryParams]="{ category: 'commercial' }" class="group relative overflow-hidden aspect-[4/5] card-hover">
-        <div class="absolute inset-0 bg-obsidian-700 flex items-end p-6">
-          <h3 class="font-display text-3xl italic">Commercial</h3>
+      <a smReveal="fade-up" [smRevealDelay]="300" routerLink="/gallery" [queryParams]="{ category: 'product-brand' }" class="group relative overflow-hidden aspect-[4/5] card-hover">
+        <img [src]="images.productBrand" alt="Product and brand photography" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] group-hover:scale-110" />
+        <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950/95 via-obsidian-950/40 to-obsidian-950/10 flex flex-col justify-end p-8">
+          <p class="section-label text-gold-400 mb-2">03</p>
+          <h3 class="font-display text-3xl italic mb-2">Product & Brand</h3>
+          <p class="font-body text-white/60 text-xs leading-relaxed">Studio-grade product photography, 3D mockups & campaign shoots.</p>
         </div>
       </a>
     </div>
 
-    <div class="text-center mt-16">
-      <a routerLink="/gallery" class="btn-primary">View Full Gallery</a>
+    <div smReveal="fade-up" class="text-center mt-16">
+      <a routerLink="/services" class="btn-primary">All Services</a>
     </div>
   </div>
 </section>
 
-<!-- ── Store teaser ──────────────────────────────────────────────────────── -->
-<section class="relative z-10 bg-obsidian-900/50 py-32 px-6">
-  <div class="max-w-4xl mx-auto text-center">
-    <p class="section-label mb-4">Fine Art Prints</p>
-    <h2 class="font-display text-5xl font-light mb-6">Own a Moment</h2>
-    <p class="font-body text-white/60 text-lg max-w-xl mx-auto mb-12">
-      Museum-quality prints delivered to your door. Matte, glossy, or metallic finishes.
+<!-- ── Subscription teaser ─────────────────────────────────────────────── -->
+<section class="relative z-10 bg-obsidian-900/50 py-28 px-6 border-t border-white/5 overflow-hidden">
+  <img [src]="images.heroStudio" alt="" loading="lazy" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-10 pointer-events-none" />
+  <div class="relative max-w-5xl mx-auto">
+    <p smReveal="fade-up" class="section-label text-center mb-4">Monthly Content Plans</p>
+    <h2 smReveal="fade-up" [smRevealDelay]="100" class="font-display text-4xl md:text-5xl text-center font-light mb-16">
+      From <em class="not-italic text-gold-400">CA$99 / month</em>
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div smReveal="scale" [smRevealDelay]="0" class="glass-panel p-8 text-center">
+        <p class="section-label mb-4">Lite</p>
+        <p class="font-display text-4xl font-light mb-3">$99<span class="text-base text-white/40">/mo</span></p>
+        <p class="font-body text-white/50 text-sm leading-relaxed">15 photos + 1 short video, 3-day delivery.</p>
+      </div>
+      <div smReveal="scale" [smRevealDelay]="150" class="glass-panel p-8 text-center ring-1 ring-gold-400/50">
+        <p class="section-label text-gold-400 mb-4">Pro — Most Popular</p>
+        <p class="font-display text-4xl font-light mb-3">$249<span class="text-base text-white/40">/mo</span></p>
+        <p class="font-body text-white/50 text-sm leading-relaxed">25 photos, 1 cinematic video + 1 reel, 2-day delivery.</p>
+      </div>
+      <div smReveal="scale" [smRevealDelay]="300" class="glass-panel p-8 text-center">
+        <p class="section-label mb-4">Business</p>
+        <p class="font-display text-4xl font-light mb-3">$499<span class="text-base text-white/40">/mo</span></p>
+        <p class="font-body text-white/50 text-sm leading-relaxed">40 photos, 2 videos + 2 reels + scriptwriting, 24h turnaround.</p>
+      </div>
+    </div>
+
+    <div smReveal="fade-up" class="text-center mt-12">
+      <a routerLink="/pricing" class="btn-ghost">Compare Plans</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Prints store teaser ──────────────────────────────────────────────── -->
+<section class="relative z-10 bg-obsidian-950 py-28 px-6 border-t border-white/5 overflow-hidden">
+  <img [src]="images.fineArtGallery" alt="" loading="lazy" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-25 pointer-events-none" />
+  <div class="absolute inset-0 bg-gradient-to-b from-obsidian-950 via-obsidian-950/60 to-obsidian-950 pointer-events-none"></div>
+  <div class="relative max-w-4xl mx-auto text-center" [smParallax]="0.08">
+    <p smReveal="fade-up" class="section-label mb-4">Fine Art Prints</p>
+    <h2 smReveal="fade-up" [smRevealDelay]="100" class="font-display text-5xl font-light mb-6">Own a Moment</h2>
+    <p smReveal="fade-up" [smRevealDelay]="200" class="font-body text-white/60 text-lg max-w-xl mx-auto mb-12">
+      Museum-quality prints from our editorial archive. Matte, glossy, or metallic finishes.
     </p>
-    <a routerLink="/store" class="btn-primary">Shop Prints</a>
+    <a smReveal="fade-up" [smRevealDelay]="300" routerLink="/store" class="btn-primary">Shop Prints</a>
   </div>
 </section>

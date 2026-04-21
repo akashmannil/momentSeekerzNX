@@ -8,8 +8,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { ApiService } from './services/api.service';
-import { API_SERVICE_TOKEN } from '@mss/data-access';
-import { UiModule } from '@mss/ui';
+import { API_SERVICE_TOKEN } from '@sm/data-access';
+import { UiModule } from '@sm/ui';
 
 @NgModule({
   imports: [CommonModule, UiModule],

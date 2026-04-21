@@ -1,33 +1,56 @@
-<div class="min-h-screen pt-24 pb-24 px-6 page-enter">
-  <div class="max-w-lg mx-auto">
-    <header class="text-center mb-16">
-      <p class="section-label mb-4">Get in Touch</p>
-      <h1 class="font-display text-6xl font-light">Contact</h1>
-    </header>
+<div class="relative min-h-screen pt-24 pb-24 px-6 page-enter overflow-hidden">
+  <!-- Ambient backdrop -->
+  <img [src]="images.heroContact" alt="" loading="eager" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-20" />
+  <div class="absolute inset-0 bg-gradient-to-b from-obsidian-950/70 via-obsidian-950/90 to-obsidian-950"></div>
 
-    <div *ngIf="submitted" class="glass-panel p-10 text-center">
-      <h2 class="font-display text-3xl font-light mb-4">Message Sent</h2>
-      <p class="font-body text-white/60">Thank you! I'll respond within 48 hours.</p>
-    </div>
+  <div class="relative max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-12 items-start">
 
-    <form *ngIf="!submitted" (ngSubmit)="submit()" [formGroup]="form" class="space-y-8" novalidate>
-      <input formControlName="name" type="text" placeholder="Your Name *" class="input-field" />
-      <input formControlName="email" type="email" placeholder="Email Address *" class="input-field" />
-      <input formControlName="subject" type="text" placeholder="Subject" class="input-field" />
-      <textarea formControlName="message" placeholder="Your message *" rows="6" class="input-field resize-none"></textarea>
+    <!-- Editorial column -->
+    <aside smReveal="fade-right" class="lg:col-span-2 relative overflow-hidden aspect-[3/4] lg:aspect-auto lg:min-h-[600px]">
+      <img [src]="images.photographer" alt="Photographer studio portrait" class="absolute inset-0 w-full h-full object-cover" />
+      <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950 via-obsidian-950/40 to-transparent"></div>
+      <div class="absolute inset-0 flex flex-col justify-end p-8">
+        <p class="section-label text-gold-400 mb-3">Studio</p>
+        <h2 class="font-display text-3xl font-light leading-tight mb-3">
+          Every project starts with a <em class="text-gold-400">conversation</em>.
+        </h2>
+        <p class="font-body text-white/60 text-sm leading-relaxed">
+          Tell us what you're building. We'll reply within 48 hours.
+        </p>
+      </div>
+    </aside>
 
-      <div *ngIf="error" class="text-red-400 text-sm">{{ error }}</div>
+    <!-- Form column -->
+    <div class="lg:col-span-3 max-w-lg mx-auto w-full">
+      <header class="text-center mb-16">
+        <p smReveal="fade-up" class="section-label mb-4">Get in Touch</p>
+        <h1 smReveal="fade-up" [smRevealDelay]="120" class="font-display text-6xl font-light">Contact</h1>
+      </header>
 
-      <button type="submit" class="btn-primary w-full justify-center" [disabled]="loading">
-        {{ loading ? 'Sending...' : 'Send Message' }}
-      </button>
-    </form>
+      <div *ngIf="submitted" smReveal="scale" class="glass-panel p-10 text-center">
+        <h2 class="font-display text-3xl font-light mb-4">Message Sent</h2>
+        <p class="font-body text-white/60">Thank you! I'll respond within 48 hours.</p>
+      </div>
 
-    <!-- Contact info -->
-    <div class="mt-16 space-y-4 text-center">
-      <p class="section-label">Or reach out directly</p>
-      <p class="font-body text-white/50">hello@momentseekerstudio.com</p>
-      <p class="font-body text-white/30 text-sm">Based in New York, available worldwide</p>
+      <form *ngIf="!submitted" (ngSubmit)="submit()" [formGroup]="form" class="space-y-8" novalidate smReveal="fade-up" [smRevealDelay]="240">
+        <input formControlName="name" type="text" placeholder="Your Name *" class="input-field" />
+        <input formControlName="email" type="email" placeholder="Email Address *" class="input-field" />
+        <input formControlName="subject" type="text" placeholder="Subject" class="input-field" />
+        <textarea formControlName="message" placeholder="Your message *" rows="6" class="input-field resize-none"></textarea>
+
+        <div *ngIf="error" class="text-red-400 text-sm">{{ error }}</div>
+
+        <button type="submit" class="btn-primary w-full justify-center" [disabled]="loading">
+          {{ loading ? 'Sending...' : 'Send Message' }}
+        </button>
+      </form>
+
+      <!-- Contact info -->
+      <div smReveal="fade-up" [smRevealDelay]="360" class="mt-16 space-y-4 text-center">
+        <p class="section-label">Or reach out directly</p>
+        <p class="font-body text-white/50">hello&#64;savagemedia.online</p>
+        <p class="font-body text-white/30 text-sm">Based in New York, available worldwide</p>
+      </div>
     </div>
   </div>
 </div>

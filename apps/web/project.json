@@ -3,7 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "apps/web/src",
-  "prefix": "mss",
+  "prefix": "sm",
   "tags": ["scope:web", "type:app"],
   "targets": {
     "build": {
@@ -13,7 +13,7 @@
         "outputPath": "dist/apps/web",
         "index": "apps/web/src/index.html",
         "browser": "apps/web/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": ["zone.js", "reflect-metadata"],
         "tsConfig": "apps/web/tsconfig.app.json",
         "assets": ["apps/web/src/favicon.ico", { "glob": "**/*", "input": "apps/web/src/assets", "output": "assets" }],
         "styles": ["apps/web/src/styles.scss"],

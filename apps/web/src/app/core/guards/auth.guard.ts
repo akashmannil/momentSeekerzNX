@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, map, take } from 'rxjs';
-import { selectIsAuthenticated } from '@mss/data-access';
+import { selectIsAuthenticated } from '@sm/data-access';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {

@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(nx serve:*)",
+      "Bash(nx build:*)",
+      "Bash(nx test:*)",
+      "Bash(nx lint:*)",
+      "Bash(nx affected:*)",
+      "Bash(nx graph)",
+      "Bash(npm run start:*)",
+      "Bash(docker-compose up:*)",
+      "Bash(docker-compose down:*)"
+    ],
+    "deny": [
+      "Bash(rm -rf /)",
+      "Bash(git push --force)",
+      "Bash(drop database)",
+      "Bash(npx nx reset)"
+    ]
+  }
+}

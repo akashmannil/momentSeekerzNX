@@ -1,21 +1,38 @@
 export enum PhotoCategory {
-  WEDDINGS = 'weddings',
-  PORTRAITS = 'portraits',
-  COMMERCIAL = 'commercial',
-  LANDSCAPE = 'landscape',
+  REAL_ESTATE = 'real-estate',
+  PRODUCT_BRAND = 'product-brand',
+  PORTRAIT = 'portrait',
+  AERIAL = 'aerial',
+  CINEMATIC = 'cinematic',
   EVENTS = 'events',
-  FINE_ART = 'fine-art',
+  COMMERCIAL = 'commercial',
 }
 
 export enum SessionType {
+  REAL_ESTATE = 'real-estate',
+  PRODUCT_BRAND = 'product-brand',
   PORTRAIT = 'portrait',
-  WEDDING = 'wedding',
-  ENGAGEMENT = 'engagement',
-  CORPORATE = 'corporate',
-  COMMERCIAL = 'commercial',
-  BOUDOIR = 'boudoir',
-  FAMILY = 'family',
-  NEWBORN = 'newborn',
+  DRONE_AERIAL = 'drone-aerial',
+  VIRTUAL_TOUR = 'virtual-tour',
+  CINEMATIC_VIDEO = 'cinematic-video',
+  VERTICAL_REEL = 'vertical-reel',
+  EVENT_COVERAGE = 'event-coverage',
+  CORPORATE_CAMPAIGN = 'corporate-campaign',
+  OTHER = 'other',
+}
+
+export enum ServiceCategory {
+  CORE_VISUAL = 'core-visual',
+  ADVANCED_TOOLS = 'advanced-tools',
+  MARKETING_BRANDING = 'marketing-branding',
+  ADD_ON_PREMIUM = 'add-on-premium',
+}
+
+export enum PricingTier {
+  LITE = 'lite',
+  PRO = 'pro',
+  BUSINESS = 'business',
+  CUSTOM = 'custom',
 }
 
 export enum BookingStatus {

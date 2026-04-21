@@ -8,10 +8,10 @@ import {
   AuthActions,
   UiActions,
   selectNavOpen,
-} from '@mss/data-access';
+} from '@sm/data-access';
 
 @Component({
-  selector: 'mss-nav',
+  selector: 'sm-nav',
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.scss'],
 })
@@ -21,10 +21,13 @@ export class NavComponent implements OnInit {
   cartCount$: Observable<number> = this.store.select(selectCartCount);
   navOpen$: Observable<boolean> = this.store.select(selectNavOpen);
   scrolled = false;
+  navOpen = false;
 
   constructor(private readonly store: Store) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.navOpen$.subscribe(open => { this.navOpen = open; });
+  }
 
   @HostListener('window:scroll')
   onScroll(): void {

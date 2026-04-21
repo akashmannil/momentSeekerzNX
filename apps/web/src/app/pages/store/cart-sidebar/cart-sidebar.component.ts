@@ -7,11 +7,11 @@ import {
   selectCart,
   selectCartTotal,
   selectCheckingOut,
-} from '@mss/data-access';
-import { CartItem } from '@mss/shared';
+} from '@sm/data-access';
+import { CartItem } from '@sm/shared';
 
 @Component({
-  selector: 'mss-cart-sidebar',
+  selector: 'sm-cart-sidebar',
   templateUrl: './cart-sidebar.component.html',
 })
 export class CartSidebarComponent implements OnInit {
