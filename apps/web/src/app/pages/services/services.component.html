@@ -37,37 +37,14 @@
       </header>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div
-          *ngFor="let service of category.services; let j = index"
-          smReveal="fade-up"
-          [smRevealDelay]="j * 80"
-          class="group relative overflow-hidden border border-white/10 hover:border-gold-400/40 transition-colors duration-300 flex flex-col"
-        >
-          <div class="relative aspect-[16/9] overflow-hidden">
-            <img [src]="service.image" [alt]="service.name" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] group-hover:scale-110" />
-            <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950 via-obsidian-950/40 to-transparent"></div>
-          </div>
-          <div class="p-8 bg-obsidian-950/80 backdrop-blur-sm flex flex-col flex-1">
-            <h3 class="font-display text-2xl mb-3">{{ service.name }}</h3>
-            <p class="font-body text-white/50 text-sm leading-relaxed mb-6 flex-1">
-              {{ service.description }}
-            </p>
-            <div class="flex items-center justify-between pt-4 border-t border-white/10">
-              <span class="section-label text-white/50">{{ service.startingPrice }}</span>
-              <a
-                *ngIf="service.sessionType"
-                [routerLink]="['/booking']"
-                [queryParams]="{ session: service.sessionType }"
-                class="section-label text-gold-400 hover:text-white transition-colors"
-              >Book →</a>
-              <a
-                *ngIf="!service.sessionType"
-                routerLink="/booking"
-                class="section-label text-gold-400 hover:text-white transition-colors"
-              >Enquire →</a>
-            </div>
-          </div>
-        </div>
+        <ng-container *ngFor="let service of category.services; let j = index">
+          <ng-container *ngIf="(activeTier$ | async) as activeTier; else noTier">
+            <ng-container *ngTemplateOutlet="serviceCard; context: { $implicit: service, index: j, activeTier: activeTier }"></ng-container>
+          </ng-container>
+          <ng-template #noTier>
+            <ng-container *ngTemplateOutlet="serviceCard; context: { $implicit: service, index: j, activeTier: null }"></ng-container>
+          </ng-template>
+        </ng-container>
       </div>
     </div>
   </section>
@@ -88,4 +65,64 @@
     </div>
   </section>
 
+  <!-- ── Service card template ────────────────────────────────────────────── -->
+  <ng-template #serviceCard let-service let-j="index" let-activeTier="activeTier">
+    <div
+      smReveal="fade-up"
+      [smRevealDelay]="j * 80"
+      class="group relative overflow-hidden border border-white/10 hover:border-gold-400/40 transition-colors duration-300 flex flex-col"
+    >
+      <div class="relative aspect-[16/9] overflow-hidden">
+        <img [src]="imageFor(service)" [alt]="service.name" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] group-hover:scale-110" />
+        <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950 via-obsidian-950/40 to-transparent"></div>
+
+        <!-- Tier inclusion chip (top-right) -->
+        <div class="absolute top-4 right-4 flex flex-wrap gap-2 justify-end max-w-[70%]">
+          <span
+            *ngFor="let planName of includedPlanNames(service)"
+            class="section-label text-[10px] px-2 py-1 bg-obsidian-950/80 backdrop-blur-sm border border-white/10 text-white/70"
+          >Included in {{ planName }}</span>
+        </div>
+      </div>
+
+      <div class="p-8 bg-obsidian-950/80 backdrop-blur-sm flex flex-col flex-1">
+        <h3 class="font-display text-2xl mb-3">{{ service.name }}</h3>
+        <p class="font-body text-white/50 text-sm leading-relaxed mb-6 flex-1">
+          {{ service.description }}
+        </p>
+
+        <!-- Subscriber-only inclusion banner -->
+        <div
+          *ngIf="isIncludedInTier(service, activeTier)"
+          class="mb-4 p-3 border border-gold-400/30 bg-gold-400/5"
+        >
+          <p class="section-label text-gold-400 text-[10px]">
+            Included in your {{ activeTier }} plan
+          </p>
+        </div>
+
+        <div class="flex items-center justify-between pt-4 border-t border-white/10 gap-4">
+          <span class="section-label text-white/50 shrink-0">{{ priceLabel(service) }}</span>
+
+          <div class="flex items-center gap-4 flex-wrap justify-end">
+            <button
+              *ngIf="service.requiresScheduling"
+              type="button"
+              (click)="book(service)"
+              class="section-label text-gold-400 hover:text-white transition-colors"
+            >Book →</button>
+
+            <button
+              *ngIf="!service.requiresScheduling"
+              type="button"
+              (click)="addToCart(service)"
+              class="section-label text-gold-400 hover:text-white transition-colors"
+            >
+              {{ isIncludedInTier(service, activeTier) ? 'Add (Included) →' : 'Add to Cart →' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
 </div>

@@ -11,10 +11,11 @@ This file is the authoritative guide for AI-assisted development on this project
 
 Revenue streams:
 
-- **Monthly subscription plans** — Lite (CA$99), Pro (CA$249), Business (CA$499) — recurring photo + video content
-- **À la carte services** — one-off shoots, edits, and deliverables across 4 service categories
-- **Fine-art print store** — curated editorial prints
+- **Monthly subscription plans** — Lite (CA$99), Pro (CA$249), Business (CA$499) — recurring photo + video content (Stripe subscription mode)
+- **À la carte services** — one-off shoots, edits, and deliverables across 4 service categories (Stripe one-off payment mode via cart)
 - **Client booking** — custom projects scoped via a consultation flow
+
+Subscribed users get a set of à la carte services **included** in their tier; services outside that set still require à la carte payment through the cart flow.
 
 It is an Nx monorepo with an Angular frontend, NestJS backend, and MongoDB database.
 
@@ -47,8 +48,7 @@ savageMedia/
 │   ├── ui/           Reusable Angular components (nav, footer, overlays)
 │   ├── feature-gallery/   (extend here)
 │   ├── feature-booking/   (extend here)
-│   ├── feature-admin/     (extend here)
-│   └── feature-store/     (extend here)
+│   └── feature-admin/     (extend here)
 ├── docker/
 ├── .github/workflows/
 └── docker-compose.yml
@@ -90,10 +90,19 @@ savageMedia/
   auth: AuthState,
   gallery: GalleryState,    // EntityAdapter<Photo>
   booking: BookingState,    // EntityAdapter<Booking>
-  store: StoreState,        // EntityAdapter<Product> + cart
+  cart: CartState,          // CartLineItem[] + subtotal + active tier + drawer state
   ui: UiState,              // loading, modal, toast, theme
 }
 ```
+
+### Cart & Subscription Flow
+- Cart supports services only. Subscriptions skip the cart and go directly to Stripe subscription checkout.
+- Guests get an opaque `guest_sid` HttpOnly cookie (issued by `apps/api/src/common/middleware/guest-session.middleware.ts`). Authenticated users are keyed by `userId`. The server resolves identity on every cart request via `JwtOptionalAuthGuard`.
+- On login/register/session restore, the frontend dispatches `CartActions.mergeGuestCart` which calls `POST /cart/merge` to move the guest cart onto the user's account.
+- Guest cart also persists to `localStorage` (`sm_guest_cart_v1`) as a resilience layer; `localStorage` is cleared on successful auth.
+- CSRF is double-submit cookie style (`csrf_token` cookie + `X-CSRF-Token` header). `apps/web/src/app/core/interceptors/credentials.interceptor.ts` injects `withCredentials: true` and the header on every API call. The `/checkout/webhook` route is CSRF-exempt.
+- Prices are **always re-validated server-side** from `libs/shared/src/lib/catalog/service-catalog.ts`. Client prices are display-only. Stripe idempotency keys are derived from a sha256 of the cart payload.
+- Webhooks are idempotent via `stripeEventId` unique sparse index on the `orders` collection.
 
 ### Effects use the API_SERVICE_TOKEN injection token
 Effects import `API_SERVICE_TOKEN` from `@sm/data-access` and inject it as `IApiService`.
@@ -132,7 +141,8 @@ src/
     ├── gallery/          Photos CRUD with pagination (categorised by PhotoCategory)
     ├── booking/          Client project/session requests (keyed by SessionType)
     ├── upload/           Multer + Sharp image processing
-    ├── store/            Products, Stripe checkout, orders (subscription plans + prints)
+    ├── cart/             Cart snapshot per user/guest (TTL-indexed, tier-aware)
+    ├── checkout/         Stripe Checkout (services + subscriptions) + webhook + orders
     └── analytics/        Admin dashboard aggregations
 ```
 
@@ -162,13 +172,15 @@ src/
 | `users` | `modules/users/schemas/user.schema.ts` |
 | `photos` | `modules/gallery/schemas/photo.schema.ts` |
 | `bookings` | `modules/booking/schemas/booking.schema.ts` |
-| `products` | `modules/store/schemas/product.schema.ts` |
-| `orders` | `modules/store/schemas/order.schema.ts` |
+| `carts` | `modules/cart/schemas/cart.schema.ts` |
+| `orders` | `modules/checkout/schemas/order.schema.ts` |
 
 ### Indexes
 - Photos: full-text on `title + description + tags`, compound `category + published + sortOrder`
-- Orders: `orderNumber` unique, `customerEmail`, `status + createdAt`
+- Orders: `orderNumber` unique, `customerEmail`, `status + createdAt`, `stripeEventId` unique sparse (webhook idempotency)
 - Bookings: `clientEmail`, `status + preferredDate`
+- Carts: partial unique on `userId`, partial unique on `guestSid`, TTL on `expiresAt` (30 days)
+- Users: `email` unique, `stripeCustomerId` unique sparse (for Stripe → user lookup during webhooks)
 
 ---
 
@@ -179,19 +191,28 @@ Contains TypeScript that is compiled and consumed by **both** apps.
 ```
 libs/shared/src/lib/
 ├── enums/index.ts          PhotoCategory, SessionType, ServiceCategory, PricingTier,
-│                           BookingStatus, PrintSize, PrintFinish, OrderStatus, UserRole
+│                           BookingStatus, OrderStatus, SubscriptionStatus,
+│                           CartItemType, UserRole
+├── catalog/                Single source of truth for pricing + services
+│   ├── service-catalog.ts  SERVICES, SERVICES_BY_ID, TIER_INCLUDED_SERVICES
+│   └── plan-catalog.ts     PLANS, PLAN_FEATURES (Claude-style feature matrix)
 ├── interfaces/             TypeScript interfaces (not Mongoose schemas)
 │   ├── photo.interface.ts
 │   ├── user.interface.ts
 │   ├── booking.interface.ts
-│   ├── store.interface.ts
-│   └── pricing.interface.ts     PricingPlan, ServiceOffering
+│   └── cart.interface.ts   CartLineItem (discriminated union), Order, UserSubscription
 └── dtos/                   class-validator DTOs (used by NestJS & Angular forms)
     ├── auth.dto.ts
     ├── gallery.dto.ts
     ├── booking.dto.ts
-    └── store.dto.ts
+    └── cart.dto.ts         AddCartItemDto, CheckoutServicesDto, CheckoutSubscriptionDto
 ```
+
+### Catalog (single source of truth)
+- `SERVICES` in `service-catalog.ts` defines every à la carte service — **prices in cents**, `requiresScheduling` flag, category, and `maxQuantity` cap. Edit this file to change pricing; no migration needed.
+- `TIER_INCLUDED_SERVICES` maps each `PricingTier` → the `ServiceId[]` that are covered by that plan. The server uses this to mark cart lines as `includedByTier` (zero-charge) at snapshot time.
+- `PLANS` in `plan-catalog.ts` defines subscription tiers; `PLAN_FEATURES` drives the comparison table on the pricing page.
+- Stripe price IDs for subscriptions come from env vars (`STRIPE_PRICE_LITE/PRO/BUSINESS`), not the catalog file.
 
 ### Enum source of truth
 
@@ -293,11 +314,12 @@ nx affected:build           # Build only affected projects
 
 ### Adding a new service offering or pricing plan
 
-1. Add any new enum value to `SessionType`, `ServiceCategory`, or `PricingTier` in `libs/shared/src/lib/enums/index.ts`
-2. Add it to the `packages` array in `apps/web/src/app/pages/booking/booking.component.ts` (keep `sessionLabels` in sync)
-3. Add it to the `categories[*].services` array in `apps/web/src/app/pages/services/services.component.ts`
-4. Add it to the `alaCarte` or `plans` array in `apps/web/src/app/pages/pricing/pricing.component.ts`
-5. Enum values propagate to the backend automatically (schemas use `Object.values(...)`), so no migration is needed for new values
+The catalog is the source of truth. In most cases, edit one file:
+
+1. **For a new à la carte service**: add a `ServiceDefinition` entry to `SERVICES` in `libs/shared/src/lib/catalog/service-catalog.ts`. Add its `ServiceId` to `TIER_INCLUDED_SERVICES` for any tier that should cover it for free. Add a row to `PLAN_FEATURES` in `plan-catalog.ts` so it appears in the pricing comparison table. The services page (`apps/web/src/app/pages/services/services.component.ts`) reads from `SERVICES` automatically — only update `serviceImages` if you want a custom image.
+2. **For a new subscription tier**: add the value to `PricingTier` in `libs/shared/src/lib/enums/index.ts`, add a `PlanDefinition` to `PLANS`, extend the `values` record on every `PLAN_FEATURES` row, and add a Stripe price env var (`STRIPE_PRICE_<TIER>`).
+3. **For a new `SessionType` or `ServiceCategory`**: add to the enum. Schemas pick it up automatically via `Object.values(...)`.
+4. If the new service requires a booking flow, make sure `requiresScheduling: true` is set — the services page will then route through `/booking` instead of `/cart`.
 
 ### Adding a new NgRx feature slice
 1. Create `libs/data-access/src/lib/<name>/` with actions, reducer, selectors, effects
@@ -336,3 +358,8 @@ Integration tests against a real MongoDB are run in CI only.
 - Stripe webhook endpoint validates signature — do not disable
 - All file uploads are processed by Sharp before storage (strips EXIF by default)
 - Rate limiting is configured via `ThrottlerModule` — tighten for production
+- **Cart prices are re-validated server-side** from the catalog on every `/cart` and `/checkout` call. Client-supplied prices are ignored.
+- Guest sessions use an HttpOnly `guest_sid` cookie; never echo it back in responses.
+- CSRF is enforced via double-submit cookie — webhook endpoints are exempt and protected by signature validation instead.
+- Stripe `Idempotency-Key` is a sha256 hash of the cart payload — prevents double-charges on retry.
+- Webhook fulfillment is idempotent via `stripeEventId` unique sparse index on `orders`.

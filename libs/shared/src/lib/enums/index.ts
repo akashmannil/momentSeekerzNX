@@ -43,30 +43,28 @@ export enum BookingStatus {
   CANCELLED = 'cancelled',
 }
 
-export enum PrintSize {
-  WALLET = '2.5x3.5',
-  FOUR_SIX = '4x6',
-  FIVE_SEVEN = '5x7',
-  EIGHT_TEN = '8x10',
-  ELEVEN_FOURTEEN = '11x14',
-  SIXTEEN_TWENTY = '16x20',
-  TWENTY_THIRTY = '20x30',
-}
-
-export enum PrintFinish {
-  MATTE = 'matte',
-  GLOSSY = 'glossy',
-  METALLIC = 'metallic',
-  FINE_ART = 'fine-art',
+export enum CartItemType {
+  SERVICE = 'service',
+  SUBSCRIPTION = 'subscription',
 }
 
 export enum OrderStatus {
   PENDING = 'pending',
-  PROCESSING = 'processing',
-  SHIPPED = 'shipped',
-  DELIVERED = 'delivered',
+  PAID = 'paid',
+  FULFILLING = 'fulfilling',
+  COMPLETED = 'completed',
   CANCELLED = 'cancelled',
   REFUNDED = 'refunded',
+}
+
+export enum SubscriptionStatus {
+  NONE = 'none',
+  TRIALING = 'trialing',
+  ACTIVE = 'active',
+  PAST_DUE = 'past-due',
+  CANCELED = 'canceled',
+  INCOMPLETE = 'incomplete',
+  ENDED = 'ended',
 }
 
 export enum UserRole {

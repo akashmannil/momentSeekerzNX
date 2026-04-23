@@ -20,9 +20,22 @@
       <li><a routerLink="/services" routerLinkActive="text-gold-400" class="section-label hover:text-gold-400 transition-colors">Services</a></li>
       <li><a routerLink="/pricing" routerLinkActive="text-gold-400" class="section-label hover:text-gold-400 transition-colors">Pricing</a></li>
       <li><a routerLink="/gallery" routerLinkActive="text-gold-400" class="section-label hover:text-gold-400 transition-colors">Gallery</a></li>
-      <li><a routerLink="/store" routerLinkActive="text-gold-400" class="section-label hover:text-gold-400 transition-colors">Store</a></li>
       <li><a routerLink="/about" routerLinkActive="text-gold-400" class="section-label hover:text-gold-400 transition-colors">About</a></li>
       <li><a routerLink="/contact" routerLinkActive="text-gold-400" class="section-label hover:text-gold-400 transition-colors">Contact</a></li>
+      <li>
+        <a
+          routerLink="/cart"
+          routerLinkActive="text-gold-400"
+          class="section-label hover:text-gold-400 transition-colors relative inline-flex items-center gap-2"
+          aria-label="Cart"
+        >
+          Cart
+          <span
+            *ngIf="(cartCount$ | async) as count"
+            class="inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 text-[10px] font-medium bg-gold-400 text-obsidian-950 rounded-full"
+          >{{ count }}</span>
+        </a>
+      </li>
       <li><a routerLink="/booking" class="btn-primary py-2 px-4">Book Now</a></li>
       <li *ngIf="isAdmin$ | async">
         <a routerLink="/admin" class="section-label text-gold-400 hover:text-white transition-colors">Admin</a>
@@ -56,9 +69,17 @@
       <li><a routerLink="/services" (click)="toggleNav(false)" class="section-label block hover:text-gold-400">Services</a></li>
       <li><a routerLink="/pricing" (click)="toggleNav(false)" class="section-label block hover:text-gold-400">Pricing</a></li>
       <li><a routerLink="/gallery" (click)="toggleNav(false)" class="section-label block hover:text-gold-400">Gallery</a></li>
-      <li><a routerLink="/store" (click)="toggleNav(false)" class="section-label block hover:text-gold-400">Store</a></li>
       <li><a routerLink="/about" (click)="toggleNav(false)" class="section-label block hover:text-gold-400">About</a></li>
       <li><a routerLink="/contact" (click)="toggleNav(false)" class="section-label block hover:text-gold-400">Contact</a></li>
+      <li>
+        <a routerLink="/cart" (click)="toggleNav(false)" class="section-label flex items-center gap-2 hover:text-gold-400">
+          Cart
+          <span
+            *ngIf="(cartCount$ | async) as count"
+            class="inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 text-[10px] font-medium bg-gold-400 text-obsidian-950 rounded-full"
+          >{{ count }}</span>
+        </a>
+      </li>
       <li><a routerLink="/booking" (click)="toggleNav(false)" class="section-label block text-gold-400">Book Now</a></li>
     </ul>
   </div>

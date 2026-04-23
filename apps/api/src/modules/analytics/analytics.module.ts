@@ -4,7 +4,7 @@ import { AnalyticsController } from './analytics.controller';
 import { AnalyticsService } from './analytics.service';
 import { Photo, PhotoSchema } from '../gallery/schemas/photo.schema';
 import { Booking, BookingSchema } from '../booking/schemas/booking.schema';
-import { Order, OrderSchema } from '../store/schemas/order.schema';
+import { Order, OrderSchema } from '../checkout/schemas/order.schema';
 
 @Module({
   imports: [
