@@ -3,7 +3,7 @@
 
 <!-- ── Hero overlay ─────────────────────────────────────────────────────── -->
 <section class="scene-overlay flex flex-col items-center justify-center min-h-screen px-6 pointer-events-none">
-  <div class="text-center animate-fade-up" style="animation-delay: 0.2s" [smParallax]="0.12">
+  <div class="text-center animate-fade-up" style="animation-delay: 1s; opacity: 0" [smParallax]="0.12">
     <p class="section-label mb-6">Visual Production Studio</p>
     <h1 class="font-display text-6xl md:text-8xl font-light leading-none tracking-tight mb-6">
       Savage<br /><em class="not-italic text-gold-400">Media</em>
@@ -14,13 +14,13 @@
   </div>
 
   <!-- CTA buttons — pointer-events re-enabled -->
-  <div class="flex flex-col sm:flex-row gap-4 mt-12 pointer-events-auto animate-fade-up" style="animation-delay: 0.5s">
+  <div class="flex flex-col sm:flex-row gap-4 mt-12 pointer-events-auto animate-fade-up" style="animation-delay: 1.5s; opacity: 0">
     <a routerLink="/services" class="btn-primary">Explore Services</a>
     <a routerLink="/pricing" class="btn-ghost">See Pricing</a>
   </div>
 
   <!-- Scroll hint -->
-  <div class="absolute bottom-10 flex flex-col items-center gap-2 opacity-40 pointer-events-none animate-fade-in" style="animation-delay: 1s">
+  <div class="absolute bottom-10 flex flex-col items-center gap-2 pointer-events-none animate-fade-in" style="animation-delay: 2s; opacity: 0">
     <span class="section-label text-white/50">Scroll to explore</span>
     <span class="block w-px h-10 bg-white/30 animate-pulse"></span>
   </div>

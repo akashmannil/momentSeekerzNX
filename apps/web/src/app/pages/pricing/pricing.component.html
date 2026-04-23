@@ -28,13 +28,15 @@
           *ngFor="let plan of plans; let i = index"
           smReveal="scale"
           [smRevealDelay]="i * 120"
-          class="glass-panel p-10 flex flex-col relative overflow-hidden"
+          class="glass-panel p-10 flex flex-col relative"
           [class.border-gold-400]="plan.featured"
           [class.ring-1]="plan.featured"
           [class.ring-gold-400]="plan.featured"
         >
-          <img [src]="planImages[plan.tier]" alt="" loading="lazy" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-10 pointer-events-none" />
-          <div class="absolute inset-0 bg-gradient-to-b from-obsidian-950/40 via-obsidian-950/70 to-obsidian-950/90 pointer-events-none"></div>
+          <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <img [src]="planImages[plan.tier]" alt="" loading="lazy" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-10" />
+            <div class="absolute inset-0 bg-gradient-to-b from-obsidian-950/40 via-obsidian-950/70 to-obsidian-950/90"></div>
+          </div>
           <span
             *ngIf="plan.featured"
             class="absolute -top-3 left-10 bg-gold-400 text-obsidian-950 text-xs tracking-[0.25em] uppercase px-3 py-1 z-10"
