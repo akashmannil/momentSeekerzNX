@@ -3,100 +3,171 @@
 
 <!-- ── Hero overlay ─────────────────────────────────────────────────────── -->
 <section class="scene-overlay flex flex-col items-center justify-center min-h-screen px-6 pointer-events-none">
-  <div class="text-center animate-fade-up" style="animation-delay: 1s; opacity: 0" [smParallax]="0.12">
-    <p class="section-label mb-6">Visual Production Studio</p>
-    <h1 class="font-display text-6xl md:text-8xl font-light leading-none tracking-tight mb-6">
-      Savage<br /><em class="not-italic text-gold-400">Media</em>
+  <div class="text-center animate-fade-up" style="animation-delay: 0.8s; opacity: 0" [smParallax]="0.12">
+    <p class="section-label mb-8">Visual Production Studio</p>
+    <h1 class="font-body font-bold text-[52px] md:text-[72px] leading-[0.95] tracking-[-0.03em] mb-6">
+      Savage<br /><span class="text-gold-400">Media</span>
     </h1>
-    <p class="font-body text-lg text-white/60 max-w-md mx-auto leading-relaxed">
-      Photography, cinematic video, aerial, and 3D — shipped fast for brands, real estate, and creators.
+    <p class="font-body text-sm text-white/40 max-w-xs mx-auto leading-relaxed">
+      Photography, cinematic video, aerial, and 3D — shipped fast for brands,
+      real estate, and creators.
     </p>
   </div>
 
   <!-- CTA buttons — pointer-events re-enabled -->
-  <div class="flex flex-col sm:flex-row gap-4 mt-12 pointer-events-auto animate-fade-up" style="animation-delay: 1.5s; opacity: 0">
+  <div
+    class="flex flex-col sm:flex-row gap-3 mt-10 pointer-events-auto animate-fade-up"
+    style="animation-delay: 1.3s; opacity: 0"
+  >
     <a routerLink="/services" class="btn-primary">Explore Services</a>
-    <a routerLink="/pricing" class="btn-ghost">See Pricing</a>
+    <a routerLink="/pricing"  class="btn-ghost">See Pricing</a>
   </div>
 
   <!-- Scroll hint -->
-  <div class="absolute bottom-10 flex flex-col items-center gap-2 pointer-events-none animate-fade-in" style="animation-delay: 2s; opacity: 0">
-    <span class="section-label text-white/50">Scroll to explore</span>
-    <span class="block w-px h-10 bg-white/30 animate-pulse"></span>
+  <div
+    class="absolute bottom-10 flex flex-col items-center gap-3 pointer-events-none animate-fade-in"
+    style="animation-delay: 2s; opacity: 0"
+  >
+    <span class="section-label">Scroll</span>
+    <span class="block w-px h-10 bg-white/20 animate-pulse"></span>
   </div>
 </section>
 
 <!-- ── Capability strip ─────────────────────────────────────────────────── -->
-<section class="relative z-10 bg-obsidian-950 py-28 px-6 border-t border-white/5">
+<section class="relative z-10 bg-black py-24 px-6 border-t border-white/[0.06]">
   <div class="max-w-6xl mx-auto">
-    <p smReveal="fade-up" class="section-label text-center mb-4">What We Do</p>
-    <h2 smReveal="fade-up" [smRevealDelay]="100" class="font-display text-4xl md:text-5xl text-center mb-16 font-light">
-      One studio. <em class="not-italic text-gold-400">Every deliverable.</em>
-    </h2>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-1">
-      <a smReveal="fade-up" [smRevealDelay]="0" routerLink="/gallery" [queryParams]="{ category: 'real-estate' }" class="group relative overflow-hidden aspect-[4/5] card-hover">
-        <img [src]="images.realEstateInterior" alt="Modern real estate interior" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] group-hover:scale-110" />
-        <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950/95 via-obsidian-950/40 to-obsidian-950/10 flex flex-col justify-end p-8">
-          <p class="section-label text-gold-400 mb-2">01</p>
-          <h3 class="font-display text-3xl italic mb-2">Real Estate</h3>
-          <p class="font-body text-white/60 text-xs leading-relaxed">Photo, video, aerial & 360° virtual tours for listings that move.</p>
-        </div>
-      </a>
-      <a smReveal="fade-up" [smRevealDelay]="150" routerLink="/gallery" [queryParams]="{ category: 'cinematic' }" class="group relative overflow-hidden aspect-[4/5] card-hover">
-        <img [src]="images.cinematic" alt="Cinematic film production" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] group-hover:scale-110" />
-        <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950/95 via-obsidian-950/40 to-obsidian-950/10 flex flex-col justify-end p-8">
-          <p class="section-label text-gold-400 mb-2">02</p>
-          <h3 class="font-display text-3xl italic mb-2">Cinematic</h3>
-          <p class="font-body text-white/60 text-xs leading-relaxed">Brand films, promo videos, and vertical reels built to convert.</p>
-        </div>
-      </a>
-      <a smReveal="fade-up" [smRevealDelay]="300" routerLink="/gallery" [queryParams]="{ category: 'product-brand' }" class="group relative overflow-hidden aspect-[4/5] card-hover">
-        <img [src]="images.productBrand" alt="Product and brand photography" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] group-hover:scale-110" />
-        <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950/95 via-obsidian-950/40 to-obsidian-950/10 flex flex-col justify-end p-8">
-          <p class="section-label text-gold-400 mb-2">03</p>
-          <h3 class="font-display text-3xl italic mb-2">Product & Brand</h3>
-          <p class="font-body text-white/60 text-xs leading-relaxed">Studio-grade product photography, 3D mockups & campaign shoots.</p>
-        </div>
+    <!-- Section header -->
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+      <div>
+        <p smReveal="fade-up" class="section-label mb-3">What We Do</p>
+        <h2 smReveal="fade-up" [smRevealDelay]="80"
+            class="font-body font-bold text-[32px] md:text-[42px] leading-tight tracking-[-0.02em]">
+          One studio.<br /><span class="text-gold-400">Every deliverable.</span>
+        </h2>
+      </div>
+      <a smReveal="fade-up" [smRevealDelay]="160" routerLink="/services"
+         class="hidden md:inline-flex btn-ghost shrink-0">
+        All Services
       </a>
     </div>
 
-    <div smReveal="fade-up" class="text-center mt-16">
-      <a routerLink="/services" class="btn-primary">All Services</a>
+    <!-- Service cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/[0.06]">
+
+      <a smReveal="fade-up" [smRevealDelay]="0"
+         routerLink="/gallery" [queryParams]="{ category: 'real-estate' }"
+         class="group relative overflow-hidden aspect-[4/5] bg-black">
+        <img [src]="images.realEstateInterior" alt="Modern real estate interior" loading="lazy"
+             class="absolute inset-0 w-full h-full object-cover opacity-70 transition-all duration-[700ms] group-hover:opacity-90 group-hover:scale-105" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent flex flex-col justify-end p-7">
+          <span class="section-label text-gold-400 mb-2">01</span>
+          <h3 class="font-body font-semibold text-lg tracking-tight mb-2">Real Estate</h3>
+          <p class="font-body text-white/40 text-xs leading-relaxed max-w-[200px]">Photo, video, aerial & 360° virtual tours for listings that move.</p>
+          <span class="mt-4 inline-flex items-center gap-2 section-label text-white/30 group-hover:text-gold-400 transition-colors duration-[200ms]">
+            View work
+            <svg class="w-3 h-3 translate-x-0 group-hover:translate-x-1 transition-transform duration-[200ms]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <a smReveal="fade-up" [smRevealDelay]="100"
+         routerLink="/gallery" [queryParams]="{ category: 'cinematic' }"
+         class="group relative overflow-hidden aspect-[4/5] bg-black">
+        <img [src]="images.cinematic" alt="Cinematic film production" loading="lazy"
+             class="absolute inset-0 w-full h-full object-cover opacity-70 transition-all duration-[700ms] group-hover:opacity-90 group-hover:scale-105" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent flex flex-col justify-end p-7">
+          <span class="section-label text-gold-400 mb-2">02</span>
+          <h3 class="font-body font-semibold text-lg tracking-tight mb-2">Cinematic</h3>
+          <p class="font-body text-white/40 text-xs leading-relaxed max-w-[200px]">Brand films, promo videos, and vertical reels built to convert.</p>
+          <span class="mt-4 inline-flex items-center gap-2 section-label text-white/30 group-hover:text-gold-400 transition-colors duration-[200ms]">
+            View work
+            <svg class="w-3 h-3 translate-x-0 group-hover:translate-x-1 transition-transform duration-[200ms]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <a smReveal="fade-up" [smRevealDelay]="200"
+         routerLink="/gallery" [queryParams]="{ category: 'product-brand' }"
+         class="group relative overflow-hidden aspect-[4/5] bg-black">
+        <img [src]="images.productBrand" alt="Product and brand photography" loading="lazy"
+             class="absolute inset-0 w-full h-full object-cover opacity-70 transition-all duration-[700ms] group-hover:opacity-90 group-hover:scale-105" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent flex flex-col justify-end p-7">
+          <span class="section-label text-gold-400 mb-2">03</span>
+          <h3 class="font-body font-semibold text-lg tracking-tight mb-2">Product & Brand</h3>
+          <p class="font-body text-white/40 text-xs leading-relaxed max-w-[200px]">Studio-grade product photography, 3D mockups & campaign shoots.</p>
+          <span class="mt-4 inline-flex items-center gap-2 section-label text-white/30 group-hover:text-gold-400 transition-colors duration-[200ms]">
+            View work
+            <svg class="w-3 h-3 translate-x-0 group-hover:translate-x-1 transition-transform duration-[200ms]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+      </a>
+
+    </div>
+
+    <div smReveal="fade-up" class="text-center mt-10 md:hidden">
+      <a routerLink="/services" class="btn-ghost">All Services</a>
     </div>
   </div>
 </section>
 
 <!-- ── Subscription teaser ─────────────────────────────────────────────── -->
-<section class="relative z-10 bg-obsidian-900/50 py-28 px-6 border-t border-white/5 overflow-hidden">
-  <img [src]="images.heroStudio" alt="" loading="lazy" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-10 pointer-events-none" />
-  <div class="relative max-w-5xl mx-auto">
-    <p smReveal="fade-up" class="section-label text-center mb-4">Monthly Content Plans</p>
-    <h2 smReveal="fade-up" [smRevealDelay]="100" class="font-display text-4xl md:text-5xl text-center font-light mb-16">
-      From <em class="not-italic text-gold-400">CA$99 / month</em>
-    </h2>
+<section class="relative z-10 py-24 px-6 border-t border-white/[0.06] overflow-hidden">
+  <!-- Subtle background texture -->
+  <img [src]="images.heroStudio" alt="" loading="lazy" aria-hidden="true"
+       class="absolute inset-0 w-full h-full object-cover opacity-[0.04] pointer-events-none" />
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div smReveal="scale" [smRevealDelay]="0" class="glass-panel p-8 text-center">
-        <p class="section-label mb-4">Lite</p>
-        <p class="font-display text-4xl font-light mb-3">$99<span class="text-base text-white/40">/mo</span></p>
-        <p class="font-body text-white/50 text-sm leading-relaxed">15 photos + 1 short video, 3-day delivery.</p>
-      </div>
-      <div smReveal="scale" [smRevealDelay]="150" class="glass-panel p-8 text-center ring-1 ring-gold-400/50">
-        <p class="section-label text-gold-400 mb-4">Pro — Most Popular</p>
-        <p class="font-display text-4xl font-light mb-3">$249<span class="text-base text-white/40">/mo</span></p>
-        <p class="font-body text-white/50 text-sm leading-relaxed">25 photos, 1 cinematic video + 1 reel, 2-day delivery.</p>
-      </div>
-      <div smReveal="scale" [smRevealDelay]="300" class="glass-panel p-8 text-center">
-        <p class="section-label mb-4">Business</p>
-        <p class="font-display text-4xl font-light mb-3">$499<span class="text-base text-white/40">/mo</span></p>
-        <p class="font-body text-white/50 text-sm leading-relaxed">40 photos, 2 videos + 2 reels + scriptwriting, 24h turnaround.</p>
-      </div>
+  <div class="relative max-w-5xl mx-auto">
+
+    <!-- Header -->
+    <div class="text-center mb-14">
+      <p smReveal="fade-up" class="section-label mb-4">Monthly Content Plans</p>
+      <h2 smReveal="fade-up" [smRevealDelay]="80"
+          class="font-body font-bold text-[32px] md:text-[42px] leading-tight tracking-[-0.02em]">
+        From <span class="text-gold-400">CA$99 / month</span>
+      </h2>
     </div>
 
-    <div smReveal="fade-up" class="text-center mt-12">
+    <!-- Plan cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+
+      <div smReveal="scale" [smRevealDelay]="0"
+           class="glass-panel p-8 flex flex-col gap-4 rounded-sm">
+        <p class="section-label">Lite</p>
+        <div class="flex items-baseline gap-1">
+          <span class="font-body font-bold text-3xl tracking-tight">$99</span>
+          <span class="font-body text-xs text-white/30">/mo</span>
+        </div>
+        <p class="font-body text-xs text-white/40 leading-relaxed">15 photos + 1 short video, 3-day delivery.</p>
+      </div>
+
+      <div smReveal="scale" [smRevealDelay]="100"
+           class="glass-panel p-8 flex flex-col gap-4 rounded-sm ring-1 ring-gold-400/40">
+        <div class="flex items-center justify-between">
+          <p class="section-label text-gold-400">Pro</p>
+          <span class="text-[10px] font-semibold tracking-[0.1em] uppercase bg-gold-400 text-white px-2.5 py-1 rounded-pill">Popular</span>
+        </div>
+        <div class="flex items-baseline gap-1">
+          <span class="font-body font-bold text-3xl tracking-tight">$249</span>
+          <span class="font-body text-xs text-white/30">/mo</span>
+        </div>
+        <p class="font-body text-xs text-white/40 leading-relaxed">25 photos, 1 cinematic video + 1 reel, 2-day delivery.</p>
+      </div>
+
+      <div smReveal="scale" [smRevealDelay]="200"
+           class="glass-panel p-8 flex flex-col gap-4 rounded-sm">
+        <p class="section-label">Business</p>
+        <div class="flex items-baseline gap-1">
+          <span class="font-body font-bold text-3xl tracking-tight">$499</span>
+          <span class="font-body text-xs text-white/30">/mo</span>
+        </div>
+        <p class="font-body text-xs text-white/40 leading-relaxed">40 photos, 2 videos + 2 reels + scriptwriting, 24h turnaround.</p>
+      </div>
+
+    </div>
+
+    <div smReveal="fade-up" class="text-center mt-10">
       <a routerLink="/pricing" class="btn-ghost">Compare Plans</a>
     </div>
   </div>
 </section>
-

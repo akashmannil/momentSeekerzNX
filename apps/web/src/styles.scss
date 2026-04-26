@@ -6,8 +6,10 @@
 // ─── Custom base ─────────────────────────────────────────────────────────────
 @layer base {
   :root {
-    --color-accent: theme('colors.gold.400');
-    --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --color-accent: #de4758;
+    --transition-instant: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast:    350ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal:  500ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   html {
@@ -15,65 +17,77 @@
   }
 
   body {
-    @apply bg-obsidian-950 text-white;
+    @apply bg-black text-white;
     font-family: theme('fontFamily.body');
+    font-size: 14px;
+    line-height: 20px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   ::selection {
     background: theme('colors.gold.400');
-    color: theme('colors.obsidian.950');
+    color: #ffffff;
   }
 
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    background: theme('colors.obsidian.950');
-  }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: #000000; }
   ::-webkit-scrollbar-thumb {
-    background: theme('colors.obsidian.700');
-    border-radius: 3px;
-    &:hover { background: theme('colors.gold.500'); }
+    background: theme('colors.obsidian.600');
+    border-radius: 99px;
+    &:hover { background: theme('colors.gold.400'); }
   }
 
   h1, h2, h3 {
     font-family: theme('fontFamily.display');
-    font-weight: 300;
-    letter-spacing: 0.02em;
+    letter-spacing: -0.02em;
   }
 }
 
 // ─── Custom components ───────────────────────────────────────────────────────
 @layer components {
+  // Primary CTA — filled red pill
   .btn-primary {
-    @apply inline-flex items-center gap-2 px-6 py-3 border border-gold-400
-           text-gold-400 font-body text-sm tracking-widest uppercase
-           transition-all duration-300
-           hover:bg-gold-400 hover:text-obsidian-950
-           focus:outline-none focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:ring-offset-obsidian-950;
+    @apply inline-flex items-center gap-2 px-6 py-2.5
+           bg-gold-400 text-white
+           font-body text-[11px] font-semibold tracking-[0.12em] uppercase
+           rounded-pill
+           transition-all duration-[200ms]
+           hover:bg-gold-500 hover:scale-[1.02]
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-400
+           focus-visible:ring-offset-2 focus-visible:ring-offset-black
+           disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100;
   }
 
+  // Ghost CTA — bordered pill
   .btn-ghost {
-    @apply inline-flex items-center gap-2 px-6 py-3
-           border border-white/20 text-white/70 font-body text-sm tracking-widest uppercase
-           transition-all duration-300 hover:text-white hover:border-white/50;
+    @apply inline-flex items-center gap-2 px-6 py-2.5
+           border border-white/20 text-white/60
+           font-body text-[11px] font-semibold tracking-[0.12em] uppercase
+           rounded-pill
+           transition-all duration-[200ms]
+           hover:border-white/50 hover:text-white hover:bg-white/[0.05]
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50
+           focus-visible:ring-offset-2 focus-visible:ring-offset-black
+           disabled:opacity-40 disabled:cursor-not-allowed;
   }
 
+  // Form inputs — pill-sm shape
   .input-field {
-    @apply w-full bg-transparent border-b border-white/20 py-3 px-0
-           text-white placeholder-white/30
-           focus:outline-none focus:border-gold-400
-           transition-colors duration-300;
+    @apply w-full bg-white/[0.04] border border-white/10 rounded-pill-sm py-3 px-5
+           text-sm text-white placeholder-white/25
+           focus:outline-none focus-visible:border-gold-400 focus-visible:bg-white/[0.06]
+           transition-all duration-[200ms];
   }
 
+  // Section labels — small caps, muted
   .section-label {
-    @apply text-xs tracking-[0.25em] uppercase text-gold-400 font-body;
+    @apply text-[11px] tracking-[0.2em] uppercase text-white/40 font-body font-medium;
   }
 
+  // Image card hover
   .card-hover {
-    @apply transition-all duration-500 ease-out
+    @apply transition-all duration-[350ms] ease-out
            hover:scale-[1.02] hover:shadow-2xl;
   }
 
@@ -83,40 +97,41 @@
     z-index: 0;
   }
 
-  // Overlay on top of the WebGL canvas
+  // Content overlay on top of the WebGL canvas
   .scene-overlay {
     @apply relative z-10;
   }
 
+  // Glass surface panel
   .glass-panel {
-    @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-sm;
+    @apply bg-white/[0.03] border border-white/[0.07];
   }
 }
 
-// ─── Page transition animations ──────────────────────────────────────────────
+// ─── Page transition ─────────────────────────────────────────────────────────
 @keyframes pageEnter {
-  from { opacity: 0; transform: translateY(12px); }
+  from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 .page-enter {
-  animation: pageEnter 0.5s var(--transition-smooth) forwards;
+  animation: pageEnter var(--transition-fast) forwards;
 }
 
 // ─── Scroll-reveal (smReveal directive) ──────────────────────────────────────
 .sm-reveal {
   opacity: 0;
   transition:
-    opacity 0.9s var(--transition-smooth),
-    transform 0.9s var(--transition-smooth),
-    filter 0.9s var(--transition-smooth);
+    opacity   var(--transition-normal),
+    transform var(--transition-normal),
+    filter    var(--transition-normal);
   will-change: opacity, transform;
 }
-.sm-reveal--fade-up       { transform: translate3d(0, 32px, 0); }
-.sm-reveal--fade          { transform: none; }
-.sm-reveal--scale         { transform: scale(0.94); }
-.sm-reveal--fade-left     { transform: translate3d(-40px, 0, 0); }
-.sm-reveal--fade-right    { transform: translate3d(40px, 0, 0); }
+.sm-reveal--fade-up    { transform: translate3d(0, 28px, 0); }
+.sm-reveal--fade       { transform: none; }
+.sm-reveal--scale      { transform: scale(0.95); }
+.sm-reveal--fade-left  { transform: translate3d(-32px, 0, 0); }
+.sm-reveal--fade-right { transform: translate3d(32px, 0, 0); }
 
 .sm-reveal.is-revealed {
   opacity: 1;
@@ -133,13 +148,13 @@
   }
 }
 
-// ─── Loading progress bar ──────────────────────────────────────────────────���─
+// ─── Loading progress bar ─────────────────────────────────────────────────────
 .loading-bar {
   position: fixed;
   top: 0;
   left: 0;
   height: 2px;
-  background: linear-gradient(90deg, theme('colors.gold.400'), theme('colors.gold.600'));
+  background: theme('colors.gold.400');
   transition: width 0.3s ease;
   z-index: 9999;
 }
