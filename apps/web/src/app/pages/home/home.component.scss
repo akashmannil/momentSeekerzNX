@@ -16,13 +16,8 @@
   }
 }
 
-// Category card hover images — add real images via [style.background-image] in production
 .group {
   cursor: pointer;
-
-  .absolute {
-    background-image: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 60%);
-  }
 
   &:hover h3 {
     color: theme('colors.gold.400');

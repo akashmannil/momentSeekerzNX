@@ -1,1 +1,22 @@
-:host { display: block; }
+:host {
+  display: block;
+}
+
+// Scrolled state — background driven by CSS vars so it responds to active theme.
+.sm-nav-scrolled {
+  background: var(--sm-color-nav-scrolled);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--sm-color-border-subtle);
+}
+
+// Mobile drawer background
+.sm-nav-mobile-drawer {
+  background: var(--sm-color-nav-mobile-bg);
+}
+
+// Active state applied via routerLinkActive — overrides nav-link defaults
+.sm-nav-link-active {
+  color: var(--sm-color-text-primary) !important;
+  background: var(--sm-color-surface-hover) !important;
+}

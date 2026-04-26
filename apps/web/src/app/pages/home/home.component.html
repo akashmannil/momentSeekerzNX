@@ -3,7 +3,7 @@
 
 <!-- ── Hero overlay ─────────────────────────────────────────────────────── -->
 <section class="scene-overlay flex flex-col items-center justify-center min-h-screen px-6 pointer-events-none">
-  <div class="text-center animate-fade-up" style="animation-delay: 0.8s; opacity: 0" [smParallax]="0.12">
+  <div class="text-center animate-fade-up animate-delay-hero-1" [smParallax]="0.12">
     <p class="section-label mb-8">Visual Production Studio</p>
     <h1 class="font-body font-bold text-[52px] md:text-[72px] leading-[0.95] tracking-[-0.03em] mb-6">
       Savage<br /><span class="text-gold-400">Media</span>
@@ -16,8 +16,7 @@
 
   <!-- CTA buttons — pointer-events re-enabled -->
   <div
-    class="flex flex-col sm:flex-row gap-3 mt-10 pointer-events-auto animate-fade-up"
-    style="animation-delay: 1.3s; opacity: 0"
+    class="flex flex-col sm:flex-row gap-3 mt-10 pointer-events-auto animate-fade-up animate-delay-hero-2"
   >
     <a routerLink="/services" class="btn-primary">Explore Services</a>
     <a routerLink="/pricing"  class="btn-ghost">See Pricing</a>
@@ -25,8 +24,7 @@
 
   <!-- Scroll hint -->
   <div
-    class="absolute bottom-10 flex flex-col items-center gap-3 pointer-events-none animate-fade-in"
-    style="animation-delay: 2s; opacity: 0"
+    class="absolute bottom-10 flex flex-col items-center gap-3 pointer-events-none animate-fade-in animate-delay-hero-3"
   >
     <span class="section-label">Scroll</span>
     <span class="block w-px h-10 bg-white/20 animate-pulse"></span>
@@ -59,14 +57,14 @@
          routerLink="/gallery" [queryParams]="{ category: 'real-estate' }"
          class="group relative overflow-hidden aspect-[4/5] bg-black">
         <img [src]="images.realEstateInterior" alt="Modern real estate interior" loading="lazy"
-             class="absolute inset-0 w-full h-full object-cover opacity-70 transition-all duration-[700ms] group-hover:opacity-90 group-hover:scale-105" />
+             class="absolute inset-0 w-full h-full object-cover opacity-70 transition-all duration-700 group-hover:opacity-90 group-hover:scale-105" />
         <div class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent flex flex-col justify-end p-7">
           <span class="section-label text-gold-400 mb-2">01</span>
           <h3 class="font-body font-semibold text-lg tracking-tight mb-2">Real Estate</h3>
           <p class="font-body text-white/40 text-xs leading-relaxed max-w-[200px]">Photo, video, aerial & 360° virtual tours for listings that move.</p>
-          <span class="mt-4 inline-flex items-center gap-2 section-label text-white/30 group-hover:text-gold-400 transition-colors duration-[200ms]">
+          <span class="mt-4 inline-flex items-center gap-2 section-label text-white/30 group-hover:text-gold-400 transition-colors duration-200">
             View work
-            <svg class="w-3 h-3 translate-x-0 group-hover:translate-x-1 transition-transform duration-[200ms]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <svg class="w-3 h-3 translate-x-0 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
           </span>
         </div>
       </a>
@@ -75,14 +73,14 @@
          routerLink="/gallery" [queryParams]="{ category: 'cinematic' }"
          class="group relative overflow-hidden aspect-[4/5] bg-black">
         <img [src]="images.cinematic" alt="Cinematic film production" loading="lazy"
-             class="absolute inset-0 w-full h-full object-cover opacity-70 transition-all duration-[700ms] group-hover:opacity-90 group-hover:scale-105" />
+             class="absolute inset-0 w-full h-full object-cover opacity-70 transition-all duration-700 group-hover:opacity-90 group-hover:scale-105" />
         <div class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent flex flex-col justify-end p-7">
           <span class="section-label text-gold-400 mb-2">02</span>
           <h3 class="font-body font-semibold text-lg tracking-tight mb-2">Cinematic</h3>
           <p class="font-body text-white/40 text-xs leading-relaxed max-w-[200px]">Brand films, promo videos, and vertical reels built to convert.</p>
-          <span class="mt-4 inline-flex items-center gap-2 section-label text-white/30 group-hover:text-gold-400 transition-colors duration-[200ms]">
+          <span class="mt-4 inline-flex items-center gap-2 section-label text-white/30 group-hover:text-gold-400 transition-colors duration-200">
             View work
-            <svg class="w-3 h-3 translate-x-0 group-hover:translate-x-1 transition-transform duration-[200ms]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <svg class="w-3 h-3 translate-x-0 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
           </span>
         </div>
       </a>
@@ -91,14 +89,14 @@
          routerLink="/gallery" [queryParams]="{ category: 'product-brand' }"
          class="group relative overflow-hidden aspect-[4/5] bg-black">
         <img [src]="images.productBrand" alt="Product and brand photography" loading="lazy"
-             class="absolute inset-0 w-full h-full object-cover opacity-70 transition-all duration-[700ms] group-hover:opacity-90 group-hover:scale-105" />
+             class="absolute inset-0 w-full h-full object-cover opacity-70 transition-all duration-700 group-hover:opacity-90 group-hover:scale-105" />
         <div class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent flex flex-col justify-end p-7">
           <span class="section-label text-gold-400 mb-2">03</span>
           <h3 class="font-body font-semibold text-lg tracking-tight mb-2">Product & Brand</h3>
           <p class="font-body text-white/40 text-xs leading-relaxed max-w-[200px]">Studio-grade product photography, 3D mockups & campaign shoots.</p>
-          <span class="mt-4 inline-flex items-center gap-2 section-label text-white/30 group-hover:text-gold-400 transition-colors duration-[200ms]">
+          <span class="mt-4 inline-flex items-center gap-2 section-label text-white/30 group-hover:text-gold-400 transition-colors duration-200">
             View work
-            <svg class="w-3 h-3 translate-x-0 group-hover:translate-x-1 transition-transform duration-[200ms]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <svg class="w-3 h-3 translate-x-0 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
           </span>
         </div>
       </a>

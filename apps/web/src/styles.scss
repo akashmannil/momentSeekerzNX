@@ -1,110 +1,228 @@
+// ─── Design tokens (CSS custom properties) ───────────────────────────────────
+@use './theme';
+
 // ─── Tailwind ─────────────────────────────────────────────────────────────────
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-// ─── Custom base ─────────────────────────────────────────────────────────────
+// ─── Base ─────────────────────────────────────────────────────────────────────
 @layer base {
-  :root {
-    --color-accent: #de4758;
-    --transition-instant: 200ms cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-fast:    350ms cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-normal:  500ms cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
   html {
     scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-black text-white;
-    font-family: theme('fontFamily.body');
-    font-size: 14px;
-    line-height: 20px;
+    background: var(--sm-color-base);
+    color: var(--sm-color-text-primary);
+    font-family: var(--sm-font-primary);
+    font-size: var(--sm-font-size-base);
+    line-height: var(--sm-line-height);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition:
+      background-color var(--sm-duration-normal) var(--sm-ease),
+      color            var(--sm-duration-normal) var(--sm-ease);
   }
 
   ::selection {
-    background: theme('colors.gold.400');
+    background: var(--sm-color-accent);
     color: #ffffff;
   }
 
   ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-track { background: #000000; }
+  ::-webkit-scrollbar-track { background: var(--sm-color-scrollbar-track); }
   ::-webkit-scrollbar-thumb {
-    background: theme('colors.obsidian.600');
+    background: var(--sm-color-scrollbar-thumb);
     border-radius: 99px;
-    &:hover { background: theme('colors.gold.400'); }
+    &:hover { background: var(--sm-color-accent); }
   }
 
   h1, h2, h3 {
-    font-family: theme('fontFamily.display');
+    font-family: var(--sm-font-primary);
     letter-spacing: -0.02em;
   }
 }
 
-// ─── Custom components ───────────────────────────────────────────────────────
+// ─── Components ───────────────────────────────────────────────────────────────
 @layer components {
-  // Primary CTA — filled red pill
+
+  // ── Buttons ───────────────────────────────────────────────────────────────
+
   .btn-primary {
     @apply inline-flex items-center gap-2 px-6 py-2.5
-           bg-gold-400 text-white
            font-body text-[11px] font-semibold tracking-[0.12em] uppercase
-           rounded-pill
-           transition-all duration-[200ms]
-           hover:bg-gold-500 hover:scale-[1.02]
-           focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-400
-           focus-visible:ring-offset-2 focus-visible:ring-offset-black
+           rounded-pill transition-all duration-200
+           focus:outline-none focus-visible:ring-2
+           focus-visible:ring-offset-2
            disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100;
+    background: var(--sm-color-accent);
+    color: #ffffff;
+    &:focus-visible {
+      --tw-ring-color: var(--sm-color-accent);
+      --tw-ring-offset-color: var(--sm-color-base);
+    }
+
+    &:hover:not(:disabled) {
+      background: var(--sm-color-accent-hover);
+      scale: 1.02;
+    }
   }
 
-  // Ghost CTA — bordered pill
   .btn-ghost {
     @apply inline-flex items-center gap-2 px-6 py-2.5
-           border border-white/20 text-white/60
            font-body text-[11px] font-semibold tracking-[0.12em] uppercase
-           rounded-pill
-           transition-all duration-[200ms]
-           hover:border-white/50 hover:text-white hover:bg-white/[0.05]
-           focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50
-           focus-visible:ring-offset-2 focus-visible:ring-offset-black
+           rounded-pill transition-all duration-200
+           focus:outline-none focus-visible:ring-2
+           focus-visible:ring-offset-2
            disabled:opacity-40 disabled:cursor-not-allowed;
+    border: 1px solid var(--sm-color-border-interactive);
+    color: var(--sm-color-text-secondary);
+
+    &:hover:not(:disabled) {
+      border-color: var(--sm-color-border-interactive-hover);
+      color: var(--sm-color-text-primary);
+      background: var(--sm-color-surface-hover);
+    }
   }
 
-  // Form inputs — pill-sm shape
+  // ── Form ──────────────────────────────────────────────────────────────────
+
   .input-field {
-    @apply w-full bg-white/[0.04] border border-white/10 rounded-pill-sm py-3 px-5
-           text-sm text-white placeholder-white/25
-           focus:outline-none focus-visible:border-gold-400 focus-visible:bg-white/[0.06]
-           transition-all duration-[200ms];
+    @apply w-full rounded-pill-sm py-3 px-5
+           text-sm
+           transition-all duration-200
+           focus:outline-none;
+    background: var(--sm-color-glass);
+    border: 1px solid var(--sm-color-border-interactive);
+    color: var(--sm-color-text-primary);
+
+    &::placeholder {
+      color: var(--sm-color-text-dim);
+    }
+
+    &:focus-visible {
+      border-color: var(--sm-color-accent);
+      background: var(--sm-color-glass-border); // slightly more opaque on focus
+    }
   }
 
-  // Section labels — small caps, muted
+  // ── Labels ────────────────────────────────────────────────────────────────
+
   .section-label {
-    @apply text-[11px] tracking-[0.2em] uppercase text-white/40 font-body font-medium;
+    @apply text-[11px] tracking-[0.2em] uppercase font-body font-medium;
+    color: var(--sm-color-text-muted);
   }
 
-  // Image card hover
+  // ── Navigation ────────────────────────────────────────────────────────────
+
+  .nav-link {
+    @apply block px-4 py-2 rounded-pill
+           text-[11px] tracking-[0.2em] uppercase font-body font-medium
+           transition-all duration-200;
+    color: var(--sm-color-text-muted);
+
+    &:hover {
+      color: var(--sm-color-text-primary);
+      background: var(--sm-color-surface-hover);
+    }
+  }
+
+  .nav-link-mobile {
+    @apply flex px-4 py-3 rounded-pill-sm
+           text-[11px] tracking-[0.2em] uppercase font-body font-medium
+           transition-all duration-200;
+    color: var(--sm-color-text-muted);
+
+    &:hover {
+      color: var(--sm-color-text-primary);
+      background: var(--sm-color-surface-hover);
+    }
+  }
+
+  // ── Theme toggle button ────────────────────────────────────────────────────
+
+  .theme-toggle {
+    @apply inline-flex items-center justify-center w-8 h-8
+           rounded-pill-sm transition-all duration-200
+           focus:outline-none focus-visible:ring-2;
+    color: var(--sm-color-text-muted);
+
+    &:hover {
+      color: var(--sm-color-text-primary);
+      background: var(--sm-color-surface-hover);
+    }
+  }
+
+  // ── Typography ────────────────────────────────────────────────────────────
+
+  .heading-hero {
+    @apply font-body font-bold leading-[0.95] tracking-[-0.03em];
+  }
+
+  .heading-section {
+    @apply font-body font-bold leading-tight tracking-[-0.02em];
+  }
+
+  // ── Surfaces ──────────────────────────────────────────────────────────────
+
+  .glass-panel {
+    background: var(--sm-color-glass);
+    border: 1px solid var(--sm-color-glass-border);
+  }
+
+  // ── Gradient overlays ─────────────────────────────────────────────────────
+
+  .gradient-overlay-up {
+    @apply absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent;
+  }
+
+  .gradient-overlay-down {
+    @apply absolute inset-0 bg-gradient-to-b from-black/70 to-transparent;
+  }
+
+  // ── Image hovers ──────────────────────────────────────────────────────────
+
+  .img-hover {
+    @apply absolute inset-0 w-full h-full object-cover opacity-70
+           transition-all duration-700
+           group-hover:opacity-90 group-hover:scale-105;
+  }
+
+  // ── Card hover ────────────────────────────────────────────────────────────
+
   .card-hover {
-    @apply transition-all duration-[350ms] ease-out
-           hover:scale-[1.02] hover:shadow-2xl;
+    @apply transition-all duration-350 ease-out
+           hover:scale-102 hover:shadow-2xl;
   }
 
-  // 3D canvas container — always fullscreen
+  // ── Canvas ────────────────────────────────────────────────────────────────
+
   .three-canvas {
     @apply fixed inset-0 w-full h-full;
     z-index: 0;
   }
 
-  // Content overlay on top of the WebGL canvas
   .scene-overlay {
     @apply relative z-10;
   }
 
-  // Glass surface panel
-  .glass-panel {
-    @apply bg-white/[0.03] border border-white/[0.07];
+  // ── Hero stagger delays ───────────────────────────────────────────────────
+  // opacity:0 holds the element invisible during the animation-delay period.
+
+  .animate-delay-hero-1 {
+    animation-delay: var(--sm-hero-delay-1);
+    opacity: 0;
+  }
+
+  .animate-delay-hero-2 {
+    animation-delay: var(--sm-hero-delay-2);
+    opacity: 0;
+  }
+
+  .animate-delay-hero-3 {
+    animation-delay: var(--sm-hero-delay-3);
+    opacity: 0;
   }
 }
 
@@ -115,16 +233,16 @@
 }
 
 .page-enter {
-  animation: pageEnter var(--transition-fast) forwards;
+  animation: pageEnter var(--sm-duration-fast) forwards;
 }
 
 // ─── Scroll-reveal (smReveal directive) ──────────────────────────────────────
 .sm-reveal {
   opacity: 0;
   transition:
-    opacity   var(--transition-normal),
-    transform var(--transition-normal),
-    filter    var(--transition-normal);
+    opacity   var(--sm-duration-normal) var(--sm-ease),
+    transform var(--sm-duration-normal) var(--sm-ease),
+    filter    var(--sm-duration-normal) var(--sm-ease);
   will-change: opacity, transform;
 }
 .sm-reveal--fade-up    { transform: translate3d(0, 28px, 0); }
@@ -148,13 +266,13 @@
   }
 }
 
-// ─── Loading progress bar ─────────────────────────────────────────────────────
+// ─── Loading bar ─────────────────────────────────────────────────────────────
 .loading-bar {
   position: fixed;
   top: 0;
   left: 0;
   height: 2px;
-  background: theme('colors.gold.400');
-  transition: width 0.3s ease;
+  background: var(--sm-color-accent);
+  transition: width 0.3s var(--sm-ease);
   z-index: 9999;
 }
