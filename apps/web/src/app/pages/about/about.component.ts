@@ -20,9 +20,9 @@ export class AboutComponent {
       copy: 'Intimate sessions designed to reveal the authentic you rather than a performed version.',
     },
     {
-      title: 'Fine Art',
-      image: IMAGES.fineArt,
-      copy: 'Limited-edition museum prints crafted on archival paper with pigment inks.',
+      title: 'Creative Direction',
+      image: IMAGES.creativeDirection,
+      copy: 'Strategy and concept design sessions with our lead creative for launches and long-form campaigns.',
     },
   ];
 }

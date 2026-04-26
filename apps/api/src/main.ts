@@ -19,6 +19,7 @@ async function bootstrap() {
   const logger = new Logger('Bootstrap');
   const app = await NestFactory.create(AppModule, {
     logger: ['error', 'warn', 'log', 'debug'],
+    rawBody: true,
   });
 
   const configService = app.get(ConfigService);
@@ -80,7 +81,8 @@ async function bootstrap() {
       .addTag('auth', 'Authentication endpoints')
       .addTag('gallery', 'Photo gallery management')
       .addTag('booking', 'Session booking requests')
-      .addTag('store', 'Online print store')
+      .addTag('cart', 'User/guest cart management')
+      .addTag('checkout', 'Stripe checkout & webhooks')
       .addTag('upload', 'File upload management')
       .addTag('analytics', 'Admin analytics')
       .build();

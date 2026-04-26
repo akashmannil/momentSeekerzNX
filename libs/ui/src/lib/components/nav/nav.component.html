@@ -1,65 +1,203 @@
 <header
-  class="fixed top-0 left-0 right-0 z-30 transition-all duration-500"
+  class="fixed top-0 left-0 right-0 z-30 transition-all duration-350"
   [ngClass]="{
-    'py-6': !scrolled,
-    'py-4': scrolled,
-    'bg-obsidian-950/90': scrolled,
-    'backdrop-blur-md': scrolled,
-    'border-b': scrolled,
-    'border-white/5': scrolled
+    'py-5': !scrolled,
+    'py-3': scrolled,
+    'sm-nav-scrolled': scrolled
   }"
 >
-  <nav class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+  <nav class="max-w-7xl mx-auto px-6 flex items-center justify-between gap-8">
+
     <!-- Logo -->
-    <a routerLink="/" class="font-display text-xl tracking-wide hover:text-gold-400 transition-colors">
+    <a
+      routerLink="/"
+      class="font-body text-sm font-bold tracking-tight hover:text-gold-400 transition-colors duration-200 shrink-0"
+      style="color: var(--sm-color-text-primary)"
+    >
       Savage Media
     </a>
 
-    <!-- Desktop links -->
-    <ul class="hidden md:flex items-center gap-8">
-      <li><a routerLink="/services" routerLinkActive="text-gold-400" class="section-label hover:text-gold-400 transition-colors">Services</a></li>
-      <li><a routerLink="/pricing" routerLinkActive="text-gold-400" class="section-label hover:text-gold-400 transition-colors">Pricing</a></li>
-      <li><a routerLink="/gallery" routerLinkActive="text-gold-400" class="section-label hover:text-gold-400 transition-colors">Gallery</a></li>
-      <li><a routerLink="/store" routerLinkActive="text-gold-400" class="section-label hover:text-gold-400 transition-colors">Store</a></li>
-      <li><a routerLink="/about" routerLinkActive="text-gold-400" class="section-label hover:text-gold-400 transition-colors">About</a></li>
-      <li><a routerLink="/contact" routerLinkActive="text-gold-400" class="section-label hover:text-gold-400 transition-colors">Contact</a></li>
-      <li><a routerLink="/booking" class="btn-primary py-2 px-4">Book Now</a></li>
-      <li *ngIf="isAdmin$ | async">
-        <a routerLink="/admin" class="section-label text-gold-400 hover:text-white transition-colors">Admin</a>
+    <!-- Desktop nav links -->
+    <ul class="hidden md:flex items-center gap-1 flex-1 justify-center">
+      <li>
+        <a routerLink="/services" routerLinkActive="sm-nav-link-active" class="nav-link">
+          Services
+        </a>
       </li>
-      <li *ngIf="isAuthenticated$ | async">
-        <button (click)="logout()" class="section-label text-white/40 hover:text-white transition-colors">Sign Out</button>
+      <li>
+        <a routerLink="/pricing" routerLinkActive="sm-nav-link-active" class="nav-link">
+          Pricing
+        </a>
       </li>
-      <li *ngIf="!(isAuthenticated$ | async)">
-        <a routerLink="/login" class="section-label text-white/40 hover:text-white transition-colors">Sign In</a>
+      <li>
+        <a routerLink="/gallery" routerLinkActive="sm-nav-link-active" class="nav-link">
+          Gallery
+        </a>
+      </li>
+      <li>
+        <a routerLink="/about" routerLinkActive="sm-nav-link-active" class="nav-link">
+          About
+        </a>
+      </li>
+      <li>
+        <a routerLink="/contact" routerLinkActive="sm-nav-link-active" class="nav-link">
+          Contact
+        </a>
+      </li>
+      <li>
+        <a
+          routerLink="/cart"
+          routerLinkActive="sm-nav-link-active"
+          class="nav-link inline-flex items-center gap-2"
+          aria-label="Cart"
+        >
+          Cart
+          <span
+            *ngIf="(cartCount$ | async) as count"
+            class="inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 text-[10px] font-semibold bg-gold-400 text-white rounded-full"
+          >{{ count }}</span>
+        </a>
       </li>
     </ul>
 
-    <!-- Mobile menu toggle -->
+    <!-- Right-side actions -->
+    <div class="hidden md:flex items-center gap-2 shrink-0">
+      <ng-container *ngIf="isAdmin$ | async">
+        <a routerLink="/admin"
+           class="section-label px-4 py-2 text-gold-400 hover:text-white transition-colors duration-200">
+          Admin
+        </a>
+      </ng-container>
+
+      <ng-container *ngIf="isAuthenticated$ | async; else signIn">
+        <button
+          (click)="logout()"
+          class="section-label px-4 py-2 transition-colors duration-200"
+          style="color: var(--sm-color-text-dim)">
+          Sign Out
+        </button>
+      </ng-container>
+      <ng-template #signIn>
+        <a routerLink="/login"
+           class="section-label px-4 py-2 transition-colors duration-200"
+           style="color: var(--sm-color-text-muted)">
+          Sign In
+        </a>
+      </ng-template>
+
+      <!-- Theme toggle -->
+      <button
+        (click)="toggleTheme()"
+        class="theme-toggle"
+        [attr.aria-label]="(isDark$ | async) ? 'Switch to light mode' : 'Switch to dark mode'"
+        title="Toggle theme"
+      >
+        <!-- Sun — visible in dark mode, click to go light -->
+        <svg *ngIf="isDark$ | async"
+             class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="4"/>
+          <line x1="12" y1="2"  x2="12" y2="4"/>
+          <line x1="12" y1="20" x2="12" y2="22"/>
+          <line x1="4.22" y1="4.22"   x2="5.64" y2="5.64"/>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="2"  y1="12" x2="4"  y2="12"/>
+          <line x1="20" y1="12" x2="22" y2="12"/>
+          <line x1="4.22" y1="19.78"  x2="5.64" y2="18.36"/>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <!-- Moon — visible in light mode, click to go dark -->
+        <svg *ngIf="!(isDark$ | async)"
+             class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+
+      <a routerLink="/booking" class="btn-primary">Book Now</a>
+    </div>
+
+    <!-- Mobile hamburger -->
     <button
-      class="md:hidden flex flex-col gap-1.5 p-2"
+      class="md:hidden flex flex-col gap-[5px] p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 rounded"
       (click)="toggleNav(!navOpen)"
       aria-label="Toggle menu"
+      [attr.aria-expanded]="navOpen"
     >
-      <span class="w-6 h-px bg-white transition-all"></span>
-      <span class="w-4 h-px bg-white transition-all"></span>
-      <span class="w-6 h-px bg-white transition-all"></span>
+      <span class="w-6 h-px origin-center transition-all duration-350"
+            [ngClass]="{'rotate-45 translate-y-[6px]': navOpen}"
+            style="background: var(--sm-color-text-primary)"></span>
+      <span class="h-px transition-all duration-350"
+            [ngClass]="{'opacity-0 w-0': navOpen, 'w-4': !navOpen}"
+            style="background: var(--sm-color-text-primary)"></span>
+      <span class="w-6 h-px origin-center transition-all duration-350"
+            [ngClass]="{'-rotate-45 -translate-y-[6px]': navOpen}"
+            style="background: var(--sm-color-text-primary)"></span>
     </button>
+
   </nav>
 
-  <!-- Mobile menu drawer -->
+  <!-- Mobile drawer -->
   <div
     *ngIf="navOpen$ | async"
-    class="md:hidden bg-obsidian-900/95 backdrop-blur-lg border-t border-white/10 px-6 py-8"
+    class="md:hidden sm-nav-mobile-drawer px-5 py-6 border-t"
+    style="border-color: var(--sm-color-border-subtle)"
   >
-    <ul class="space-y-6">
-      <li><a routerLink="/services" (click)="toggleNav(false)" class="section-label block hover:text-gold-400">Services</a></li>
-      <li><a routerLink="/pricing" (click)="toggleNav(false)" class="section-label block hover:text-gold-400">Pricing</a></li>
-      <li><a routerLink="/gallery" (click)="toggleNav(false)" class="section-label block hover:text-gold-400">Gallery</a></li>
-      <li><a routerLink="/store" (click)="toggleNav(false)" class="section-label block hover:text-gold-400">Store</a></li>
-      <li><a routerLink="/about" (click)="toggleNav(false)" class="section-label block hover:text-gold-400">About</a></li>
-      <li><a routerLink="/contact" (click)="toggleNav(false)" class="section-label block hover:text-gold-400">Contact</a></li>
-      <li><a routerLink="/booking" (click)="toggleNav(false)" class="section-label block text-gold-400">Book Now</a></li>
+    <ul class="space-y-1 mb-6">
+      <li><a routerLink="/services" (click)="toggleNav(false)" class="nav-link-mobile">Services</a></li>
+      <li><a routerLink="/pricing"  (click)="toggleNav(false)" class="nav-link-mobile">Pricing</a></li>
+      <li><a routerLink="/gallery"  (click)="toggleNav(false)" class="nav-link-mobile">Gallery</a></li>
+      <li><a routerLink="/about"    (click)="toggleNav(false)" class="nav-link-mobile">About</a></li>
+      <li><a routerLink="/contact"  (click)="toggleNav(false)" class="nav-link-mobile">Contact</a></li>
+      <li>
+        <a routerLink="/cart" (click)="toggleNav(false)"
+           class="nav-link-mobile items-center gap-2">
+          Cart
+          <span
+            *ngIf="(cartCount$ | async) as count"
+            class="inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 text-[10px] font-semibold bg-gold-400 text-white rounded-full"
+          >{{ count }}</span>
+        </a>
+      </li>
     </ul>
+
+    <div class="flex flex-col gap-3">
+      <a routerLink="/booking" (click)="toggleNav(false)" class="btn-primary justify-center">Book Now</a>
+      <ng-container *ngIf="isAuthenticated$ | async; else mobileSignIn">
+        <button (click)="logout(); toggleNav(false)" class="btn-ghost justify-center">Sign Out</button>
+      </ng-container>
+      <ng-template #mobileSignIn>
+        <a routerLink="/login" (click)="toggleNav(false)" class="btn-ghost justify-center">Sign In</a>
+      </ng-template>
+
+      <!-- Theme toggle row -->
+      <div class="flex items-center justify-between pt-4" style="border-top: 1px solid var(--sm-color-border-subtle)">
+        <span class="section-label">Theme</span>
+        <button
+          (click)="toggleTheme()"
+          class="theme-toggle"
+          [attr.aria-label]="(isDark$ | async) ? 'Switch to light mode' : 'Switch to dark mode'"
+        >
+          <svg *ngIf="isDark$ | async"
+               class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="4"/>
+            <line x1="12" y1="2"  x2="12" y2="4"/>
+            <line x1="12" y1="20" x2="12" y2="22"/>
+            <line x1="4.22" y1="4.22"   x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="2"  y1="12" x2="4"  y2="12"/>
+            <line x1="20" y1="12" x2="22" y2="12"/>
+            <line x1="4.22" y1="19.78"  x2="5.64" y2="18.36"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <svg *ngIf="!(isDark$ | async)"
+               class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
   </div>
 </header>

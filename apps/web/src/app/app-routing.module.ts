@@ -26,9 +26,9 @@ const routes: Routes = [
     title: 'Pricing — Savage Media',
   },
   {
-    path: 'store',
-    loadChildren: () => import('./pages/store/store-page.module').then(m => m.StorePageModule),
-    title: 'Prints & Store — Savage Media',
+    path: 'cart',
+    loadChildren: () => import('./pages/cart/cart.module').then(m => m.CartModule),
+    title: 'Your Cart — Savage Media',
   },
   {
     path: 'about',
@@ -50,16 +50,12 @@ const routes: Routes = [
     loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule),
     title: 'Sign In',
   },
-
-  // ── Protected admin routes ───────────────────────────────────────────────────
   {
     path: 'admin',
     canActivate: [AdminGuard],
     loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminModule),
     title: 'Admin — Savage Media',
   },
-
-  // ── Fallback ─────────────────────────────────────────────────────────────────
   { path: '**', redirectTo: '' },
 ];
 

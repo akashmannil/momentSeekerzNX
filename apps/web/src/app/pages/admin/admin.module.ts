@@ -6,7 +6,6 @@ import { AdminShellComponent } from './admin-shell.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { GalleryManagerComponent } from './gallery-manager/gallery-manager.component';
 import { BookingManagerComponent } from './booking-manager/booking-manager.component';
-import { OrderManagerComponent } from './order-manager/order-manager.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +13,6 @@ import { OrderManagerComponent } from './order-manager/order-manager.component';
     DashboardComponent,
     GalleryManagerComponent,
     BookingManagerComponent,
-    OrderManagerComponent,
   ],
   imports: [
     CommonModule,
@@ -28,7 +26,6 @@ import { OrderManagerComponent } from './order-manager/order-manager.component';
           { path: 'dashboard', component: DashboardComponent },
           { path: 'gallery', component: GalleryManagerComponent },
           { path: 'bookings', component: BookingManagerComponent },
-          { path: 'orders', component: OrderManagerComponent },
         ],
       },
     ]),

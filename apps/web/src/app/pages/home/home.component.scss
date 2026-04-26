@@ -4,13 +4,20 @@
   position: relative;
 }
 
-// Category card hover images — add real images via [style.background-image] in production
+// Collapse hero stagger delays when the user prefers reduced motion
+@media (prefers-reduced-motion: reduce) {
+  :host .scene-overlay {
+    .animate-fade-up,
+    .animate-fade-in {
+      animation-delay: 0s !important;
+      animation-duration: 0.2s !important;
+      opacity: 1 !important;
+    }
+  }
+}
+
 .group {
   cursor: pointer;
-
-  .absolute {
-    background-image: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 60%);
-  }
 
   &:hover h3 {
     color: theme('colors.gold.400');

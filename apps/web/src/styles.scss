@@ -1,122 +1,255 @@
+// ─── Design tokens (CSS custom properties) ───────────────────────────────────
+@use './theme';
+
 // ─── Tailwind ─────────────────────────────────────────────────────────────────
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-// ─── Custom base ─────────────────────────────────────────────────────────────
+// ─── Base ─────────────────────────────────────────────────────────────────────
 @layer base {
-  :root {
-    --color-accent: theme('colors.gold.400');
-    --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
   html {
     scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-obsidian-950 text-white;
-    font-family: theme('fontFamily.body');
+    background: var(--sm-color-base);
+    color: var(--sm-color-text-primary);
+    font-family: var(--sm-font-primary);
+    font-size: var(--sm-font-size-base);
+    line-height: var(--sm-line-height);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition:
+      background-color var(--sm-duration-normal) var(--sm-ease),
+      color            var(--sm-duration-normal) var(--sm-ease);
   }
 
   ::selection {
-    background: theme('colors.gold.400');
-    color: theme('colors.obsidian.950');
+    background: var(--sm-color-accent);
+    color: #ffffff;
   }
 
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    background: theme('colors.obsidian.950');
-  }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--sm-color-scrollbar-track); }
   ::-webkit-scrollbar-thumb {
-    background: theme('colors.obsidian.700');
-    border-radius: 3px;
-    &:hover { background: theme('colors.gold.500'); }
+    background: var(--sm-color-scrollbar-thumb);
+    border-radius: 99px;
+    &:hover { background: var(--sm-color-accent); }
   }
 
   h1, h2, h3 {
-    font-family: theme('fontFamily.display');
-    font-weight: 300;
-    letter-spacing: 0.02em;
+    font-family: var(--sm-font-primary);
+    letter-spacing: -0.02em;
   }
 }
 
-// ─── Custom components ───────────────────────────────────────────────────────
+// ─── Components ───────────────────────────────────────────────────────────────
 @layer components {
+
+  // ── Buttons ───────────────────────────────────────────────────────────────
+
   .btn-primary {
-    @apply inline-flex items-center gap-2 px-6 py-3 border border-gold-400
-           text-gold-400 font-body text-sm tracking-widest uppercase
-           transition-all duration-300
-           hover:bg-gold-400 hover:text-obsidian-950
-           focus:outline-none focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:ring-offset-obsidian-950;
+    @apply inline-flex items-center gap-2 px-6 py-2.5
+           font-body text-[11px] font-semibold tracking-[0.12em] uppercase
+           rounded-pill transition-all duration-200
+           focus:outline-none focus-visible:ring-2
+           focus-visible:ring-offset-2
+           disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100;
+    background: var(--sm-color-accent);
+    color: #ffffff;
+    &:focus-visible {
+      --tw-ring-color: var(--sm-color-accent);
+      --tw-ring-offset-color: var(--sm-color-base);
+    }
+
+    &:hover:not(:disabled) {
+      background: var(--sm-color-accent-hover);
+      scale: 1.02;
+    }
   }
 
   .btn-ghost {
-    @apply inline-flex items-center gap-2 px-6 py-3
-           border border-white/20 text-white/70 font-body text-sm tracking-widest uppercase
-           transition-all duration-300 hover:text-white hover:border-white/50;
+    @apply inline-flex items-center gap-2 px-6 py-2.5
+           font-body text-[11px] font-semibold tracking-[0.12em] uppercase
+           rounded-pill transition-all duration-200
+           focus:outline-none focus-visible:ring-2
+           focus-visible:ring-offset-2
+           disabled:opacity-40 disabled:cursor-not-allowed;
+    border: 1px solid var(--sm-color-border-interactive);
+    color: var(--sm-color-text-secondary);
+
+    &:hover:not(:disabled) {
+      border-color: var(--sm-color-border-interactive-hover);
+      color: var(--sm-color-text-primary);
+      background: var(--sm-color-surface-hover);
+    }
   }
+
+  // ── Form ──────────────────────────────────────────────────────────────────
 
   .input-field {
-    @apply w-full bg-transparent border-b border-white/20 py-3 px-0
-           text-white placeholder-white/30
-           focus:outline-none focus:border-gold-400
-           transition-colors duration-300;
+    @apply w-full rounded-pill-sm py-3 px-5
+           text-sm
+           transition-all duration-200
+           focus:outline-none;
+    background: var(--sm-color-glass);
+    border: 1px solid var(--sm-color-border-interactive);
+    color: var(--sm-color-text-primary);
+
+    &::placeholder {
+      color: var(--sm-color-text-dim);
+    }
+
+    &:focus-visible {
+      border-color: var(--sm-color-accent);
+      background: var(--sm-color-glass-border); // slightly more opaque on focus
+    }
   }
+
+  // ── Labels ────────────────────────────────────────────────────────────────
 
   .section-label {
-    @apply text-xs tracking-[0.25em] uppercase text-gold-400 font-body;
+    @apply text-[11px] tracking-[0.2em] uppercase font-body font-medium;
+    color: var(--sm-color-text-muted);
   }
+
+  // ── Navigation ────────────────────────────────────────────────────────────
+
+  .nav-link {
+    @apply block px-4 py-2 rounded-pill
+           text-[11px] tracking-[0.2em] uppercase font-body font-medium
+           transition-all duration-200;
+    color: var(--sm-color-text-muted);
+
+    &:hover {
+      color: var(--sm-color-text-primary);
+      background: var(--sm-color-surface-hover);
+    }
+  }
+
+  .nav-link-mobile {
+    @apply flex px-4 py-3 rounded-pill-sm
+           text-[11px] tracking-[0.2em] uppercase font-body font-medium
+           transition-all duration-200;
+    color: var(--sm-color-text-muted);
+
+    &:hover {
+      color: var(--sm-color-text-primary);
+      background: var(--sm-color-surface-hover);
+    }
+  }
+
+  // ── Theme toggle button ────────────────────────────────────────────────────
+
+  .theme-toggle {
+    @apply inline-flex items-center justify-center w-8 h-8
+           rounded-pill-sm transition-all duration-200
+           focus:outline-none focus-visible:ring-2;
+    color: var(--sm-color-text-muted);
+
+    &:hover {
+      color: var(--sm-color-text-primary);
+      background: var(--sm-color-surface-hover);
+    }
+  }
+
+  // ── Typography ────────────────────────────────────────────────────────────
+
+  .heading-hero {
+    @apply font-body font-bold leading-[0.95] tracking-[-0.03em];
+  }
+
+  .heading-section {
+    @apply font-body font-bold leading-tight tracking-[-0.02em];
+  }
+
+  // ── Surfaces ──────────────────────────────────────────────────────────────
+
+  .glass-panel {
+    background: var(--sm-color-glass);
+    border: 1px solid var(--sm-color-glass-border);
+  }
+
+  // ── Gradient overlays ─────────────────────────────────────────────────────
+
+  .gradient-overlay-up {
+    @apply absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent;
+  }
+
+  .gradient-overlay-down {
+    @apply absolute inset-0 bg-gradient-to-b from-black/70 to-transparent;
+  }
+
+  // ── Image hovers ──────────────────────────────────────────────────────────
+
+  .img-hover {
+    @apply absolute inset-0 w-full h-full object-cover opacity-70
+           transition-all duration-700
+           group-hover:opacity-90 group-hover:scale-105;
+  }
+
+  // ── Card hover ────────────────────────────────────────────────────────────
 
   .card-hover {
-    @apply transition-all duration-500 ease-out
-           hover:scale-[1.02] hover:shadow-2xl;
+    @apply transition-all duration-350 ease-out
+           hover:scale-102 hover:shadow-2xl;
   }
 
-  // 3D canvas container — always fullscreen
+  // ── Canvas ────────────────────────────────────────────────────────────────
+
   .three-canvas {
     @apply fixed inset-0 w-full h-full;
     z-index: 0;
   }
 
-  // Overlay on top of the WebGL canvas
   .scene-overlay {
     @apply relative z-10;
   }
 
-  .glass-panel {
-    @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-sm;
+  // ── Hero stagger delays ───────────────────────────────────────────────────
+  // opacity:0 holds the element invisible during the animation-delay period.
+
+  .animate-delay-hero-1 {
+    animation-delay: var(--sm-hero-delay-1);
+    opacity: 0;
+  }
+
+  .animate-delay-hero-2 {
+    animation-delay: var(--sm-hero-delay-2);
+    opacity: 0;
+  }
+
+  .animate-delay-hero-3 {
+    animation-delay: var(--sm-hero-delay-3);
+    opacity: 0;
   }
 }
 
-// ─── Page transition animations ──────────────────────────────────────────────
+// ─── Page transition ─────────────────────────────────────────────────────────
 @keyframes pageEnter {
-  from { opacity: 0; transform: translateY(12px); }
+  from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 .page-enter {
-  animation: pageEnter 0.5s var(--transition-smooth) forwards;
+  animation: pageEnter var(--sm-duration-fast) forwards;
 }
 
 // ─── Scroll-reveal (smReveal directive) ──────────────────────────────────────
 .sm-reveal {
   opacity: 0;
   transition:
-    opacity 0.9s var(--transition-smooth),
-    transform 0.9s var(--transition-smooth),
-    filter 0.9s var(--transition-smooth);
+    opacity   var(--sm-duration-normal) var(--sm-ease),
+    transform var(--sm-duration-normal) var(--sm-ease),
+    filter    var(--sm-duration-normal) var(--sm-ease);
   will-change: opacity, transform;
 }
-.sm-reveal--fade-up       { transform: translate3d(0, 32px, 0); }
-.sm-reveal--fade          { transform: none; }
-.sm-reveal--scale         { transform: scale(0.94); }
-.sm-reveal--fade-left     { transform: translate3d(-40px, 0, 0); }
-.sm-reveal--fade-right    { transform: translate3d(40px, 0, 0); }
+.sm-reveal--fade-up    { transform: translate3d(0, 28px, 0); }
+.sm-reveal--fade       { transform: none; }
+.sm-reveal--scale      { transform: scale(0.95); }
+.sm-reveal--fade-left  { transform: translate3d(-32px, 0, 0); }
+.sm-reveal--fade-right { transform: translate3d(32px, 0, 0); }
 
 .sm-reveal.is-revealed {
   opacity: 1;
@@ -133,13 +266,13 @@
   }
 }
 
-// ─── Loading progress bar ──────────────────────────────────────────────────���─
+// ─── Loading bar ─────────────────────────────────────────────────────────────
 .loading-bar {
   position: fixed;
   top: 0;
   left: 0;
   height: 2px;
-  background: linear-gradient(90deg, theme('colors.gold.400'), theme('colors.gold.600'));
-  transition: width 0.3s ease;
+  background: var(--sm-color-accent);
+  transition: width 0.3s var(--sm-ease);
   z-index: 9999;
 }

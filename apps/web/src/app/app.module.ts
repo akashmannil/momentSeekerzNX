@@ -7,13 +7,10 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-// Feature state
 import {
-  authReducer, galleryReducer, bookingReducer, uiReducer,
-  AuthEffects, GalleryEffects, BookingEffects,
-  StoreEffects,
+  authReducer, galleryReducer, bookingReducer, uiReducer, cartReducer,
+  AuthEffects, GalleryEffects, BookingEffects, CartEffects,
 } from '@sm/data-access';
-import { storeReducer } from '@sm/data-access';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -27,17 +24,15 @@ import { CoreModule } from './core/core.module';
     HttpClientModule,
     AppRoutingModule,
     CoreModule,
-
-    // ── NgRx root store ──────────────────────────────────────────────────────
     StoreModule.forRoot({
       router: routerReducer,
       auth: authReducer,
       gallery: galleryReducer,
       booking: bookingReducer,
       ui: uiReducer,
-      store: storeReducer,
+      cart: cartReducer,
     }),
-    EffectsModule.forRoot([AuthEffects, GalleryEffects, BookingEffects, StoreEffects]),
+    EffectsModule.forRoot([AuthEffects, GalleryEffects, BookingEffects, CartEffects]),
     StoreRouterConnectingModule.forRoot(),
     StoreDevtoolsModule.instrument({
       maxAge: 25,

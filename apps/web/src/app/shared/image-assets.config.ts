@@ -71,9 +71,6 @@ export const IMAGE_SOURCES = {
   photographerAtWork:   { original: '', fallback: unsplash('photo-1476610182048-b716b8518aae') },
   philosophy:           { original: '', fallback: unsplash('photo-1470225620780-dba8ba36b745') },
   wedding:              { original: '', fallback: unsplash('photo-1519741497674-611481863552') },
-  fineArt:              { original: '', fallback: unsplash('photo-1578926078093-bee3a0d5f6a8') },
-  fineArtGallery:       { original: '', fallback: unsplash('photo-1531913764164-f85c52e6e654') },
-  finePrints:           { original: '', fallback: unsplash('photo-1513519245088-0e12902e5a38') },
 
   // ── Ambient wide hero textures ───────────────────────────────────────────
   heroCinematic:        { original: '', fallback: unsplash('photo-1536440136628-849c177e76a1', 1920) },
@@ -81,7 +78,6 @@ export const IMAGE_SOURCES = {
   heroAerial:           { original: '', fallback: unsplash('photo-1507608616759-54f48f0af0ee', 1920) },
   heroBooking:          { original: '', fallback: unsplash('photo-1554941829-202a0b2403b8', 1920) },
   heroContact:          { original: '', fallback: unsplash('photo-1511285560929-80b456fea0bc', 1920) },
-  heroStore:            { original: '', fallback: unsplash('photo-1549887552-cb1071d3e5ca', 1920) },
   heroServices:         { original: '', fallback: unsplash('photo-1500021804447-2ca2eaaaabeb', 1920) },
   heroAbout:            { original: '', fallback: unsplash('photo-1464822759023-fed622ff2c3b', 1920) },
 } as const satisfies Record<string, ImageSource>;

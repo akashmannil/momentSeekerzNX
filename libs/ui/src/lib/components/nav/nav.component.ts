@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { map, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 import {
   selectIsAuthenticated,
   selectIsAdmin,
@@ -9,6 +9,7 @@ import {
   UiActions,
   selectNavOpen,
 } from '@sm/data-access';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'sm-nav',
@@ -20,10 +21,15 @@ export class NavComponent implements OnInit {
   isAdmin$: Observable<boolean> = this.store.select(selectIsAdmin);
   cartCount$: Observable<number> = this.store.select(selectCartCount);
   navOpen$: Observable<boolean> = this.store.select(selectNavOpen);
+  isDark$: Observable<boolean> = this.theme.theme$.pipe(map(t => t === 'dark'));
+
   scrolled = false;
   navOpen = false;
 
-  constructor(private readonly store: Store) {}
+  constructor(
+    private readonly store: Store,
+    private readonly theme: ThemeService,
+  ) {}
 
   ngOnInit(): void {
     this.navOpen$.subscribe(open => { this.navOpen = open; });
@@ -36,6 +42,10 @@ export class NavComponent implements OnInit {
 
   toggleNav(open: boolean): void {
     this.store.dispatch(UiActions.setNavOpen({ open }));
+  }
+
+  toggleTheme(): void {
+    this.theme.toggle();
   }
 
   logout(): void {

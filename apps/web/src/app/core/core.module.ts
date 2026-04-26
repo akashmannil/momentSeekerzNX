@@ -6,6 +6,7 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { CredentialsInterceptor } from './interceptors/credentials.interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { ApiService } from './services/api.service';
 import { API_SERVICE_TOKEN } from '@sm/data-access';
@@ -16,8 +17,8 @@ import { UiModule } from '@sm/ui';
   exports: [UiModule],
   providers: [
     ApiService,
-    // Provide ApiService via the InjectionToken so NgRx effects can use it
     { provide: API_SERVICE_TOKEN, useExisting: ApiService },
+    { provide: HTTP_INTERCEPTORS, useClass: CredentialsInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],

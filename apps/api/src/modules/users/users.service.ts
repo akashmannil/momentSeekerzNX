@@ -54,4 +54,26 @@ export class UsersService {
     user.isActive = false;
     await user.save();
   }
+
+  async updateSubscription(
+    userId: string,
+    patch: Partial<{
+      tier: string | null;
+      status: string;
+      stripeCustomerId: string;
+      stripeSubscriptionId: string;
+      currentPeriodEnd: Date;
+      cancelAtPeriodEnd: boolean;
+    }>
+  ): Promise<UserDocument | null> {
+    const $set: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(patch)) {
+      $set[`subscription.${k}`] = v;
+    }
+    return this.userModel.findByIdAndUpdate(userId, { $set }, { new: true }).exec();
+  }
+
+  async findByStripeCustomerId(customerId: string): Promise<UserDocument | null> {
+    return this.userModel.findOne({ 'subscription.stripeCustomerId': customerId }).exec();
+  }
 }

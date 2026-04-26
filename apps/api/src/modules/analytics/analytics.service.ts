@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Photo } from '../gallery/schemas/photo.schema';
 import { Booking } from '../booking/schemas/booking.schema';
-import { Order } from '../store/schemas/order.schema';
+import { Order } from '../checkout/schemas/order.schema';
 
 @Injectable()
 export class AnalyticsService {
@@ -41,7 +41,7 @@ export class AnalyticsService {
       ]),
       this.orderModel.aggregate([
         { $match: { createdAt: { $gte: thirtyDaysAgo }, status: { $ne: 'cancelled' } } },
-        { $group: { _id: null, total: { $sum: '$total' }, count: { $sum: 1 } } },
+        { $group: { _id: null, total: { $sum: '$totalCents' }, count: { $sum: 1 } } },
       ]),
     ]);
 
@@ -53,7 +53,7 @@ export class AnalyticsService {
         totalBookings,
         pendingBookings,
         recentOrders,
-        revenueThisMonth: Math.round(revenue.total * 100) / 100,
+        revenueThisMonth: Math.round(revenue.total) / 100,
         ordersThisMonth: revenue.count,
       },
       topPhotos,
@@ -70,7 +70,7 @@ export class AnalyticsService {
       {
         $group: {
           _id: { year: { $year: '$createdAt' }, month: { $month: '$createdAt' } },
-          revenue: { $sum: '$total' },
+          revenueCents: { $sum: '$totalCents' },
           orders: { $sum: 1 },
         },
       },
@@ -84,7 +84,7 @@ export class AnalyticsService {
               { $toString: '$_id.month' },
             ],
           },
-          revenue: { $round: ['$revenue', 2] },
+          revenue: { $divide: ['$revenueCents', 100] },
           orders: 1,
           _id: 0,
         },

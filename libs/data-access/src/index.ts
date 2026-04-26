@@ -16,11 +16,11 @@ export * from './lib/booking/booking.reducer';
 export * from './lib/booking/booking.selectors';
 export * from './lib/booking/booking.effects';
 
-// Store (print store)
-export * from './lib/store-ngrx/store.actions';
-export * from './lib/store-ngrx/store.reducer';
-export * from './lib/store-ngrx/store.selectors';
-export * from './lib/store-ngrx/store.effects';
+// Cart (services + subscriptions)
+export * from './lib/cart/cart.actions';
+export * from './lib/cart/cart.reducer';
+export * from './lib/cart/cart.selectors';
+export * from './lib/cart/cart.effects';
 
 // UI
 export * from './lib/ui/ui.actions';

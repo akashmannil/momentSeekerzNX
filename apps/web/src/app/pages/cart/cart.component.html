@@ -1,0 +1,196 @@
+<section class="min-h-screen bg-obsidian-950 pt-32 pb-24 px-6">
+  <div class="max-w-6xl mx-auto">
+    <p class="section-label mb-4">Your Cart</p>
+    <h1 class="font-display text-5xl md:text-6xl font-light mb-12">
+      Review <em class="not-italic text-gold-400">& checkout</em>
+    </h1>
+
+    <ng-container *ngIf="(items$ | async) as items">
+      <ng-container *ngIf="items.length; else empty">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+          <!-- ── Line items ─────────────────────────────────────────────── -->
+          <div class="lg:col-span-2 space-y-4">
+            <ng-container *ngFor="let item of items; trackBy: trackById">
+              <div class="glass-panel p-6 flex gap-6 items-start">
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-3 flex-wrap">
+                    <h3 class="font-display text-xl">{{ item.name }}</h3>
+                    <span
+                      *ngIf="item.type === CartItemType.SERVICE && item.includedByTier"
+                      class="section-label text-xs px-2 py-1 bg-gold-400/10 text-gold-400 border border-gold-400/30"
+                    >
+                      Included by your {{ item.includedByTier }} plan
+                    </span>
+                  </div>
+
+                  <p class="font-body text-white/50 text-sm mt-2">
+                    {{ item.type === CartItemType.SUBSCRIPTION ? 'Monthly subscription' : 'À la carte service' }}
+                  </p>
+
+                  <!-- Quantity stepper (services only) -->
+                  <div
+                    *ngIf="item.type === CartItemType.SERVICE"
+                    class="flex items-center gap-4 mt-4"
+                  >
+                    <div class="flex items-center border border-white/10">
+                      <button
+                        type="button"
+                        (click)="decrement(item)"
+                        [disabled]="item.quantity <= 1"
+                        class="w-9 h-9 text-white/60 hover:text-gold-400 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                        aria-label="Decrease quantity"
+                      >−</button>
+                      <span class="w-10 text-center text-sm">{{ item.quantity }}</span>
+                      <button
+                        type="button"
+                        (click)="increment(item)"
+                        class="w-9 h-9 text-white/60 hover:text-gold-400 transition-colors"
+                        aria-label="Increase quantity"
+                      >+</button>
+                    </div>
+                    <button
+                      type="button"
+                      (click)="remove(item)"
+                      class="section-label text-white/40 hover:text-white transition-colors"
+                    >Remove</button>
+                  </div>
+                </div>
+
+                <!-- Price -->
+                <div class="text-right shrink-0">
+                  <p
+                    *ngIf="item.type === CartItemType.SERVICE && item.includedByTier; else paidPrice"
+                    class="font-display text-2xl text-gold-400"
+                  >Included</p>
+                  <ng-template #paidPrice>
+                    <p class="font-display text-2xl">
+                      {{ formatMoney(item.unitPriceCents * item.quantity) }}
+                    </p>
+                    <p *ngIf="item.quantity > 1" class="text-xs text-white/40 mt-1">
+                      {{ formatMoney(item.unitPriceCents) }} × {{ item.quantity }}
+                    </p>
+                  </ng-template>
+                </div>
+              </div>
+            </ng-container>
+
+            <div class="flex justify-end pt-4">
+              <button
+                type="button"
+                (click)="clear()"
+                class="section-label text-white/40 hover:text-white transition-colors"
+              >Clear cart</button>
+            </div>
+          </div>
+
+          <!-- ── Summary panel ──────────────────────────────────────────── -->
+          <aside class="glass-panel p-8 h-fit lg:sticky lg:top-32">
+            <p class="section-label mb-6">Order Summary</p>
+
+            <div
+              *ngIf="(activeTier$ | async) as tier"
+              class="mb-6 p-4 border border-gold-400/30 bg-gold-400/5"
+            >
+              <p class="section-label text-gold-400 mb-1">{{ tier }} Plan Active</p>
+              <p class="text-xs text-white/60 leading-relaxed">
+                Services covered by your plan checkout at no charge.
+              </p>
+            </div>
+
+            <dl class="space-y-3 pb-6 border-b border-white/10">
+              <div class="flex justify-between">
+                <dt class="text-white/50 text-sm">Items</dt>
+                <dd class="text-sm">{{ count$ | async }}</dd>
+              </div>
+              <div class="flex justify-between">
+                <dt class="text-white/50 text-sm">Subtotal</dt>
+                <dd class="text-sm">{{ formatMoney((subtotalCents$ | async) ?? 0) }}</dd>
+              </div>
+              <div class="flex justify-between">
+                <dt class="text-white/50 text-sm">Taxes</dt>
+                <dd class="text-xs text-white/40">Calculated at checkout</dd>
+              </div>
+            </dl>
+
+            <div class="flex justify-between py-6">
+              <p class="font-display text-xl">Total</p>
+              <p class="font-display text-xl text-gold-400">
+                {{ formatMoney((subtotalCents$ | async) ?? 0) }}
+              </p>
+            </div>
+
+            <!-- Guest details -->
+            <form
+              *ngIf="!(isAuthenticated$ | async)"
+              [formGroup]="guestForm"
+              class="space-y-3 mb-6"
+            >
+              <div>
+                <label for="cart-email" class="section-label block mb-2">Email</label>
+                <input
+                  id="cart-email"
+                  type="email"
+                  formControlName="customerEmail"
+                  autocomplete="email"
+                  class="w-full bg-obsidian-900/60 border border-white/10 px-4 py-3 text-sm focus:outline-none focus:border-gold-400 transition-colors"
+                />
+                <p
+                  *ngIf="guestForm.get('customerEmail')?.touched && guestForm.get('customerEmail')?.invalid"
+                  class="text-xs text-red-400 mt-1"
+                >Enter a valid email address.</p>
+              </div>
+              <div>
+                <label for="cart-name" class="section-label block mb-2">Full Name</label>
+                <input
+                  id="cart-name"
+                  type="text"
+                  formControlName="customerName"
+                  autocomplete="name"
+                  class="w-full bg-obsidian-900/60 border border-white/10 px-4 py-3 text-sm focus:outline-none focus:border-gold-400 transition-colors"
+                />
+                <p
+                  *ngIf="guestForm.get('customerName')?.touched && guestForm.get('customerName')?.invalid"
+                  class="text-xs text-red-400 mt-1"
+                >Enter your name.</p>
+              </div>
+            </form>
+
+            <p *ngIf="error$ | async as error" class="text-xs text-red-400 mb-4">{{ error }}</p>
+
+            <ng-container *ngIf="{ isAuth: (isAuthenticated$ | async) ?? false, checking: (checkingOut$ | async) ?? false } as vm">
+              <button
+                type="button"
+                class="btn-primary w-full justify-center"
+                [disabled]="vm.checking"
+                (click)="checkout(vm.isAuth)"
+              >
+                <span *ngIf="!vm.checking; else paying">Proceed to Checkout</span>
+                <ng-template #paying>Redirecting to Stripe…</ng-template>
+              </button>
+            </ng-container>
+
+            <p class="text-xs text-white/40 text-center mt-4 leading-relaxed">
+              Secure payment via Stripe. You'll review the final total before paying.
+            </p>
+          </aside>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <ng-template #empty>
+      <div class="glass-panel p-12 text-center">
+        <p class="section-label mb-4">Your cart is empty</p>
+        <h2 class="font-display text-3xl font-light mb-6">
+          Add a service to get <em class="not-italic text-gold-400">started</em>
+        </h2>
+        <p class="font-body text-white/50 mb-8 max-w-md mx-auto">
+          Browse our à la carte services or pick a monthly content plan for recurring delivery.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a routerLink="/services" class="btn-primary">Browse Services</a>
+          <a routerLink="/pricing" class="btn-ghost">See Plans</a>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</section>
