@@ -1,5 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { filter, map, Observable, startWith } from 'rxjs';
+import { NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import {
   selectIsAuthenticated,
@@ -22,6 +23,11 @@ export class NavComponent implements OnInit {
   cartCount$: Observable<number> = this.store.select(selectCartCount);
   navOpen$: Observable<boolean> = this.store.select(selectNavOpen);
   isDark$: Observable<boolean> = this.theme.theme$.pipe(map(t => t === 'dark'));
+  isAdminRoute$: Observable<boolean> = this.router.events.pipe(
+    filter((e): e is NavigationEnd => e instanceof NavigationEnd),
+    map(e => e.urlAfterRedirects.startsWith('/admin')),
+    startWith(this.router.url.startsWith('/admin')),
+  );
 
   scrolled = false;
   navOpen = false;
@@ -29,6 +35,7 @@ export class NavComponent implements OnInit {
   constructor(
     private readonly store: Store,
     private readonly theme: ThemeService,
+    private readonly router: Router,
   ) {}
 
   ngOnInit(): void {

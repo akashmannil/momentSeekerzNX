@@ -10,6 +10,14 @@
   border-bottom: 1px solid var(--sm-color-border-subtle);
 }
 
+// Admin pages — distinct nav background to signal admin context.
+.sm-nav-admin {
+  background: #1a1410;
+  border-bottom: 1px solid rgba(212, 168, 67, 0.25);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
 // Mobile drawer background
 .sm-nav-mobile-drawer {
   background: var(--sm-color-nav-mobile-bg);

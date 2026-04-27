@@ -5,7 +5,7 @@ import { AuthActions } from '@sm/data-access';
 @Component({
   selector: 'sm-admin-shell',
   template: `
-    <div class="flex min-h-screen">
+    <div class="flex min-h-screen pt-20">
       <aside class="w-60 bg-obsidian-900 border-r border-white/10 flex flex-col">
         <div class="p-6 border-b border-white/10">
           <p class="section-label">Savage Media</p>
@@ -23,6 +23,10 @@ import { AuthActions } from '@sm/data-access';
           <a routerLink="bookings" routerLinkActive="text-gold-400 bg-white/5"
              class="flex items-center gap-3 px-4 py-3 rounded text-white/60 hover:text-white hover:bg-white/5 transition-colors font-body text-sm">
             Bookings
+          </a>
+          <a routerLink="logs" routerLinkActive="text-gold-400 bg-white/5"
+             class="flex items-center gap-3 px-4 py-3 rounded text-white/60 hover:text-white hover:bg-white/5 transition-colors font-body text-sm">
+            Logs
           </a>
         </nav>
         <div class="p-4 border-t border-white/10">

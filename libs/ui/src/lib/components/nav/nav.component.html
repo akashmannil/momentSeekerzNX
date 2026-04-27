@@ -3,7 +3,8 @@
   [ngClass]="{
     'py-5': !scrolled,
     'py-3': scrolled,
-    'sm-nav-scrolled': scrolled
+    'sm-nav-scrolled': scrolled,
+    'sm-nav-admin': (isAdminRoute$ | async)
   }"
 >
   <nav class="max-w-7xl mx-auto px-6 flex items-center justify-between gap-8">

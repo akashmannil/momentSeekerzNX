@@ -11,8 +11,6 @@ import helmet from 'helmet';
 import { createHash } from 'crypto';
 import * as bcrypt from 'bcryptjs';
 import { AppModule } from './app.module';
-import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
-import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import { UsersService } from './modules/users/users.service';
 
 async function bootstrap() {
@@ -67,9 +65,8 @@ async function bootstrap() {
     })
   );
 
-  // ─── Global filters & interceptors ──────────────────────────────────────────
-  app.useGlobalFilters(new AllExceptionsFilter());
-  app.useGlobalInterceptors(new LoggingInterceptor());
+  // Global filter and interceptor are registered as APP_FILTER / APP_INTERCEPTOR
+  // providers in AppModule so they can use DI (LogsService).
 
   // ─── Swagger API docs ────────────────────────────────────────────────────────
   if (configService.get('NODE_ENV') !== 'production') {
