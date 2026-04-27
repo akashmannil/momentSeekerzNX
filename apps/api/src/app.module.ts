@@ -3,6 +3,7 @@
  * Wires together all feature modules, MongoDB connection, config, and throttling.
  */
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ThrottlerModule } from '@nestjs/throttler';
@@ -14,8 +15,12 @@ import { UploadModule } from './modules/upload/upload.module';
 import { CartModule } from './modules/cart/cart.module';
 import { CheckoutModule } from './modules/checkout/checkout.module';
 import { AnalyticsModule } from './modules/analytics/analytics.module';
+import { LogsModule } from './modules/logs/logs.module';
 import { GuestSessionMiddleware } from './common/middleware/guest-session.middleware';
 import { CsrfMiddleware } from './common/middleware/csrf.middleware';
+import { RequestContextMiddleware } from './common/middleware/request-context.middleware';
+import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
+import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 
 @Module({
   imports: [
@@ -40,6 +45,7 @@ import { CsrfMiddleware } from './common/middleware/csrf.middleware';
         },
       ],
     }),
+    LogsModule,
     AuthModule,
     UsersModule,
     GalleryModule,
@@ -49,11 +55,15 @@ import { CsrfMiddleware } from './common/middleware/csrf.middleware';
     CheckoutModule,
     AnalyticsModule,
   ],
+  providers: [
+    { provide: APP_INTERCEPTOR, useClass: LoggingInterceptor },
+    { provide: APP_FILTER, useClass: AllExceptionsFilter },
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
-      .apply(GuestSessionMiddleware, CsrfMiddleware)
+      .apply(RequestContextMiddleware, GuestSessionMiddleware, CsrfMiddleware)
       .forRoutes('*');
   }
 }
